@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Data2\Data2.csproj" />
     <ProjectReference Include="..\EShop.Core\EShop.Core.csproj" />
   </ItemGroup>
 

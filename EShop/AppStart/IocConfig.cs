@@ -1,4 +1,4 @@
-﻿using Auth.FWT.Infrastructure.Logging;
+﻿using Data2.Infrastructure.Logging;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using FluentValidation;

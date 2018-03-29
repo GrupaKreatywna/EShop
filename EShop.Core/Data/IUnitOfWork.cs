@@ -1,9 +1,9 @@
-using Auth.FWT.Core.Entities;
+using Data2.Core.Entities;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Auth.FWT.Core.Data
+namespace Data2.Core.Data
 {
     public interface IUnitOfWork : IDisposable
     {

@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace Auth.FWT.Data
+namespace Data2.Data
 {
     public class AppContext : DbContext
     {

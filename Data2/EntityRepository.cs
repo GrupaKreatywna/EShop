@@ -1,11 +1,12 @@
 using Data2.Core.Data;
 using Data2.Core.Entities;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Z.EntityFramework.Plus;
 
 namespace Data2.Data
 {
@@ -27,7 +28,7 @@ namespace Data2.Data
 
         public void BatchDelete(Expression<Func<TEntity, bool>> predicate)
         {
-            //_dbEntitySet.Where(predicate).Delete();
+            _dbEntitySet.Where(predicate).Delete();
         }
 
         public void Delete(TEntity entity)
@@ -38,7 +39,7 @@ namespace Data2.Data
         public Task Delete(TKey id, Expression<Func<TEntity, bool>> predicate)
         {
             var query = _dbEntitySet.Where(predicate).Where(x => (object)x.Id == (object)id);
-            //query.Delete();
+            query.Delete();
 
             return Task.FromResult(0);
         }

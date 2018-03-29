@@ -1,4 +1,4 @@
-namespace Auth.FWT.Core.Data
+namespace Data2.Core.Data
 {
     public enum OrderBy
     {

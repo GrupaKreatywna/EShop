@@ -1,7 +1,7 @@
 using Eshop.Core.Services.Logging;
 using System;
 
-namespace Auth.FWT.Infrastructure.Logging
+namespace Data2.Infrastructure.Logging
 {
     public class NLogLogger : ILogger
     {

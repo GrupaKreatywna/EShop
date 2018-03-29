@@ -1,6 +1,6 @@
 using Data2.Core.Entities;
-using Microsoft.EntityFrameworkCore;
 using System;
+using System.Data.Entity;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;

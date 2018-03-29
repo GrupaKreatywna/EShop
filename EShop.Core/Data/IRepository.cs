@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Auth.FWT.Core.Entities;
+using Data2.Core.Entities;
 
-namespace Auth.FWT.Core.Data
+namespace Data2.Core.Data
 {
     public interface IRepository<TEntity, TKey> : IDisposable
         where TEntity : BaseEntity<TKey>
