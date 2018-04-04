@@ -1,39 +1,41 @@
-using Auth.FWT.Core.Data;
-using Auth.FWT.Core.Entities;
+using Eshop.Core.Data;
+using Eshop.Core.Entities;
+using Microsoft.EntityFrameworkCore;
 using Eshop.Core.Extensions;
 using System;
 using System.Collections;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Auth.FWT.Data
+namespace Eshop.Data
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private readonly IEntitiesContext _context;
+        private readonly DbContext _context;
 
         private bool _disposed;
 
         private Hashtable _repositories;
 
-        public UnitOfWork(IEntitiesContext context)
+        public UnitOfWork(DbContext context)
         {
             _context = context;
         }
 
         public void BeginTransaction()
         {
-            _context.BeginTransaction();
+            //_context.BeginTransaction();
         }
 
         public int Commit()
         {
-            return _context.Commit();
+            //return _context.Commit();
+            return 1;
         }
 
         public Task<int> CommitAsync()
         {
-            return _context.CommitAsync();
+            return null;
         }
 
         public void Dispose()
@@ -81,7 +83,7 @@ namespace Auth.FWT.Data
 
         public void Rollback()
         {
-            _context.Rollback();
+           
         }
 
         public int SaveChanges()
