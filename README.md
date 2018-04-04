@@ -1,0 +1,1 @@
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/02f4e1927a7c415d835ff801ae88f3d2)](https://www.codacy.com/app/agolaszewski/EShop?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=GrupaKreatywna/EShop&amp;utm_campaign=Badge_Grade)
