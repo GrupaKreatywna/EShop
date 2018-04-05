@@ -1,7 +1,7 @@
 using Eshop.Core.Data;
 using Eshop.Core.Entities;
-using Microsoft.EntityFrameworkCore;
 using Eshop.Core.Extensions;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections;
 using System.Threading;
@@ -20,22 +20,6 @@ namespace Eshop.Data
         public UnitOfWork(DbContext context)
         {
             _context = context;
-        }
-
-        public void BeginTransaction()
-        {
-            //_context.BeginTransaction();
-        }
-
-        public int Commit()
-        {
-            //return _context.Commit();
-            return 1;
-        }
-
-        public Task<int> CommitAsync()
-        {
-            return null;
         }
 
         public void Dispose()
@@ -83,7 +67,6 @@ namespace Eshop.Data
 
         public void Rollback()
         {
-           
         }
 
         public int SaveChanges()
