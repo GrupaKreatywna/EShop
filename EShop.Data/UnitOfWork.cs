@@ -6,6 +6,7 @@ using System;
 using System.Collections;
 using System.Threading;
 using System.Threading.Tasks;
+using EShop.Core.Entities;
 
 namespace Eshop.Data
 {
@@ -21,6 +22,8 @@ namespace Eshop.Data
         {
             _context = context;
         }
+
+        IRepository<Order, int> IUnitOfWork.OrderRepository => throw new NotImplementedException();
 
         public void BeginTransaction()
         {
@@ -99,6 +102,56 @@ namespace Eshop.Data
         public Task<int> SaveChangesAsync(CancellationToken cancellationToken)
         {
             return _context.SaveChangesAsync(cancellationToken);
+        }
+
+        void IUnitOfWork.BeginTransaction()
+        {
+            throw new NotImplementedException();
+        }
+
+        int IUnitOfWork.Commit()
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<int> IUnitOfWork.CommitAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        void IUnitOfWork.Dispose(bool disposing)
+        {
+            throw new NotImplementedException();
+        }
+
+        void IDisposable.Dispose()
+        {
+            throw new NotImplementedException();
+        }
+
+        IRepository<TEntity, TKey> IUnitOfWork.Repository<TEntity, TKey>()
+        {
+            throw new NotImplementedException();
+        }
+
+        void IUnitOfWork.Rollback()
+        {
+            throw new NotImplementedException();
+        }
+
+        int IUnitOfWork.SaveChanges()
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<int> IUnitOfWork.SaveChangesAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<int> IUnitOfWork.SaveChangesAsync(CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
         }
     }
 }

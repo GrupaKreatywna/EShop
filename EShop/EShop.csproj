@@ -24,4 +24,8 @@
     <ProjectReference Include="..\EShop.Infrastructure\EShop.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="GetVersions\" />
+  </ItemGroup>
+
 </Project>
