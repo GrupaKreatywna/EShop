@@ -1,7 +1,6 @@
-﻿using System;
+﻿using Eshop.Core.Entities;
+using System;
 using System.Collections.Generic;
-using System.Text;
-using Eshop.Core.Entities;
 
 namespace EShop.Core.Entities
 {
@@ -15,6 +14,6 @@ namespace EShop.Core.Entities
 
         public DateTime ValidationEnd { get; set; }
 
-        //public ICollection<Order> Orders { get; set; }
+        public ICollection<Order> Orders { get; set; }
     }
 }
