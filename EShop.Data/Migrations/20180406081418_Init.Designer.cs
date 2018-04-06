@@ -11,7 +11,7 @@ using System;
 namespace EShop.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20180406074037_Init")]
+    [Migration("20180406081418_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
