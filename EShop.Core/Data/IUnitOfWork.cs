@@ -1,4 +1,5 @@
 using Eshop.Core.Entities;
+using EShop.Core.Entities;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -7,6 +8,7 @@ namespace Eshop.Core.Data
 {
     public interface IUnitOfWork : IDisposable
     {
+        IRepository<Product, int> ProductRepository { get; }
         void BeginTransaction();
 
         int Commit();

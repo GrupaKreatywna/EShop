@@ -6,6 +6,7 @@ using System;
 using System.Collections;
 using System.Threading;
 using System.Threading.Tasks;
+using EShop.Core.Entities;
 
 namespace Eshop.Data
 {
@@ -20,6 +21,14 @@ namespace Eshop.Data
         public UnitOfWork(DbContext context)
         {
             _context = context;
+        }
+
+        public IRepository<Product, int> ProductRepository
+        {
+            get
+            {
+                return Repository<Product, int>();
+            }
         }
 
         public void BeginTransaction()
