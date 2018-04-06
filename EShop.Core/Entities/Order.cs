@@ -14,6 +14,6 @@ namespace EShop.Core.Entities
         public string City { get; set; }
         public  string PostalCode { get; set; }
         //public int DiscountCouponId {get;set;}
-        //public int DiscountCoupon DiscountCoupon {get;set;}
+        //public DiscountCoupon DiscountCoupon {get;set;}
     }
 }
