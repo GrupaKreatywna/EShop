@@ -1,3 +1,4 @@
+using EShop.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Eshop.Data
@@ -13,5 +14,7 @@ namespace Eshop.Data
         {
             base.OnModelCreating(modelBuilder);
         }
+
+        public DbSet<Order> Orders { get; set; }
     }
 }
