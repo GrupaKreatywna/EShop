@@ -7,9 +7,10 @@ namespace Eshop.Data
     {
 
 
-        public  DbSet<Product> Products{get;set;}
-        public  DbSet<Price> Prices{get;set;}
+        public DbSet<Product> Products{get;set;}
+        public DbSet<Price> Prices{get;set;}
         public DbSet<Order> Orders { get; set; }
+        public DbSet<Category> Categories{get;set;}
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
