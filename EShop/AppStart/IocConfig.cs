@@ -31,8 +31,8 @@ namespace Eshop
             builder.RegisterAssemblyTypes(assemblies).AsClosedTypesOf(typeof(IReadCacheHandler<,>)).InstancePerLifetimeScope();
             builder.RegisterAssemblyTypes(assemblies).AsClosedTypesOf(typeof(IWriteCacheHandler<,>)).InstancePerLifetimeScope();
 
-            builder.RegisterType<Eshop.Data.AppContext>().As<IEntitiesContext>().InstancePerLifetimeScope();
-            builder.RegisterType<Eshop.Data.AppContext>().As<DbContext>().InstancePerLifetimeScope();
+            builder.RegisterType<Eshop.Data.DataContext>().As<IEntitiesContext>().InstancePerLifetimeScope();
+            builder.RegisterType<Eshop.Data.DataContext>().As<DbContext>().InstancePerLifetimeScope();
             builder.RegisterGeneric(typeof(EntityRepository<,>)).As(typeof(IRepository<,>)).InstancePerLifetimeScope();
             builder.RegisterType(typeof(UnitOfWork)).As(typeof(IUnitOfWork)).InstancePerLifetimeScope();
 

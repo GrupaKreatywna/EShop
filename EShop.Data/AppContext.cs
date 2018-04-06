@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Eshop.Data
 {
-    public class AppContext : DbContext, IEntitiesContext
+    public class DataContext : DbContext, IEntitiesContext
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
