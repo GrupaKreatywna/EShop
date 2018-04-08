@@ -23,10 +23,7 @@ namespace EShop.Controllers
         [HttpPost("[action]")]
         public async Task CreateDC(string _name, int _couponCode, DateTime _validationStart, DateTime _validationEnd)
         {
-            //await Task.Delay(1000);
-            //return new CreateDiscountCoupon.Result() { Code = 1 };
-            //CreateDiscountCoupon.Command command = new CreateDiscountCoupon.Command() { data = new CreateDiscountCoupon.Data() { Name = _name, CouponCode = _couponCode, ValidationEnd = _validationEnd, ValidationStart = _validationStart } };
-            await _commandDispatcher.Dispatch<CreateDiscountCoupon.Command>(new CreateDiscountCoupon.Command() { data = new CreateDiscountCoupon.Data(_name, _couponCode, _validationStart, _validationEnd) } );//(command);
+            await _commandDispatcher.Dispatch<CreateDiscountCoupon.Command>(new CreateDiscountCoupon.Command() { data = new CreateDiscountCoupon.Data(_name, _couponCode, _validationStart, _validationEnd) } );
         }
 
         [HttpGet("[action]")]

@@ -28,9 +28,6 @@ namespace EShop.Controllers.DiscountCoupon
             {
                 _uow.DiscountCouponRepository.Insert(command.data.ToDiscountCouponEntity());
                 await _uow.SaveChangesAsync();
-                //var result = new Result { Code = 1 };
-                //return result;
-                //return 1;
             }
         }
 
@@ -60,11 +57,6 @@ namespace EShop.Controllers.DiscountCoupon
                 };
                 return dc;
             }
-        }
-
-        public class Result
-        {
-            public int Code { get; set; }
         }
     }
 }
