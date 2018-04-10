@@ -1,6 +1,5 @@
 ﻿using Eshop.Core.CQRS;
 using Eshop.Core.Data;
-using EShop.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -9,29 +8,30 @@ using System.Threading.Tasks;
 
 namespace EShop.Controllers.DiscountCoupon
 {
-    public class GetDiscountCoupon
+    public class GetLast10DiscountCoupons
     {
         public class Query : IQuery
         {
             public int Id;
         }
 
-        public class Handler : IQueryHandler<Query, Result>
+        public class Handler : IQueryHandler<Query, List<ResultWithId>>
         {
             private IUnitOfWork _uow;
             public Handler(IUnitOfWork uow)
             {
                 _uow = uow;
             }
-            public async Task<Result> Handle(Query query)
+            public async Task<List<ResultWithId>> Handle(Query query)
             {
-                var result = await _uow.DiscountCouponRepository.Query().Where(x => x.Id == query.Id).Select(x => new Result()
+                var result = await _uow.DiscountCouponRepository.Query().OrderByDescending(x => x.Id).Take(10).Select(x => new ResultWithId
                 {
+                    Id = x.Id,
                     Name = x.Name,
                     CouponCode = x.CouponCode,
                     ValidationStart = x.ValidationStart,
                     ValidationEnd = x.ValidationEnd
-                }).FirstOrDefaultAsync();
+                }).ToListAsync();
                 return result;
             }
         }

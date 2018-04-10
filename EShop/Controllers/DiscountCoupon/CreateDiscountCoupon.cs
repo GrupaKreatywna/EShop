@@ -48,7 +48,7 @@ namespace EShop.Controllers.DiscountCoupon
 
             public Core.Entities.DiscountCoupon ToDiscountCouponEntity()
             {
-                Core.Entities.DiscountCoupon dc = new Core.Entities.DiscountCoupon()
+                Core.Entities.DiscountCoupon dc = new Core.Entities.DiscountCoupon
                 {
                     Name = Name,
                     CouponCode = CouponCode,

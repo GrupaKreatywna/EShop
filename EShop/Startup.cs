@@ -34,6 +34,11 @@ namespace Eshop
                 c.SwaggerDoc("v1", new Info { Title = "Eshop", Version = "v1" });
             });
 
+            services.ConfigureSwaggerGen(options =>
+            {
+                options.CustomSchemaIds(type => type.FullName);
+            });
+
             ApplicationContainer = IocConfig.RegisterDependencies(services);
             return new AutofacServiceProvider(ApplicationContainer);
         }

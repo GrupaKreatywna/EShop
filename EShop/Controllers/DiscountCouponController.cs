@@ -21,21 +21,27 @@ namespace EShop.Controllers
         }
 
         [HttpPost("[action]")]
-        public async Task CreateDC(string _name, int _couponCode, DateTime _validationStart, DateTime _validationEnd)
+        public async Task Create(string _name, int _couponCode, DateTime _validationStart, DateTime _validationEnd)
         {
-            await _commandDispatcher.Dispatch<CreateDiscountCoupon.Command>(new CreateDiscountCoupon.Command() { data = new CreateDiscountCoupon.Data(_name, _couponCode, _validationStart, _validationEnd) } );
+            await _commandDispatcher.Dispatch<CreateDiscountCoupon.Command>(new CreateDiscountCoupon.Command { data = new CreateDiscountCoupon.Data(_name, _couponCode, _validationStart, _validationEnd) } );
         }
 
         [HttpGet("[action]")]
-        public async Task<GetDiscountCoupon.Result> GetDC(int Id)
+        public async Task<GetDiscountCoupon.Result> Get(int Id)
         {
-            return await _queryDispatcher.Dispatch<GetDiscountCoupon.Query, GetDiscountCoupon.Result>(new GetDiscountCoupon.Query() { Id = Id });
+            return await _queryDispatcher.Dispatch<GetDiscountCoupon.Query, GetDiscountCoupon.Result>(new GetDiscountCoupon.Query { Id = Id });
         }
 
         [HttpGet("[action]")]
-        public async Task<List<GetDiscountCoupon.ResultWithId>> GetAllDC()
+        public async Task<List<GetAllDiscountCoupons.ResultWithId>> GetAll()
         {
-            return await _queryDispatcher.Dispatch<GetDiscountCoupon.Query, List<GetDiscountCoupon.ResultWithId>>(new GetDiscountCoupon.Query());
+            return await _queryDispatcher.Dispatch<GetAllDiscountCoupons.Query, List<GetAllDiscountCoupons.ResultWithId>>(new GetAllDiscountCoupons.Query());
+        }
+
+        [HttpGet("[action]")]
+        public async Task<List<GetLast10DiscountCoupons.ResultWithId>> GetLast10()
+        {
+            return await _queryDispatcher.Dispatch<GetLast10DiscountCoupons.Query, List<GetLast10DiscountCoupons.ResultWithId>>(new GetLast10DiscountCoupons.Query());
         }
     }
 }
