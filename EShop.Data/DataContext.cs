@@ -9,7 +9,7 @@ namespace Eshop.Data
         public DbSet<Price> Prices{get;set;}
         public DbSet<Order> Orders { get; set; }
         public DbSet<Category> Categories{get;set;}
-        //public DbSet<DiscountCoupon> DiscountCoupons { get; set; } // This line causes: SqlException: Invalid object name 'DiscountCoupons'
+        public DbSet<DiscountCoupon> DiscountCoupons { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

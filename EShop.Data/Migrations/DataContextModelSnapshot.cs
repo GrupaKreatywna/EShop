@@ -51,7 +51,7 @@ namespace EShop.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("DiscountCoupon");
+                    b.ToTable("DiscountCoupons");
                 });
 
             modelBuilder.Entity("EShop.Core.Entities.Order", b =>
