@@ -9,6 +9,8 @@ namespace Eshop.Core.Data
     public interface IUnitOfWork : IDisposable
     {
         IRepository<Product, int> ProductRepository { get; }
+
+        IRepository<Category, int> CategoryRepository { get; }
         void BeginTransaction();
 
         int Commit();

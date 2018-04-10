@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace EShop.Controllers.Product
 {
-    public class GetProduct
+    public class GetTenLastProducts
     {
         public class Query : IQuery
         {
@@ -19,13 +19,9 @@ namespace EShop.Controllers.Product
 
             }
 
-            public Query(int id)
-            {
-                ID = id;
-            }
         }
 
-        public class Handler : IQueryHandler<Query, Result>
+        public class Handler : IQueryHandler<Query, List<Result>>
         {
             private readonly IUnitOfWork _uow;
             public Handler(IUnitOfWork uow)
@@ -33,36 +29,9 @@ namespace EShop.Controllers.Product
                 _uow = uow;
             }
 
-            public async Task<Result> Handle(Query query)
-            {
-                
-                    var result = await _uow.ProductRepository.Query().Where(x => x.Id == query.ID).Select(x => new Result()
-                    {
-                        Name = x.Name,
-                        Picture = x.Picture,
-                        Description = x.Description,
-                        Tags = x.Tags,
-                        Count = x.Count,
-                        CurrentPriceId = x.CurrentPriceId,
-                        CategoryId = x.CategoryId
-                    }
-                    ).FirstOrDefaultAsync();
-                    return result;                
-            }
-
-        }
-
-        public class HandlerList : IQueryHandler<Query, List<Result>>
-        {
-            private readonly IUnitOfWork __uow;
-            public HandlerList(IUnitOfWork uow)
-            {
-                __uow = uow;
-            }
-
             public async Task<List<Result>> Handle(Query query)
             {
-                var result = await __uow.ProductRepository.Query().Select(x => new Result()
+                var result = await _uow.ProductRepository.Query().OrderByDescending(x => x.Id).Take(10).Select(x => new Result()
                 {
                     ID = x.Id,
                     Name = x.Name,
@@ -78,11 +47,6 @@ namespace EShop.Controllers.Product
             }
         }
 
-
-
-
-
-
         public class Result
         {
             public int ID { get; set; }
@@ -94,7 +58,5 @@ namespace EShop.Controllers.Product
             public int? CurrentPriceId { get; set; }
             public int CategoryId { get; set; }
         }
-
-
     }
 }

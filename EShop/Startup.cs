@@ -26,12 +26,17 @@ namespace Eshop
         {
             services.AddMvc(options =>
             {
-                //options.Filters.Add(typeof(ApiExceptionAttribute));
+                options.Filters.Add(typeof(ApiExceptionAttribute));
             });
 
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info { Title = "Eshop", Version = "v1" });
+            });
+
+            services.ConfigureSwaggerGen(options =>
+            {
+                options.CustomSchemaIds(type => type.FullName);
             });
 
             ApplicationContainer = IocConfig.RegisterDependencies(services);
