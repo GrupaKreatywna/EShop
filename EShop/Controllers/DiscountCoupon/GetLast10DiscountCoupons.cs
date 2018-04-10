@@ -12,12 +12,12 @@ namespace EShop.Controllers.DiscountCoupon
     {
         public class Query : IQuery
         {
-            public int Id;
+            public int Id { get; set; }
         }
 
         public class Handler : IQueryHandler<Query, List<ResultWithId>>
         {
-            private IUnitOfWork _uow;
+            private readonly IUnitOfWork _uow;
             public Handler(IUnitOfWork uow)
             {
                 _uow = uow;

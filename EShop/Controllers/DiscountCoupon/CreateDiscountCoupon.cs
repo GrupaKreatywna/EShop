@@ -13,12 +13,12 @@ namespace EShop.Controllers.DiscountCoupon
     {
         public class Command : ICommand
         {
-            public Data data;
+            public Data Data { get; set; }
         }
 
         public class Handler : ICommandHandler<Command>
         {
-            private IUnitOfWork _uow;
+            private readonly IUnitOfWork _uow;
             public Handler(IUnitOfWork uow)
             {
                 _uow = uow;
@@ -26,7 +26,7 @@ namespace EShop.Controllers.DiscountCoupon
 
             public async Task Execute(Command command)
             {
-                _uow.DiscountCouponRepository.Insert(command.data.ToDiscountCouponEntity());
+                _uow.DiscountCouponRepository.Insert(command.Data.ToDiscountCouponEntity());
                 await _uow.SaveChangesAsync();
             }
         }

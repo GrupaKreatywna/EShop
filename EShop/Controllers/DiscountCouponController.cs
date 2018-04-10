@@ -11,8 +11,8 @@ namespace EShop.Controllers
     [Route("api/[controller]")]
     public class DiscountCouponController : Controller
     {
-        private IQueryDispatcher _queryDispatcher;
-        private ICommandDispatcher _commandDispatcher;
+        private readonly IQueryDispatcher _queryDispatcher;
+        private readonly ICommandDispatcher _commandDispatcher;
 
         public DiscountCouponController(IQueryDispatcher queryDispatcher, ICommandDispatcher commandDispatcher)
         {

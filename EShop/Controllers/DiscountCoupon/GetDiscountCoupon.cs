@@ -13,19 +13,19 @@ namespace EShop.Controllers.DiscountCoupon
     {
         public class Query : IQuery
         {
-            public int Id;
+            public int Id { get; set; }
         }
 
         public class Handler : IQueryHandler<Query, Result>
         {
-            private IUnitOfWork _uow;
+            private readonly IUnitOfWork _uow;
             public Handler(IUnitOfWork uow)
             {
                 _uow = uow;
             }
             public async Task<Result> Handle(Query query)
             {
-                var result = await _uow.DiscountCouponRepository.Query().Where(x => x.Id == query.Id).Select(x => new Result()
+                var result = await _uow.DiscountCouponRepository.Query().Where(x => x.Id == query.Id).Select(x => new Result
                 {
                     Name = x.Name,
                     CouponCode = x.CouponCode,
