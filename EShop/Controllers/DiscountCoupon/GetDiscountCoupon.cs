@@ -36,14 +36,38 @@ namespace EShop.Controllers.DiscountCoupon
             }
         }
 
+        public class HandlerAll : IQueryHandler<Query, List<ResultWithId>>
+        {
+            private IUnitOfWork _uow;
+            public HandlerAll(IUnitOfWork uow)
+            {
+                _uow = uow;
+            }
+            public async Task<List<ResultWithId>> Handle(Query query)
+            {
+                var result = await _uow.DiscountCouponRepository.Query().Select(x => new ResultWithId()
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    CouponCode = x.CouponCode,
+                    ValidationStart = x.ValidationStart,
+                    ValidationEnd = x.ValidationEnd
+                }).ToListAsync();
+                return result;
+            }
+        }
+
         public class Result
         {
-            //public int Id { get; set; }
             public string Name { get; set; }
             public int CouponCode { get; set; }
             public DateTime ValidationStart { get; set; }
             public DateTime ValidationEnd { get; set; }
-            //public ICollection<Order> Orders { get; set; }
+        }
+
+        public class ResultWithId : Result
+        {
+            public int Id { get; set; }
         }
     }
 }

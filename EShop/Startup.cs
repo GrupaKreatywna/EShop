@@ -26,7 +26,7 @@ namespace Eshop
         {
             services.AddMvc(options =>
             {
-                //options.Filters.Add(typeof(ApiExceptionAttribute));
+                options.Filters.Add(typeof(ApiExceptionAttribute));
             });
 
             services.AddSwaggerGen(c =>

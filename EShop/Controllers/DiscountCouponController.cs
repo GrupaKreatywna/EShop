@@ -31,5 +31,11 @@ namespace EShop.Controllers
         {
             return await _queryDispatcher.Dispatch<GetDiscountCoupon.Query, GetDiscountCoupon.Result>(new GetDiscountCoupon.Query() { Id = Id });
         }
+
+        [HttpGet("[action]")]
+        public async Task<List<GetDiscountCoupon.ResultWithId>> GetAllDC()
+        {
+            return await _queryDispatcher.Dispatch<GetDiscountCoupon.Query, List<GetDiscountCoupon.ResultWithId>>(new GetDiscountCoupon.Query());
+        }
     }
 }
