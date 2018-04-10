@@ -23,6 +23,20 @@ namespace Eshop.Data
             _context = context;
         }
 
+        public IRepository<Product, int> ProductRepository
+        {
+            get
+            {
+                return Repository<Product, int>();
+            }
+        }
+
+        public IRepository<Order, int> OrderRepository
+        {
+            get
+            {
+                return Repository<Order, int>();
+                
         public IRepository<DiscountCoupon, int> DiscountCouponRepository
         {
             get
