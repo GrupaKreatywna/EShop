@@ -17,6 +17,6 @@ export const Homepage = () => (
   <div>
       <UnnumberedList data={placeholderCategories} display='name' primaryKey='id'/>
       <SearchAutocomplete searchThrough={placeholderItems} display='productname' primaryKey='id' />
-      <Products data={placeholderItems} nameProp='productname' imgProp='img' primaryKey='id'/>
+      <Products data={placeholderItems} nameProp='productname' imgURLProp='img' primaryKey='id'/>
   </div>
 )

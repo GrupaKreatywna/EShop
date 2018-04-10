@@ -1,5 +1,5 @@
 ﻿import React, { Component } from 'react';
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 import Autocomplete from 'react-autocomplete';
 
 
@@ -11,17 +11,10 @@ export const UnnumberedList = props => {
     ));
 
     return <ul>{categoriesList}</ul>;
-}
+};
 
 export const Products = props => {
-    
-    //TODO find a better way to list what props
-    //a component takes
-    //the below is pretty dirty
-    const data = props.data;    
-    const primaryKey = props.primaryKey
-    const nameProp = props.nameProp;
-    const imgURLProp = props.imgProp;
+    const {data, primaryKey, nameProp, imgURLProp} = props;
 
     const mappedProducts = data.map(product => (
         <div key={product[primaryKey]} >
@@ -40,16 +33,10 @@ export class SearchAutocomplete extends Component { //TODO add defaultProps, pro
         this.state = {
             value: "",
         };
-
+        const {searchThroughCollection, primaryKey, displayProp } = this.props;
         this.searchResultItemStyle = this.searchResultItemStyle.bind(this);
     }
 
-    searchThroughCollection = this.props.searchThrough;    
-    primaryKey = this.props.primaryKey
-    displayProp = this.props.display;
-    //TODO the above primaryKey and displayProp props are strings which are names of object props
-    //they can be passed as product[displayProp] (in this case i'm trying to get product.displayProp)
-    //but maybe it's possible to pass it as product[product.prop]? seems safer
     
     searchResultItemStyle = (product, isHighlighted) => (
         <div key={product[this.primaryKey]} style={{ background: isHighlighted ? 'lightgray' : 'white' }}>
