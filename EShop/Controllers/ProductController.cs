@@ -20,30 +20,30 @@ namespace EShop.Controllers
             _commandDispatcher = commandDispatcher;
         }
 
-        [HttpGet("[action]")]
+        [HttpGet("/api/Product/{id}")]
         public async Task<GetProduct.Result> Get(int id)
         {
             return await _queryDispatcher.Dispatch<GetProduct.Query, GetProduct.Result>(new GetProduct.Query(id));
         }
 
-        [HttpGet("[action]")]
+        [HttpGet("/api/Products")]
         public async Task<List<GetProduct.Result>> GetAll()
         {
                 return await _queryDispatcher.Dispatch<GetProduct.Query, List<GetProduct.Result>>(new GetProduct.Query());
         }
-        [HttpGet("[action]")]
+        [HttpGet("/api/Product/Latest")]
         public async Task<List<GetTenLastProducts.Result>> GetTenLast()
         {
             return await _queryDispatcher.Dispatch<GetTenLastProducts.Query, List<GetTenLastProducts.Result>>(new GetTenLastProducts.Query());
         }
 
-        [HttpPost("[action]")]
-        public async Task Create(string Name, string Picture, string Description, string Tags,
-                int Count, int? CurrentPriceId, int CategoryId)
+        [HttpPost("")]
+        public async Task Create(string name, string picture, string description, string tags,
+                int count, int? currentPriceId, int categoryId)
         {
             await _commandDispatcher.Dispatch<CreateProduct.Command>(new CreateProduct.Command()
             {
-                _data = new CreateProduct.Data(Name,Picture,Description,Tags,Count,CurrentPriceId,CategoryId)
+                _data = new CreateProduct.Data(name,picture,description,tags,count,currentPriceId,categoryId)
             });   
         }
 

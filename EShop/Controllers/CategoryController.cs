@@ -20,25 +20,25 @@ namespace EShop.Controllers
             _commandDispatcher = commandDispatcher;
         }
 
-        [HttpGet("[action]")]
+        [HttpGet("/api/Category/{id}")]
         public async Task<GetCategory.Result> Get(int id)
         {
             return await _queryDispatcher.Dispatch<GetCategory.Query, GetCategory.Result>(new GetCategory.Query(id));
         }
 
-        [HttpGet("[action]")]
+        [HttpGet("/api/Categories")]
         public async Task<List<GetAllCategories.TreeNode>> GetAll()
         {
             return await _queryDispatcher.Dispatch<GetAllCategories.Query, List<GetAllCategories.TreeNode>>(new GetAllCategories.Query());
         }
         
 
-        [HttpPost("[action]")]
-        public async Task Create(int? ParentId, string CategoryName)
+        [HttpPost("")]
+        public async Task Create(int? parentId, string categoryName)
         {
             await _commandDispatcher.Dispatch<CreateCategory.Command>(new CreateCategory.Command()
             {
-                _data = new CreateCategory.Data(ParentId,CategoryName)
+                _data = new CreateCategory.Data(parentId,categoryName)
             });
         }
 

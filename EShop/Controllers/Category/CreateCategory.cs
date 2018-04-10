@@ -36,10 +36,10 @@ namespace EShop.Controllers.Category
             public int? ParentId { get; set; }
             public string CategoryName { get; set; }
 
-            public Data(int? ParentId, string CategoryName)
+            public Data(int? parentId, string categoryName)
             {
-                this.ParentId = ParentId;
-                this.CategoryName = CategoryName;
+                this.ParentId = parentId;
+                this.CategoryName = categoryName;
             }
 
             public Core.Entities.Category ToCategoryEntity()

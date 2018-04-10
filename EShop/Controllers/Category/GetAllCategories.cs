@@ -27,26 +27,39 @@ namespace EShop.Controllers.Category
             public async Task<List<TreeNode>> Handle(Query query)
             {
 
-                var result = await _uow.CategoryRepository.Query().Select(x => new TreeNode()
+                var all = await _uow.CategoryRepository.Query().Select(x => new TreeNode
                 {
                     ID = x.Id,
-                    CategoryName = x.CategoryName,
-                    Children = _uow.CategoryRepository.Query().Where(child => child.ParentId != null).Where(child => child.ParentId == x.Id).Select(child => new TreeNode()
-                    {
-                        ID = child.Id,
-                        CategoryName = child.CategoryName
-                    }).ToList()
+                    ParentId = x.ParentId,
+                    CategoryName = x.CategoryName
+                }).ToListAsync();
+                var result = new List<TreeNode>();
+                foreach (var item in all)
+                {
+                    item.Children = new List<TreeNode>();
                 }
-                ).ToListAsync();
+                foreach (var child in all)
+                {
+                    if (child.ParentId == null)
+                    {
+                        result.Add(child);
+                        continue;
+                    }
+
+                    all.FirstOrDefault(x => x.ID == child.ParentId).Children.Add(child);
+                }
                 return result;
             }
+
+           
 
         }
 
         public class TreeNode
         {
             public int ID { get; set; }
-            public List<TreeNode> Children;
+            public int? ParentId { get; set; }
+            public List<TreeNode> Children { get; set; }
             public string CategoryName { get; set; }
         }
     }
