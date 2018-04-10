@@ -30,7 +30,7 @@ namespace EShop.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "DiscountCoupon",
+                name: "DiscountCoupons",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -42,7 +42,7 @@ namespace EShop.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DiscountCoupon", x => x.Id);
+                    table.PrimaryKey("PK_DiscountCoupons", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -77,9 +77,9 @@ namespace EShop.Data.Migrations
                 {
                     table.PrimaryKey("PK_Orders", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Orders_DiscountCoupon_DiscountCouponId",
+                        name: "FK_Orders_DiscountCoupons_DiscountCouponId",
                         column: x => x.DiscountCouponId,
-                        principalTable: "DiscountCoupon",
+                        principalTable: "DiscountCoupons",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -184,7 +184,7 @@ namespace EShop.Data.Migrations
                 name: "Products");
 
             migrationBuilder.DropTable(
-                name: "DiscountCoupon");
+                name: "DiscountCoupons");
 
             migrationBuilder.DropTable(
                 name: "Categories");

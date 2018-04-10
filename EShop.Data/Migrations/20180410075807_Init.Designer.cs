@@ -11,7 +11,7 @@ using System;
 namespace EShop.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20180406085937_Init")]
+    [Migration("20180410075807_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -52,7 +52,7 @@ namespace EShop.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("DiscountCoupon");
+                    b.ToTable("DiscountCoupons");
                 });
 
             modelBuilder.Entity("EShop.Core.Entities.Order", b =>
