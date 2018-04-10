@@ -23,6 +23,7 @@ namespace Eshop.Data
             _context = context;
         }
 
+
         public IRepository<Product, int> ProductRepository
         {
             get
@@ -36,6 +37,13 @@ namespace Eshop.Data
             get
             {
                 return Repository<Category, int>();
+            }
+        }
+        public IRepository<DiscountCoupon, int> DiscountCouponRepository
+        {
+            get
+            {
+                return Repository<DiscountCoupon, int>();
             }
         }
 

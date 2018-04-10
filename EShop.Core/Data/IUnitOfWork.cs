@@ -11,6 +11,10 @@ namespace Eshop.Core.Data
         IRepository<Product, int> ProductRepository { get; }
 
         IRepository<Category, int> CategoryRepository { get; }
+
+        IRepository<DiscountCoupon, int> DiscountCouponRepository { get; }
+
+
         void BeginTransaction();
 
         int Commit();
