@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Eshop.Filters;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
 
@@ -32,6 +31,11 @@ namespace Eshop
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info { Title = "Eshop", Version = "v1" });
+            });
+
+            services.ConfigureSwaggerGen(options =>
+            {
+                options.CustomSchemaIds(type => type.FullName);
             });
 
             ApplicationContainer = IocConfig.RegisterDependencies(services);
