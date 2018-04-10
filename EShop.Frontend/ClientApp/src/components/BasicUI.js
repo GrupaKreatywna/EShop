@@ -12,45 +12,55 @@ export const UnnumberedList = props => {
 
     return <ul>{categoriesList}</ul>;
 };
+UnnumberedList.PropTypes = {
+    primaryKey: PropTypes.string,
+    data: PropTypes.arrayOf(PropTypes.object).isRequired,
+    display: PropTypes.string.isRequired,
+}
 
 export const Products = props => {
     const {data, primaryKey, nameProp, imgURLProp} = props;
 
     const mappedProducts = data.map(product => (
         <div key={product[primaryKey]} >
-            <img src={product[imgURLProp]} alt={product[primaryKey]}/>
+            <img src={product[imgURLProp]} alt={product[nameProp]}/>
             {product[nameProp]}
         </div>
     ));
 
     return <div>{mappedProducts}</div>
 }
+Products.PropTypes = {
+    data: PropTypes.arrayOf(PropTypes.object).isRequired,
+    primaryKey: PropTypes.string, //these are object property names, not property types itself
+    nameProp: PropTypes.string,
+    imgURLProp: PropTypes.string,
+}
 
-export class SearchAutocomplete extends Component { //TODO add defaultProps, propTypes
-
+export class SearchAutocomplete extends Component {
     constructor(props) {
         super(props);
         this.state = {
             value: "",
         };
         const {searchThroughCollection, primaryKey, displayProp } = this.props;
-        this.searchResultItemStyle = this.searchResultItemStyle.bind(this);
     }
 
-    
-    searchResultItemStyle = (product, isHighlighted) => (
-        <div key={product[this.primaryKey]} style={{ background: isHighlighted ? 'lightgray' : 'white' }}>
-            {product[this.displayProp]}
-        </div>
-    ); 
     render() {  
+        const searchResultItemStyle = (product, isHighlighted) => (
+            <div key={product[this.primaryKey]} style={{ background: isHighlighted ? 'lightgray' : 'white' }}>
+                {product[this.displayProp]}
+            </div>
+        ); 
+        
         return (
             <div>
                 <Autocomplete
                     items={this.searchThroughCollection}
                     getItemValue={item => item[this.displayProp]}
                     shouldItemRender={(item, value) => item[this.displayProp].toLowerCase().indexOf(value.toLowerCase())>-1}
-                    renderItem={this.searchResultItemStyle}
+                    renderItem={searchResultItemStyle}
+                    
                     value={this.state.value}
                     onChange={e => this.setState({ value: e.target.value })}
                     onSelect={val => this.setState({ value: val })}
@@ -58,5 +68,10 @@ export class SearchAutocomplete extends Component { //TODO add defaultProps, pro
             </div>
         );
     }
+}
+SearchAutocomplete.PropTypes = {
+    searchThroughCollection: PropTypes.arrayOf(PropTypes.object).isRequired,
+    primaryKey: PropTypes.string, //these are object property names, not actual properties
+    displayProp: PropTypes.string,
 }
 
