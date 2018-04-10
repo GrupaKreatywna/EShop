@@ -12,7 +12,7 @@ export const UnnumberedList = props => {
 
     return <ul>{categoriesList}</ul>;
 };
-UnnumberedList.PropTypes = {
+UnnumberedList.propTypes = {
     primaryKey: PropTypes.string,
     data: PropTypes.arrayOf(PropTypes.object).isRequired,
     display: PropTypes.string.isRequired,
@@ -30,7 +30,7 @@ export const Products = props => {
 
     return <div>{mappedProducts}</div>
 }
-Products.PropTypes = {
+Products.propTypes = {
     data: PropTypes.arrayOf(PropTypes.object).isRequired,
     primaryKey: PropTypes.string, //these are object property names, not property types itself
     nameProp: PropTypes.string,
@@ -43,7 +43,7 @@ export class SearchAutocomplete extends Component {
         this.state = {
             value: "",
         };
-        const {searchThroughCollection, primaryKey, displayProp } = this.props;
+        const {searchThrough, primaryKey, displayProp } = this.props;
     }
 
     render() {  
@@ -56,7 +56,7 @@ export class SearchAutocomplete extends Component {
         return (
             <div>
                 <Autocomplete
-                    items={this.searchThroughCollection}
+                    items={this.searchThrough}
                     getItemValue={item => item[this.displayProp]}
                     shouldItemRender={(item, value) => item[this.displayProp].toLowerCase().indexOf(value.toLowerCase())>-1}
                     renderItem={searchResultItemStyle}
@@ -69,7 +69,7 @@ export class SearchAutocomplete extends Component {
         );
     }
 }
-SearchAutocomplete.PropTypes = {
+SearchAutocomplete.propTypes = {
     searchThroughCollection: PropTypes.arrayOf(PropTypes.object).isRequired,
     primaryKey: PropTypes.string, //these are object property names, not actual properties
     displayProp: PropTypes.string,
