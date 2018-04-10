@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eshop.Data", "Eshop.Data\Es
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EShop.Core", "EShop.Core\EShop.Core.csproj", "{19FBE5F3-C406-40A4-88D8-F4321CF82837}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EShop.Front", "EShop.Front\EShop.Front.csproj", "{496BEE2A-33B5-4798-B729-819CB1F93764}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EShop.Frontend", "EShop.Frontend\EShop.Frontend.csproj", "{9AB331DD-BDDA-4CC7-9C74-5CE465AB50D3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,10 +41,10 @@ Global
 		{19FBE5F3-C406-40A4-88D8-F4321CF82837}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{19FBE5F3-C406-40A4-88D8-F4321CF82837}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{19FBE5F3-C406-40A4-88D8-F4321CF82837}.Release|Any CPU.Build.0 = Release|Any CPU
-		{496BEE2A-33B5-4798-B729-819CB1F93764}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{496BEE2A-33B5-4798-B729-819CB1F93764}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{496BEE2A-33B5-4798-B729-819CB1F93764}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{496BEE2A-33B5-4798-B729-819CB1F93764}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9AB331DD-BDDA-4CC7-9C74-5CE465AB50D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9AB331DD-BDDA-4CC7-9C74-5CE465AB50D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9AB331DD-BDDA-4CC7-9C74-5CE465AB50D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9AB331DD-BDDA-4CC7-9C74-5CE465AB50D3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

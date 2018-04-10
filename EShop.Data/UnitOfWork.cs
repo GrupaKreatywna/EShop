@@ -39,6 +39,22 @@ namespace Eshop.Data
             }
         }
 
+        public IRepository<Order, int> OrderRepository
+        {
+            get
+            {
+                return Repository<Order, int>();
+            }
+        }
+                
+        public IRepository<DiscountCoupon, int> DiscountCouponRepository
+        {
+            get
+            {
+                return Repository<DiscountCoupon, int>();
+            }
+        }
+
         public void BeginTransaction()
         {
             //_context.BeginTransaction();

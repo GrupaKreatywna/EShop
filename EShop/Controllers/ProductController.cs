@@ -46,6 +46,11 @@ namespace EShop.Controllers
                 _data = new CreateProduct.Data(name,picture,description,tags,count,currentPriceId,categoryId)
             });   
         }
+        [HttpGet("/api/Products/Search/{word}")]
+        public async Task<List<SearchProduct.Result>> Search(string word)
+        {
+            return await _queryDispatcher.Dispatch<SearchProduct.Query, List<SearchProduct.Result>>(new SearchProduct.Query(){Word=word});
+        }
 
     }
 }

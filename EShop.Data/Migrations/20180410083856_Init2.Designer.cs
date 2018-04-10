@@ -11,9 +11,10 @@ using System;
 namespace EShop.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20180410083856_Init2")]
+    partial class Init2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,7 +52,7 @@ namespace EShop.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("DiscountCoupons");
+                    b.ToTable("DiscountCoupon");
                 });
 
             modelBuilder.Entity("EShop.Core.Entities.Order", b =>
