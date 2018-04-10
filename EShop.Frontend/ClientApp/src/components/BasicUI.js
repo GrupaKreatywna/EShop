@@ -52,7 +52,7 @@ export class SearchAutocomplete extends Component { //TODO add defaultProps, pro
     //but maybe it's possible to pass it as product[product.prop]? seems safer
     
     searchResultItemStyle = (product, isHighlighted) => (
-        <div key={this.primaryKey} style={{ background: isHighlighted ? 'lightgray' : 'white' }}>
+        <div key={product[this.primaryKey]} style={{ background: isHighlighted ? 'lightgray' : 'white' }}>
             {product[this.displayProp]}
         </div>
     ); 
