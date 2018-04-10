@@ -20,25 +20,32 @@ namespace EShop.Controllers
             _commandDispatcher = commandDispatcher;
         }
 
-        [HttpGet("[action]")]
+        [HttpGet("/api/Order/{id}")]
         public async Task<GetOrder.Result> Get(int id)
         {
             return await _queryDispatcher.Dispatch<GetOrder.Query, GetOrder.Result>(new GetOrder.Query() {ID=id });
         }
 
-        [HttpGet("[action]")]
+        [HttpGet("/api/Orders")]
         public async Task<List<GetOrders.Result>> GetList()
         {
             return await _queryDispatcher.Dispatch<GetOrders.Query, List<GetOrders.Result>> (new GetOrders.Query());
         }
 
-        [HttpGet("[action]")]
+        [HttpGet("/api/Orders/SearchByDate/{orderDate}")]
         public async Task<List<SearchByDateOrder.Result>> SearchByDate(DateTime orderDate)
         {
             return await _queryDispatcher.Dispatch<SearchByDateOrder.Query, List<SearchByDateOrder.Result>>(new SearchByDateOrder.Query() { OrderDate=orderDate });
         }
 
-        [HttpPost("[action]")]
+        [HttpGet("/api/Orders/SearchByContractingAuthority/{contractingAuthority}")]
+        public async Task<List<SearchByContractingAuthorityOrder.Result>> SearchByContractingAuthority(string contractingAuthority)
+        {
+            return await _queryDispatcher.Dispatch<SearchByContractingAuthorityOrder.Query, List<SearchByContractingAuthorityOrder.Result>>
+                (new SearchByContractingAuthorityOrder.Query() { ContractingAuthority=contractingAuthority });
+        }
+
+        [HttpPost("")]
         public async Task CreateOrder(DateTime _OrderDate, string _Adress, string _ContractingAuthority, string _City, string _PostalCode, int? _DiscountCouponId)
         {
             await _commandDispatcher.Dispatch<CreateOrder.Command>(new CreateOrder.Command() { data = new CreateOrder.Data(_OrderDate,_Adress,_ContractingAuthority,_City,_PostalCode,_DiscountCouponId) });//(command); 

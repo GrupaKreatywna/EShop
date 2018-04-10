@@ -26,7 +26,7 @@ namespace EShop.Controllers
             return await _queryDispatcher.Dispatch<GetProduct.Query, GetProduct.Result>(new GetProduct.Query());
         }
 
-        [HttpGet("[action]")]
+        [HttpGet("/api/Products/Search/{word}")]
         public async Task<List<SearchProduct.Result>> Search(string word)
         {
             return await _queryDispatcher.Dispatch<SearchProduct.Query, List<SearchProduct.Result>>(new SearchProduct.Query(){Word=word});
