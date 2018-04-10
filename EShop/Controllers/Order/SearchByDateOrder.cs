@@ -8,50 +8,25 @@ using System.Threading.Tasks;
 
 namespace EShop.Controllers.Order
 {
-    public class GetOrder
+    public class SearchByDateOrder
     {
         public class Query : IQuery
         {
-            public int ID;
+            public DateTime OrderDate;
         }
-
-        public class Handler : IQueryHandler<Query, Result>
-        {
-            private IUnitOfWork _uow;
-            public Handler(IUnitOfWork uow)
-            {
-                _uow = uow;
-            }
-
-            public async Task<Result> Handle(Query query)
-            {
-                var result = await _uow.OrderRepository.Query().Where(x => x.Id == query.ID).Select(x => new Result()
-                {
-                    OrderDate = x.OrderDate,
-                    Adress = x.Adress,
-                    ContractingAuthority = x.ContractingAuthority,
-                    City = x.City,
-                    PostalCode = x.PostalCode,
-                    DiscountCouponId = x.DiscountCouponId
-  
-                }
-                ).FirstOrDefaultAsync();
-                return result;
-            }
-        }
-
-        
         public class HandlerList : IQueryHandler<Query, List<Result>>
         {
+
+
             private IUnitOfWork _uow;
             public HandlerList(IUnitOfWork uow)
             {
                 _uow = uow;
             }
-            
+
             public async Task<List<Result>> Handle(Query query)
             {
-                var result = await _uow.OrderRepository.Query().Select(x => new Result()
+                var result = await _uow.OrderRepository.Query().Where(x=>x.OrderDate==query.OrderDate).Select(x => new Result()
                 {
                     OrderDate = x.OrderDate,
                     Adress = x.Adress,
@@ -67,7 +42,7 @@ namespace EShop.Controllers.Order
 
         }
 
-            public class Result
+        public class Result
         {
             public DateTime OrderDate { get; set; }
             public string Adress { get; set; }
@@ -77,5 +52,4 @@ namespace EShop.Controllers.Order
             public int? DiscountCouponId { get; set; }
         }
     }
-
 }
