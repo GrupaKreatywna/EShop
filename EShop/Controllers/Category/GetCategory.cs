@@ -6,9 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace EShop.Controllers.Product
+namespace EShop.Controllers.Category
 {
-    public class GetProduct
+    public class GetCategory
     {
         public class Query : IQuery
         {
@@ -35,19 +35,16 @@ namespace EShop.Controllers.Product
 
             public async Task<Result> Handle(Query query)
             {
-                
-                    var result = await _uow.ProductRepository.Query().Where(x => x.Id == query.ID).Select(x => new Result()
+              
+                    var result = await _uow.CategoryRepository.Query().Where(x => x.Id == query.ID).Select(x => new Result()
                     {
-                        Name = x.Name,
-                        Picture = x.Picture,
-                        Description = x.Description,
-                        Tags = x.Tags,
-                        Count = x.Count,
-                        CurrentPriceId = x.CurrentPriceId,
-                        CategoryId = x.CategoryId
+                        ID = x.Id,
+                        CategoryName = x.CategoryName,
+                        ParentId = x.ParentId
                     }
                     ).FirstOrDefaultAsync();
-                    return result;                
+                    return result;
+               
             }
 
         }
@@ -62,39 +59,21 @@ namespace EShop.Controllers.Product
 
             public async Task<List<Result>> Handle(Query query)
             {
-                var result = await __uow.ProductRepository.Query().Select(x => new Result()
+                var result = await __uow.CategoryRepository.Query().Select(x => new Result()
                 {
                     ID = x.Id,
-                    Name = x.Name,
-                    Picture = x.Picture,
-                    Description = x.Description,
-                    Tags = x.Tags,
-                    Count = x.Count,
-                    CurrentPriceId = x.CurrentPriceId,
-                    CategoryId = x.CategoryId
+                    CategoryName = x.CategoryName,
+                    ParentId = x.ParentId
                 }).ToListAsync();
 
                 return result;
             }
         }
-
-
-
-
-
-
         public class Result
         {
             public int ID { get; set; }
-            public string Name { get; set; }
-            public string Picture { get; set; }
-            public string Description { get; set; }
-            public string Tags { get; set; }
-            public int Count { get; set; }
-            public int? CurrentPriceId { get; set; }
-            public int CategoryId { get; set; }
+            public int? ParentId { get; set; }
+            public string CategoryName { get; set; }
         }
-
-
     }
 }

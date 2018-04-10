@@ -31,11 +31,21 @@ namespace Eshop.Data
             }
         }
 
+        public IRepository<Category, int> CategoryRepository
+        {
+            get
+            {
+                return Repository<Category, int>();
+            }
+        }
+
         public IRepository<Order, int> OrderRepository
         {
             get
             {
                 return Repository<Order, int>();
+            }
+        }
                 
         public IRepository<DiscountCoupon, int> DiscountCouponRepository
         {
