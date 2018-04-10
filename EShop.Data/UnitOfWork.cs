@@ -36,6 +36,12 @@ namespace Eshop.Data
             get
             {
                 return Repository<Order, int>();
+                
+        public IRepository<DiscountCoupon, int> DiscountCouponRepository
+        {
+            get
+            {
+                return Repository<DiscountCoupon, int>();
             }
         }
 
