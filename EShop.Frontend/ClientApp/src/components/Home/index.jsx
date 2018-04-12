@@ -1,8 +1,9 @@
 import React from 'react';
-import {UnnumberedList, SearchAutocomplete, Products} from './BasicUI';
-import style_Homepage from './styles/Home.css';
-import style_BasicUI from './styles/BasicUI.css';
 
+import style from './style.css';
+import UnnumberedList from '../UnnumberedList/'; //TODO: webpack aliases (to reove the "../")
+import SearchAutocomplete from '../SearchAutocomplete';
+import Products from '../Products/';
 
 let placeholderCategories = [
   { id: '1', name: "category1placeholder" },
@@ -17,16 +18,11 @@ let placeholderItems = [
 ];
 
 
-
-export const Homepage = () => (
-  <div className={style_Homepage.HomepageLayout}>
+export const Home = () => (
+  <div className={style.Layout}>
       
       <UnnumberedList data={placeholderCategories} display='name' primaryKey='id'/>
-      
-      <div className={(style_BasicUI.main + ' ' + style_BasicUI.result)}>
-        <SearchAutocomplete searchThrough={placeholderItems} display='productname' primaryKey='id' />
-      </div>
-
+      <SearchAutocomplete searchThrough={placeholderItems} display='productname' primaryKey='id' />
       <Products data={placeholderItems} nameProp='productname' imgURLProp='img' primaryKey='id'/>
   
   </div>

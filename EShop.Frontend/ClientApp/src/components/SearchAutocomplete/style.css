@@ -1,0 +1,39 @@
+/*You may need to tinker with the selectors a bit
+because the <Autocomplete/> component hates
+CSS modules*/
+
+:local(.main) > div > input { /*<-tinkering with selectors*/
+    display: block;
+    width: 100%;
+    height: 40px;
+    
+    padding-left: 20px;
+    
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    font-size: 20px;
+    letter-spacing: 1px;
+
+    top:50%;
+    transform: translateY(-50%);
+
+
+}
+
+:local(.main) {
+}
+/*dropdown that contains all search results*/
+:local(.elementsWrapper) > div >div {
+    min-width: 0 !important;
+    width:30% !important;
+} 
+
+:local(.elementHighlighted) {
+    background-color: lightsalmon;
+}
+
+:local(.elementNormal) {
+    background-color: white;
+}
+
+@keyframes toTheTop
