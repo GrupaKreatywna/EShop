@@ -1,5 +1,8 @@
 import React from 'react';
-import {UnnumberedList, SearchAutocomplete, Products} from './BasicUI.js';
+import {UnnumberedList, SearchAutocomplete, Products} from './BasicUI';
+import style_Homepage from './styles/Home.css';
+import style_BasicUI from './styles/BasicUI.css';
+
 
 let placeholderCategories = [
   { id: '1', name: "category1placeholder" },
@@ -13,10 +16,18 @@ let placeholderItems = [
   { id: '3', img:'https://placehold.it/32x32', productname: "Podstawy Elektroniki i Elektrotechniki dla Studentów Informatyki" }
 ];
 
+
+
 export const Homepage = () => (
-  <div>
+  <div className={style_Homepage.HomepageLayout}>
+      
       <UnnumberedList data={placeholderCategories} display='name' primaryKey='id'/>
-      <SearchAutocomplete searchThrough={placeholderItems} display='productname' primaryKey='id' />
+      
+      <div className={(style_BasicUI.main + ' ' + style_BasicUI.result)}>
+        <SearchAutocomplete searchThrough={placeholderItems} display='productname' primaryKey='id' />
+      </div>
+
       <Products data={placeholderItems} nameProp='productname' imgURLProp='img' primaryKey='id'/>
+  
   </div>
 )

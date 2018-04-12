@@ -53,7 +53,6 @@ export class SearchAutocomplete extends Component {
         ); 
         
         return (
-            <div>
                 <Autocomplete
                     items={this.props.searchThrough}
                     getItemValue={item => item[this.props.display]}
@@ -63,8 +62,8 @@ export class SearchAutocomplete extends Component {
                     value={this.state.value}
                     onChange={e => this.setState({ value: e.target.value })}
                     onSelect={val => this.setState({ value: val })}
+                    wrapperStyle={{}}
                 />
-            </div>
         );
     }
 }

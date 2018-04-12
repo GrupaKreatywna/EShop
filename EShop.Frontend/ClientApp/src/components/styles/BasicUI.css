@@ -1,0 +1,8 @@
+:local(.main) > div > input {
+    display: block;
+    width: 100%;
+}
+
+:local(.result) > div > div > div {
+    color: red;
+}
