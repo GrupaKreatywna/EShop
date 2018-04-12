@@ -43,22 +43,21 @@ export class SearchAutocomplete extends Component {
         this.state = {
             value: "",
         };
-        const {searchThrough, primaryKey, displayProp } = this.props;
     }
 
     render() {  
         const searchResultItemStyle = (product, isHighlighted) => (
-            <div key={product[this.primaryKey]} style={{ background: isHighlighted ? 'lightgray' : 'white' }}>
-                {product[this.displayProp]}
+            <div key={product[this.props.primaryKey]} style={{ background: isHighlighted ? 'lightgray' : 'white' }}>
+                {product[this.props.display]}
             </div>
         ); 
         
         return (
             <div>
                 <Autocomplete
-                    items={this.searchThrough}
-                    getItemValue={item => item[this.displayProp]}
-                    shouldItemRender={(item, value) => item[this.displayProp].toLowerCase().indexOf(value.toLowerCase())>-1}
+                    items={this.props.searchThrough}
+                    getItemValue={item => item[this.props.display]}
+                    shouldItemRender={(item, value) => item[this.props.display].toLowerCase().indexOf(value.toLowerCase())>-1}
                     renderItem={searchResultItemStyle}
                     
                     value={this.state.value}
@@ -70,8 +69,8 @@ export class SearchAutocomplete extends Component {
     }
 }
 SearchAutocomplete.propTypes = {
-    searchThroughCollection: PropTypes.arrayOf(PropTypes.object).isRequired,
+    searchThrough: PropTypes.arrayOf(PropTypes.object).isRequired,
     primaryKey: PropTypes.string, //these are object property names, not actual properties
-    displayProp: PropTypes.string,
+    display: PropTypes.string,
 }
 
