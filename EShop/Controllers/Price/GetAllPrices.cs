@@ -24,7 +24,7 @@ namespace EShop.Controllers.Price
 
             public async Task<List<Result>> Handle(Query query)
             {
-                var result = await _uow.PriceRepository.Query().Select(x => new Result()
+                var result = await _uow.PriceRepository.Query().Select(x => new Result
                 {
                     Id = x.Id,
                     Value = x.Value,
