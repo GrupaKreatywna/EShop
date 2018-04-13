@@ -12,7 +12,7 @@ namespace EShop.Controllers.Price
     {
         public class Query : IQuery
         {
-            public int Id { get; set; }
+            public int Id { get; private set; }
 
             public Query(int id)
             {
@@ -23,7 +23,7 @@ namespace EShop.Controllers.Price
         {
 
 
-            private IUnitOfWork _uow;
+            private readonly IUnitOfWork _uow;
             public Handler(IUnitOfWork uow)
             {
                 _uow = uow;
@@ -31,7 +31,7 @@ namespace EShop.Controllers.Price
 
             public async Task<Result> Handle(Query query)
             {
-                var result = await _uow.PriceRepository.Query().Where(x =>x.Id == query.Id).Select(x => new Result()
+                var result = await _uow.PriceRepository.Query().Where(x =>x.Id == query.Id).Select(x => new Result
                 {
                     Id = x.Id,
                     Value = x.Value,

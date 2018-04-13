@@ -11,7 +11,7 @@ namespace EShop.Controllers.Price
     {
         public class Command : ICommand
         {
-            public Data _data;
+            public Data _data { get; set; }
         }
 
         public class Handler : ICommandHandler<Command>

@@ -35,7 +35,7 @@ namespace EShop.Controllers
         [HttpPost("")]
         public async Task Create(decimal value, DateTime startDate, DateTime? endDate )
         {
-             await _commandDispatcher.Dispatch<CreatePrice.Command>(new CreatePrice.Command()
+             await _commandDispatcher.Dispatch<CreatePrice.Command>(new CreatePrice.Command
             {
                 _data = new CreatePrice.Data(value, startDate, endDate)
 

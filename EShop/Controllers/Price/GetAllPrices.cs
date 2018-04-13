@@ -16,9 +16,7 @@ namespace EShop.Controllers.Price
         }
         public class Handler : IQueryHandler<Query, List<Result>>
         {
-
-
-            private IUnitOfWork _uow;
+            private readonly IUnitOfWork _uow;
             public Handler(IUnitOfWork uow)
             {
                 _uow = uow;
