@@ -1,0 +1,10 @@
+:local(.Layout){
+    display:grid;
+    
+    grid-template-columns: 1fr 2fr 1fr;
+    grid-auto-rows: 25vh;
+    grid-column-gap:10px;
+
+    padding-top: 30px;
+}
+

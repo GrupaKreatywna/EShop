@@ -1,5 +1,9 @@
 import React from 'react';
-import {UnnumberedList, SearchAutocomplete, Products} from './BasicUI.js';
+
+import style from './style.css';
+import UnnumberedList from '../UnnumberedList/'; //TODO: webpack aliases (to reove the "../")
+import SearchAutocomplete from '../SearchAutocomplete';
+import Products from '../Products/';
 
 let placeholderCategories = [
   { id: '1', name: "category1placeholder" },
@@ -13,10 +17,13 @@ let placeholderItems = [
   { id: '3', img:'https://placehold.it/32x32', productname: "Podstawy Elektroniki i Elektrotechniki dla Studentów Informatyki" }
 ];
 
-export const Homepage = () => (
-  <div>
+
+export const Home = () => (
+  <div className={style.Layout}>
+      
       <UnnumberedList data={placeholderCategories} display='name' primaryKey='id'/>
       <SearchAutocomplete searchThrough={placeholderItems} display='productname' primaryKey='id' />
-      <Products data={placeholderItems} nameProp='productname' imgProp='img' primaryKey='id'/>
+      <Products data={placeholderItems} nameProp='productname' imgURLProp='img' primaryKey='id'/>
+  
   </div>
 )
