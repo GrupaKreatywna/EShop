@@ -18,7 +18,7 @@ export default class SearchAutocomplete extends Component {
     componentDidMount() {
         fetch(env.host+env.apiProducts)
             .then(response => response.json())
-            .then(json => this.setState({data:json}));
+            .then(json => this.setState( { data: json } ));
     }
     
     render() {

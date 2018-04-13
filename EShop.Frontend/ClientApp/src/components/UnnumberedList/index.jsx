@@ -1,19 +1,32 @@
-import React from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
-const UnnumberedList = props => {
-    const categoriesList = props.data.map(category=>(
-        <li key={category[props.primaryKey]}>
-            {category[props.display]}
-        </li>
-    ));
+import style from './style.css';
+import * as env from '../../env';
 
-    return <ul>{categoriesList}</ul>;
+export default class UnnumberedList extends Component {
+    
+    constructor() {
+        super();
+        this.state = {
+            data: [],
+        }
+    }
+    
+    componentDidMount() {
+        fetch(env.host + env.apiCategories)
+            .then(response=>response.json())
+            .then(json => this.setState( { data: json }));
+    }
+
+    render() {
+        
+        const categoriesList = this.state.data.map(category=>(
+            <li key={category[env.category.id]}>
+                {category[env.category.name]}
+            </li>
+        ));
+        
+        return <ul>{categoriesList}</ul>;
+    }
 };
-UnnumberedList.propTypes = {
-    primaryKey: PropTypes.string,
-    data: PropTypes.arrayOf(PropTypes.object).isRequired,
-    display: PropTypes.string.isRequired,
-}
-
-export default UnnumberedList;

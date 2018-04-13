@@ -15,7 +15,7 @@ let placeholderCategories = [
 export const Home = () => (
   <div className={style.Layout}>
       
-      <UnnumberedList data={placeholderCategories} display='name' primaryKey='id'/>
+      <UnnumberedList/>
       <SearchAutocomplete/>
       <Products/>
   
