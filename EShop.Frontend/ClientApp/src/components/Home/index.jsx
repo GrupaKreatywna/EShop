@@ -12,17 +12,11 @@ let placeholderCategories = [
   { id: '3', name: "category3" }
 ];
 
-let placeholderItems = [
-  { id: '1', img:'https://placehold.it/32x32', productname: "przykladowy produkt", },
-  { id: '2', img:'https://placehold.it/32x32', productname: "Exiting Vim: Theory and Practice" },
-  { id: '3', img:'https://placehold.it/32x32', productname: "Podstawy Elektroniki i Elektrotechniki dla Studentów Informatyki" }
-];
-
 export const Home = () => (
   <div className={style.Layout}>
       
       <UnnumberedList data={placeholderCategories} display='name' primaryKey='id'/>
-      <SearchAutocomplete searchThrough={placeholderItems} display='productname' primaryKey='id' />
+      <SearchAutocomplete/>
       <Products/>
   
   </div>
