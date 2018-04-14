@@ -22,6 +22,11 @@ export const Home = () => (
       <SearchAutocomplete/>
     </div>
     <div className={style.gridProductsMostPopular}>  
+      <p><b>Najczęściej kupowane</b></p>
+      <Products/>
+    </div>
+    <div className={style.gridProductsRecentlyAdded}>
+      <p><b>Ostatnio dodane</b></p>
       <Products/>
     </div>
   

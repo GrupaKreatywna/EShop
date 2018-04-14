@@ -1,9 +1,14 @@
 :local(.Layout){
     display:grid;
 
-    grid-template-areas: "Categories SearchAutocomplete _BLANK_"
-                         "ProductsMostPopular";
+    grid-template-areas: "Categories SearchAutocomplete ."
+                         ". ProductsMostPopular ."
+                         ". ProductsRecentlyAdded .";
 
+    grid-template-columns: 20vw auto 20vw;
+    grid-template-rows: 1fr
+                        1fr
+                        1fr;
     grid-column-gap:10px;
 
     padding-top: 30px;
@@ -21,3 +26,6 @@
     grid-area: ProductsMostPopular;
 }
 
+:local(.gridProductsRecentlyAdded) {
+    grid-area: ProductsRecentlyAdded;
+}
