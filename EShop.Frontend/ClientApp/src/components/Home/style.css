@@ -6,12 +6,13 @@
                          ". ProductsRecentlyAdded .";
 
     grid-template-columns: 20vw auto 20vw;
+    
     grid-template-rows: 1fr
                         1fr
                         1fr;
+    
     grid-column-gap:10px;
-
-    padding-top: 30px;
+    padding-top: 10vh;
 }
 
 :local(.gridCategories) {
@@ -24,6 +25,7 @@
 
 :local(.gridProductsMostPopular) {
     grid-area: ProductsMostPopular;
+
 }
 
 :local(.gridProductsRecentlyAdded) {
