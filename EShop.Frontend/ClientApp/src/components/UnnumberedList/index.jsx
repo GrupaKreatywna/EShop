@@ -22,11 +22,11 @@ export default class UnnumberedList extends Component {
     render() {
         
         const categoriesList = this.state.data.map(category=>(
-            <li key={category[env.category.id]}>
+            <li key={category[env.category.id]} className={style.listItem}>
                 {category[env.category.name]}
             </li>
         ));
         
-        return <ul>{categoriesList}</ul>;
+        return <ul className={style.list}>{categoriesList}</ul>;
     }
 };
