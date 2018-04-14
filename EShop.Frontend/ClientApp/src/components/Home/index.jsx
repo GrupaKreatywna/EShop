@@ -14,10 +14,16 @@ let placeholderCategories = [
 
 export const Home = () => (
   <div className={style.Layout}>
-      
+
+    <div className={style.gridCategories}>
       <UnnumberedList/>
+    </div>
+    <div className={style.gridSearchAutocomplete}>  
       <SearchAutocomplete/>
+    </div>
+    <div className={style.gridProductsMostPopular}>  
       <Products/>
+    </div>
   
   </div>
 )

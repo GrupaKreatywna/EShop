@@ -1,10 +1,23 @@
 :local(.Layout){
     display:grid;
-    
-    grid-template-columns: 1fr 2fr 1fr;
-    grid-auto-rows: 25vh;
+
+    grid-template-areas: "Categories SearchAutocomplete _BLANK_"
+                         "ProductsMostPopular";
+
     grid-column-gap:10px;
 
     padding-top: 30px;
+}
+
+:local(.gridCategories) {
+    grid-area: Categories;
+}
+
+:local(.gridSearchAutocomplete) {
+    grid-area: SearchAutocomplete;
+}
+
+:local(.gridProductsMostPopular) {
+    grid-area: ProductsMostPopular;
 }
 
