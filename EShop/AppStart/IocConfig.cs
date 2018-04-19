@@ -46,22 +46,19 @@ namespace Eshop
             {
                 var configuration = b.Resolve<IConfiguration>();
                 return configuration.GetSection("RedisConfiguration").Get<RedisConnection>();
-
             }).SingleInstance();
 
             builder.Register(b =>
             {
-                var conf = b.Resolve<RedisConnection>();
-                return ConnectionMultiplexer.Connect(conf.Configuration);
+                var redis = b.Resolve<RedisConnection>();
+                return ConnectionMultiplexer.Connect(redis.RedisConfiguration);
             }).SingleInstance();
 
             builder.Register(b =>
             {
                 var redis = b.Resolve<ConnectionMultiplexer>();
                 return redis.GetDatabase();
-            }).InstancePerDependency();
-
-
+            }).InstancePerLifetimeScope();
 
             return builder.Build();
         }
