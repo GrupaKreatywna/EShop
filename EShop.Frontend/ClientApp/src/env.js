@@ -7,6 +7,8 @@ export const apiSinglePrice = '/api/Price'
 
 export const apiCategories = '/api/Categories';
 
+export const postRedis = '/api/redis';
+
 export const product = {
     id:'id',
     img: 'picture',

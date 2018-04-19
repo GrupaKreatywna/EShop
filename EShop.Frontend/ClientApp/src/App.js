@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Route } from 'react-router';
 
 import { Home } from './components/Home/';
-import { ProductDetails } from './components/ProductDetails'
+import { ProductDetails } from './components/ProductDetails';
 
 export default class App extends Component {
   displayName = App.name
