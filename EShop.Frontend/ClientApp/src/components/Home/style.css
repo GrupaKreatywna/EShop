@@ -1,33 +1,10 @@
 :local(.Layout){
     display:grid;
-
-    grid-template-areas: "Categories SearchAutocomplete ."
-                         ". ProductsMostPopular ."
-                         ". ProductsRecentlyAdded .";
-
-    grid-template-columns: 20vw auto 20vw;
     
-    grid-template-rows: 1fr
-                        1fr
-                        1fr;
-    
+    grid-template-columns: 1fr 2fr 1fr;
+    grid-auto-rows: 25vh;
     grid-column-gap:10px;
-    padding-top: 10vh;
+
+    padding-top: 30px;
 }
 
-:local(.gridCategories) {
-    grid-area: Categories;
-}
-
-:local(.gridSearchAutocomplete) {
-    grid-area: SearchAutocomplete;
-}
-
-:local(.gridProductsMostPopular) {
-    grid-area: ProductsMostPopular;
-
-}
-
-:local(.gridProductsRecentlyAdded) {
-    grid-area: ProductsRecentlyAdded;
-}
