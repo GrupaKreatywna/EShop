@@ -12,6 +12,12 @@ export default class SearchAutocomplete extends Component {
             value: "",
         };
     }
+    componentDidMount() {
+        fetch(env.host+env.apiProducts)
+            .then(response => response.json())
+            .then(json => this.setState( { data: json } ));
+    }
+    
 
     render() {
         const searchResultItemStyle = (product, isHighlighted) => (
