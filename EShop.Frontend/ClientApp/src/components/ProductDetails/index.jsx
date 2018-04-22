@@ -11,7 +11,7 @@ export class ProductDetails extends Component {
         this.state = {
             product: {},
             price: 0,
-            productcount: 1,
+            numberOfCopiesToBuy: 1,
         }
 
         this.IdRouteParam = this.props.match.params.id;
@@ -21,41 +21,35 @@ export class ProductDetails extends Component {
     }
 
     componentDidMount() {
-        fetch(env.host + env.apiSingleProduct + this.IdRouteParam) 
+        fetch(env.host + env.apiSingleProduct + this.IdRouteParam) //fetch product info
             .then(response => response.json())
             .then(json => this.setState({ product: json }));
 
-        fetch(env.host + env.apiSinglePrice + this.state.product[env.product.currentPriceId]) //fetch price associated with current product
+            //TODO tell backend dudes the api/Price/:id price endpoint doesnt work (but merge from master first they mightve fixed it)
+/*        fetch(env.host + env.apiSinglePrice + this.state.product[env.product.currentPriceId]) //fetch price associated with current product
             .then(response => response.json())
-            .then(json => this.setState({ price: json[env.price.pricevalue] }))
+            .then(json => this.setState({ price: json[env.price.pricevalue] })) */
     }
-    /* 
-        routeHasIdParam = props => {
-            if( ((typeof this.props.match.params.id) === "number" ) ) {
-                ///add error logic here TODO
-            }
-            if( (this.state.product)) //if returned json is an empty array TODO 
-        } */
+
+    //TODO handle what happens when the id is invalid (doesnt exist in db etc)
 
     addProductToCart(e) {
-        //e.preventDefault(); //e.PreventDefault is not a function? We just don't know.
+        //e.preventDefault(); //TODO fix preventdefault error? maybe its because the button is not in a form
         const cartCookieName = "cart";
         let cart = JSON.parse(localStorage.getItem(cartCookieName));
-        
-        //TODO create class for Product instead of hardcoding it in two places?
 
         if (!cart) {       
+            //TODO SWITCH TO GUID
             const generateuuid = () => ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c => (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16));                    
             cart = {
                 uuid: generateuuid(), 
-                products: Array({}),
+                products: Array(),
             };
         }
-
-        //api/Product/[product id here] will always return an object with id equal to 0, use route URL param instead
+        //TODO handle duplicates
         cart.products.push({
-            id:this.IdRouteParam,
-            count: this.state.productcount //nice code redundancy btw TODO
+            id:this.IdRouteParam, // * api/Product/[product id here] will always return an object with id equal to 0, use route URL param instead
+            count: this.state.numberOfCopiesToBuy,
         });
         localStorage.setItem(cartCookieName, JSON.stringify(cart));
         
@@ -63,6 +57,7 @@ export class ProductDetails extends Component {
     }
 
     sendProductIdToRedis(uuidArg) {
+        //TODO fix "too much recursion" error
         fetch(env.host+env.postRedis, {
             method: 'POST',
             headers: {
@@ -80,7 +75,7 @@ export class ProductDetails extends Component {
     render() {
         return (
             <div id="wrapper">
-                <img id="image" src={this.state.product[env.product.img]} alt={this.state.product[env.product.id]} />
+                <img id="image" src={this.state.product[env.product.img]} alt={this.state.product[env.product.name]} />
                 <h1 id="name">{this.state.product[env.product.name]}</h1>
                 <p id="description">{this.state.product[env.product.description]}</p>
                 <p id="price"><b>{this.state.price[env.price.pricevalue]}</b></p>
@@ -89,8 +84,4 @@ export class ProductDetails extends Component {
             </div>
         )
     }
-}
-
-ProductDetails.propTypes = {
-
 }
