@@ -4,6 +4,8 @@ import PropTypes from 'prop-types'
 import style from './style.css'
 import * as env from '../../env.js'
 
+//TODO add item counter
+
 export class ProductDetails extends Component {
     constructor(props) {
         super(props);
@@ -34,12 +36,12 @@ export class ProductDetails extends Component {
     //TODO handle what happens when the id is invalid (doesnt exist in db etc)
 
     addProductToCart(e) {
-        //e.preventDefault(); //TODO fix preventdefault error? maybe its because the button is not in a form
+        e.preventDefault();
         const cartCookieName = "cart";
         let cart = JSON.parse(localStorage.getItem(cartCookieName));
 
         if (!cart) {       
-            //TODO SWITCH TO GUID
+            //TODO SWITCH TO GUID (or not, i don't know if they're the same thing)
             const generateuuid = () => ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c => (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16));                    
             cart = {
                 uuid: generateuuid(), 
