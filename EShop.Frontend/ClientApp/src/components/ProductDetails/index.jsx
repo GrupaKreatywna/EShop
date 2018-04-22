@@ -35,17 +35,23 @@ export class ProductDetails extends Component {
 
     //TODO handle what happens when the id is invalid (doesnt exist in db etc)
 
-    addProductToCart(e) {
-        e.preventDefault();
+    addProductToCart(note) {
         const cartCookieName = "cart";
         let cart = JSON.parse(localStorage.getItem(cartCookieName));
 
         if (!cart) {       
             //TODO SWITCH TO GUID (or not, i don't know if they're the same thing)
-            const generateuuid = () => ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c => (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16));                    
+            function uuidv4() {
+                return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                  var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+                });
+            }                  
+            let generateduuid = uuidv4();
+            console.log(generateduuid);
             cart = {
-                uuid: generateuuid(), 
-                products: Array(),
+                uuid: generateduuid, 
+                products: [],
             };
         }
         //TODO handle duplicates
@@ -55,11 +61,6 @@ export class ProductDetails extends Component {
         });
         localStorage.setItem(cartCookieName, JSON.stringify(cart));
         
-        //this.sendProductIdToRedis(cart.uuid); //takes everything it needs (id, productcount etc) from state TODO fix recursion?
-    }
-
-    sendProductIdToRedis(uuidArg) {
-        //TODO fix "too much recursion" error
         fetch(env.host+env.postRedis, {
             method: 'POST',
             headers: {
@@ -67,12 +68,15 @@ export class ProductDetails extends Component {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                uuid: uuidArg,
+                uuid: cart.uuid,
                 productid: this.IdRouteParam,
-                productcount: this.state.numberOfCopiesToBuy,
+                productcount: this.state.numberOfCopiesToBuy
             })
         })
+        .then(response => console.log(response.json()))
+        .then(json => alert(JSON.stringify(json)));
     }
+
 
     render() {
         return (
