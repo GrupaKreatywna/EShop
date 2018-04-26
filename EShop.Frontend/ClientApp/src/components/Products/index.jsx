@@ -13,7 +13,7 @@ class Products extends Component {
     }
 
     componentDidMount() {
-        fetch(env.host + env.apiProducts)
+        fetch(env.host + this.props.apiLink)
         .then(response => response.json())
         .then(json => this.setState({data: json}));
     }
@@ -32,3 +32,7 @@ class Products extends Component {
 }
 
 export default Products;
+
+Products.propTypes = {
+    apiLink: PropTypes.string.isRequired,
+}

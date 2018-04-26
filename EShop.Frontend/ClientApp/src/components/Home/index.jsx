@@ -1,10 +1,12 @@
 import React from 'react';
 
 import style from './style.css';
+import * as env from '../../env.js';
 
 import UnnumberedList from '../UnnumberedList/'; //TODO: webpack aliases (to reove the "../")
 import SearchAutocomplete from '../SearchAutocomplete';
 import Products from '../Products/';
+
 
 let placeholderCategories = [
   { id: '1', name: "category1placeholder" },
@@ -31,13 +33,13 @@ export const Home = () => (
 
     <div className={style.gridProductsMostPopular}>  
       <p><b>Najczęściej kupowane</b></p>
-      <Products/>
+      <Products apiLink={env.apiMostBoughtProducts}/>
     </div>
     
     <div className={style.gridProductsRecentlyAdded}>
       <p><b>Ostatnio dodane</b></p>
 
-      <Products/>
+      <Products apiLink={env.apiRecentlyAddedProducts}/>
     </div>
   
   </div>
