@@ -19,8 +19,8 @@ namespace EShop.Controllers.Bucket
 
             public async Task<List<Result>> Handle(Query query)
             {
-               
 
+                return new List<Result>();
                 
             }
 

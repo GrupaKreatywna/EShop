@@ -45,13 +45,13 @@ namespace Eshop
             builder.Register(b =>
             {
                 var configuration = b.Resolve<IConfiguration>();
-                return configuration.GetSection("RedisConfiguration").Get<RedisConnection>();
+                return configuration.GetSection("RedisConnection").Get<RedisConnection>();
             }).SingleInstance();
 
             builder.Register(b =>
             {
                 var redis = b.Resolve<RedisConnection>();
-                return ConnectionMultiplexer.Connect(redis.RedisConfiguration);
+                return ConnectionMultiplexer.Connect(redis.Configuration);
             }).SingleInstance();
 
             builder.Register(b =>

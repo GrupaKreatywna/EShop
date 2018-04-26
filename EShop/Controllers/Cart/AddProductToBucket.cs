@@ -20,7 +20,7 @@ namespace EShop.Controllers.Bucket
 
             public async Task Execute(Command command)
             {
-                private readonly IDatabase _redis;
+                //private readonly IDatabase _redis;
 
 
             }
