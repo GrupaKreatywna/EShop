@@ -6,6 +6,7 @@ using Eshop.Core.CQRS;
 using EShop.Controllers.Cart;
 using Microsoft.AspNetCore.Mvc;
 using StackExchange.Redis;
+using static EShop.Controllers.Cart.GetAllItemsFromCart;
 
 namespace EShop.Controllers
 {
@@ -26,9 +27,15 @@ namespace EShop.Controllers
         {
             await _commandDispatcher.Dispatch<AddProductToCart.Command>(new AddProductToCart.Command()
             {
-                _data = new AddProductToCart.Data(key,id,quantity) 
-                  
+                _data = new AddProductToCart.Data(key, id, quantity)
+
             });
+        }
+
+        [HttpGet("/api/Cart")]
+        public async Task<List<Result>> GetCart(Guid key)
+        {
+            return await _queryDispatcher.Dispatch<GetAllItemsFromCart.Query, List<GetAllItemsFromCart.Result>>(new GetAllItemsFromCart.Query(key));
         }
 
     }

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace EShop.Controllers.Cart
 {
-    public class DeleteProductFromBucket
+    public class DeleteProductFromCart
     {
     }
 }

@@ -25,28 +25,7 @@ namespace EShop.Controllers.Cart
 
             public async Task Execute(Command command)
             {
-                string key = command._data.Key.ToString("n");
-                int id = command._data.Id;
-                int quantity = command._data.Quantity;
-
-                HashEntry[] tab = new HashEntry[1];
-                HashEntry hId = new HashEntry("id", id);
-                HashEntry hQuantity = new HashEntry("quantity", quantity);
-                tab[0] = hId;
-             
-                
-                //if (_redis.HashExists);
-                //{
-                //    int q = int.Parse(_redis.ListGetByIndex(key, -1));
-                //    quantity += q;
-                //    await _redis.ListSetByIndexAsync(key, 1, quantity);
-
-                //}
-                //else
-                //{
-                //    await _redis.HashSetAsync(key,tab);
-                //    await _redis.ListRightPushAsync(key, quantity);
-                //}
+                await _redis.HashIncrementAsync(command._data.Key.ToString(), command._data.Id, command._data.Quantity);        
             }
         }
 
