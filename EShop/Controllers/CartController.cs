@@ -26,5 +26,22 @@ namespace EShop.Controllers
         {
             await _commandDispatcher.Dispatch<DeleteProductFromCart.Command>(new DeleteProductFromCart.Command { Item = new DeleteProductFromCart.CartItem { Key = cartKey, Id = productId, Quantity = quantity } });
         }
+   
+        [HttpPost("")]
+        public async Task AddToCart(Guid key, int id, int quantity)
+        {
+            await _commandDispatcher.Dispatch<AddProductToCart.Command>(new AddProductToCart.Command()
+            {
+                _data = new AddProductToCart.Data(key, id, quantity)
+
+            });
+        }
+
+        [HttpGet("/api/Cart")]
+        public async Task<List<Result>> GetCart(Guid key)
+        {
+            return await _queryDispatcher.Dispatch<GetAllItemsFromCart.Query, List<GetAllItemsFromCart.Result>>(new GetAllItemsFromCart.Query(key));
+        }
+
     }
 }
