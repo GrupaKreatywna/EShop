@@ -22,10 +22,13 @@ CSS modules*/
 
 :local(.main) {
 }
+
 /*dropdown that contains all search results*/
-:local(.elementsWrapper) > div >div {
+
+
+:local(.elementsWrapper) > div {
     min-width: 0 !important;
-    width:30% !important;
+    width:100% !important;
 } 
 
 :local(.elementHighlighted) {
