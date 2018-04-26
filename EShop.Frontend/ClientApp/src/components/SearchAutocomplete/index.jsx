@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Autocomplete from 'react-autocomplete';
 
 import style from './style.css'
+import * as env from '../../env.js'
 
 export default class SearchAutocomplete extends Component {
     constructor(props) {
