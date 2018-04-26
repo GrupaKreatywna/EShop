@@ -24,7 +24,9 @@ namespace Eshop
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc(options =>
+            services.AddCors();
+			
+			services.AddMvc(options =>
             {
                 options.Filters.Add(typeof(ApiExceptionAttribute));
             });
@@ -40,12 +42,19 @@ namespace Eshop
             });
 
             ApplicationContainer = IocConfig.RegisterDependencies(services);
+			
             return new AutofacServiceProvider(ApplicationContainer);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+
+            app.UseCors(builder => builder
+                .WithOrigins("*")
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowCredentials());
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
