@@ -9,6 +9,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Eshop.Core.CQRS;
 using System;
+using Microsoft.Extensions.Configuration;
+using EShop.Infrastructure.Redis;
+using StackExchange.Redis;
 
 namespace Eshop
 {
@@ -38,6 +41,24 @@ namespace Eshop
             builder.RegisterType(typeof(UnitOfWork)).As(typeof(IUnitOfWork)).InstancePerLifetimeScope();
 
             builder.Register(b => NLogLogger.Instance).SingleInstance().InstancePerLifetimeScope();
+
+            builder.Register(b =>
+            {
+                var configuration = b.Resolve<IConfiguration>();
+                return configuration.GetSection("RedisConnection").Get<RedisConnection>();
+            }).SingleInstance();
+
+            builder.Register(b =>
+            {
+                var redis = b.Resolve<RedisConnection>();
+                return ConnectionMultiplexer.Connect(redis.Configuration);
+            }).SingleInstance();
+
+            builder.Register(b =>
+            {
+                var redis = b.Resolve<ConnectionMultiplexer>();
+                return redis.GetDatabase();
+            }).InstancePerLifetimeScope();
 
             return builder.Build();
         }

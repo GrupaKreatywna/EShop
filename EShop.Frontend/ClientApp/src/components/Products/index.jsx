@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
-import style from './style.css';
 import * as env from '../../env';
 
 class Products extends Component {
@@ -21,13 +20,13 @@ class Products extends Component {
     render() {
         
         let mappedData = this.state.data.map(product => (
-            <div key={product[env.product.id]} className={style.product}>
-                <img src={product[env.product.img]} className={style.image} alt={product[env.product.name]}/>
-                <div className={style.text}>{product[env.product.name]}</div>
+            <div key={product[env.product.id]} >
+                <img src={product[env.product.img]} alt={product[env.product.name]}/>
+                {product[env.product.name]}
             </div>
         ));
         
-        return <div className={style.wrapper}>{mappedData}</div>
+        return <div>{mappedData}</div>
     }
 }
 
