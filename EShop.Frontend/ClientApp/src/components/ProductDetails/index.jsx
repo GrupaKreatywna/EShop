@@ -73,8 +73,6 @@ export class ProductDetails extends Component {
                 productcount: this.state.numberOfCopiesToBuy
             })
         })
-        .then(response => console.log(response.json()))
-        .then(json => alert(JSON.stringify(json)));
     }
 
 
