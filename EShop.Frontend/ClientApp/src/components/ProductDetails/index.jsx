@@ -29,8 +29,9 @@ export class ProductDetails extends Component {
         //TODO figure out what should be awaited and what should not (there are 2 awaits in each line below and two near setStates)
         let getProduct = async () => await(await fetch(env.host+env.apiSingleProduct+this.idRouteParam)).json();
         let getPrice = async () => await(await fetch(env.host+env.apiSinglePrice+this.state.product[env.product.currentPriceId])).json();
-        this.setState({product: await getProduct()});
-        this.setState({price: (await getPrice()).value});
+        
+        this.setState({product: await getProduct()}); 
+        this.setState({price: (await getPrice())[env.price.value]});
     }
 
             //TODO tell backend dudes the api/Price/:id price endpoint doesnt work (but merge from master first they mightve fixed it)
