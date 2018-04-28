@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Eshop.Core.CQRS;
 using EShop.Controllers.Order;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EShop.Controllers
@@ -46,6 +47,7 @@ namespace EShop.Controllers
         }
 
         [HttpPost("")]
+        [Authorize]
         public async Task CreateOrder(DateTime _OrderDate, string _Adress, string _ContractingAuthority, string _City, string _PostalCode, int? _DiscountCouponId)
         {
             await _commandDispatcher.Dispatch<CreateOrder.Command>(new CreateOrder.Command() { data = new CreateOrder.Data(_OrderDate,_Adress,_ContractingAuthority,_City,_PostalCode,_DiscountCouponId) });//(command); 

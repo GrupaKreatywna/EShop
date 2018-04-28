@@ -26,6 +26,7 @@ namespace EShop.Controllers.Order
             public async Task Execute(Command command)
             {
                 _uow.OrderRepository.Insert(command.data.ToOrderEntity());
+                
                 await _uow.SaveChangesAsync();
             }
         }
@@ -38,6 +39,8 @@ namespace EShop.Controllers.Order
             public string City { get; set; }
             public string PostalCode { get; set; }
             public int? DiscountCouponId { get; set; }
+
+            
 
             public Data(DateTime _OrderDate,string _Adress,string _ContractingAuthority, string _City, string _PostalCode, int? _DiscountCouponId)
             {
@@ -59,6 +62,7 @@ namespace EShop.Controllers.Order
                 City = City,
                 PostalCode = PostalCode,
                 DiscountCouponId = DiscountCouponId
+                
             };
                 return o;
             }
