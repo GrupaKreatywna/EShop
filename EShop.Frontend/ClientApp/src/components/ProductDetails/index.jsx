@@ -35,44 +35,36 @@ export class ProductDetails extends Component {
     }
 
     //TODO handle what happens when the id is invalid (doesnt exist in db etc)
-    //TODO remove cart products from localStorge (because Redis handles this now)
 
-    addProductToCart(note) {
-        const cartCookieName = "cart";
-        let cart = JSON.parse(localStorage.getItem(cartCookieName));
+    //TODO add product counter
 
-        if (!cart) {       
-            //TODO SWITCH TO GUID (or not, i don't know if they're the same thing)
+    addProductToCart(e) {
+        const guidCookieName = "guid";
+        let guid = localStorage.getItem(guidCookieName);
+
+        if (!guid) {       
             function uuidv4() {
                 return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
                   var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
                 return v.toString(16);
                 });
             }                  
-            let generateduuid = uuidv4();
-            console.log(generateduuid);
-            cart = {
-                uuid: generateduuid, 
-                products: [],
-            };
+            
+            guid = uuidv4();
         }
-        //TODO handle duplicates
-        cart.products.push({
-            id:this.IdRouteParam, // * api/Product/[product id here] will always return an object with id equal to 0, use route URL param instead
-            count: this.state.numberOfCopiesToBuy,
-        });
-        localStorage.setItem(cartCookieName, JSON.stringify(cart));
+        localStorage.setItem(guidCookieName, guid);
         
-        fetch(env.host+env.postRedis, {
+        // ! POSTing to Redis as JSON doesn't work at the time I'm writing this. Use query string params instead (see the url inside swagger)
+        fetch(env.host+env.apiCartRedis, { //send items to redis
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                uuid: cart.uuid,
-                productid: this.idRouteParam,
-                productcount: this.state.numberOfCopiesToBuy
+                [env.redisCartElement.key]: guid,
+                [env.redisCartElement.id]: this.idRouteParam,
+                [env.redisCartElement.quanity]: this.state.numberOfCopiesToBuy
             })
         })
     }

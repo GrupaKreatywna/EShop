@@ -6,10 +6,10 @@ export const apiRecentlyAddedProducts = '/api/Product/Latest';
 export const apiMostBoughtProducts = '/api/Product/PLACEHOLDER (not implemented yet)'
 
 export const apiSinglePrice = '/api/Price/'
+
 export const apiCategories = '/api/Categories/';
 
-
-export const postRedis = '/api/redis/';
+export const apiCartRedis = '/api/Cart/';
 
 export const product = {
     id:'id',
@@ -27,7 +27,13 @@ export const category = {
 export const price = {
     value:'value',
 }
-//TODO make this work
+
+export const redisCartElement = {
+    key: "key",
+    id: "id",
+    quanity: "quantity",
+}
+//TODO make this work 
 
 export const helpers = {
     
