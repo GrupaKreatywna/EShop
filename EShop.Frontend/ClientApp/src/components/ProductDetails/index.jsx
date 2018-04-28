@@ -16,24 +16,30 @@ export class ProductDetails extends Component {
             numberOfCopiesToBuy: 1,
         }
 
-        this.IdRouteParam = this.props.match.params.id;
+        this.price = 0;
+
+        this.idRouteParam = this.props.match.params.id;
         
         this.addProductToCart = this.addProductToCart.bind(this);
         this.sendProductIdToRedis = this.addProductToCart.bind(this);
     }
 
-    componentDidMount() {
-        fetch(env.host + env.apiSingleProduct + this.IdRouteParam) //fetch product info
-            .then(response => response.json())
-            .then(json => this.setState({ product: json }));
+    async componentDidMount() { //TODO will rewrite to async/await I Promise()
+        
+        //TODO figure out what should be awaited and what should not (there are 2 awaits in each line below and two near setStates)
+        let getProduct = async () => await(await fetch(env.host+env.apiSingleProduct+this.idRouteParam)).json();
+        let getPrice = async () => await(await fetch(env.host+env.apiSinglePrice+this.state.product[env.product.currentPriceId])).json();
+        this.setState({product: await getProduct()});
+        this.setState({price: (await getPrice()).value});
+    }
 
             //TODO tell backend dudes the api/Price/:id price endpoint doesnt work (but merge from master first they mightve fixed it)
 /*        fetch(env.host + env.apiSinglePrice + this.state.product[env.product.currentPriceId]) //fetch price associated with current product
             .then(response => response.json())
             .then(json => this.setState({ price: json[env.price.pricevalue] })) */
-    }
 
     //TODO handle what happens when the id is invalid (doesnt exist in db etc)
+    //TODO remove cart products from localStorge (because Redis handles this now)
 
     addProductToCart(note) {
         const cartCookieName = "cart";
@@ -69,7 +75,7 @@ export class ProductDetails extends Component {
             },
             body: JSON.stringify({
                 uuid: cart.uuid,
-                productid: this.IdRouteParam,
+                productid: this.idRouteParam,
                 productcount: this.state.numberOfCopiesToBuy
             })
         })
@@ -82,7 +88,7 @@ export class ProductDetails extends Component {
                 <img id="image" src={this.state.product[env.product.img]} alt={this.state.product[env.product.name]} />
                 <h1 id="name">{this.state.product[env.product.name]}</h1>
                 <p id="description">{this.state.product[env.product.description]}</p>
-                <p id="price"><b>{this.state.price[env.price.pricevalue]}</b></p>
+                <p id="price"><b>{this.state.price}</b></p>
 
                 <button onClick={this.addProductToCart}>Dodaj do koszyka</button>
             </div>

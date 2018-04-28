@@ -15,7 +15,7 @@ export const product = {
     id:'id',
     img: 'picture',
     name: 'name',
-    currentPriceId: 'currentpriceid',
+    currentPriceId: 'currentPriceId',
     description: 'description',
 }
 
@@ -25,14 +25,17 @@ export const category = {
 }
 
 export const price = {
-    pricevalue:'price'
+    value:'value',
 }
 //TODO make this work
-/*
+
 export const helpers = {
-    getPriceFromPriceId: function(price) {
-        fetch(host + apiSinglePrice + price.id) //fetch price associated with current product
-            .then(response => response.json()[price.pricevalue])
-    },
+    
+    fetchPriceFromPriceId: function(priceId) {
+        let x = 0;
+        fetch(host + apiSinglePrice + priceId) //fetch price associated with current product
+            .then(response => response.json())
+            .then(json => x=json[price.pricevalue])
+        return x;
+        },
 }
-*/

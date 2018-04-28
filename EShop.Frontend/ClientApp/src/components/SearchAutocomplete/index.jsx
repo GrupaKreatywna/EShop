@@ -6,6 +6,7 @@ import Autocomplete from 'react-autocomplete';
 import style from './style.css'
 import * as env from '../../env.js'
 
+//TODO Use the API endpoint for search
 export default class SearchAutocomplete extends Component {
     constructor() {
         super();
