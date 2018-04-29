@@ -5,6 +5,8 @@ import style from './style.css'
 import * as env from '../../env.js'
 
 //TODO add item counter
+//TODO handle what happens when the id is invalid (doesnt exist in db/is negative etc)
+//TODO handle invalid fetches (this should be the same as the above TODO)
 
 export class ProductDetails extends Component {
     constructor(props) {
@@ -16,28 +18,21 @@ export class ProductDetails extends Component {
             numberOfCopiesToBuy: 1,
         }
 
-        this.price = 0;
-
-        this.idRouteParam = this.props.match.params.id;
-        
+        this.idRouteParam = this.props.match.params.id; // this is the ID of the product this component views (from URL - localhost/product/[:id])        
         this.addProductToCart = this.addProductToCart.bind(this);
-        this.sendProductIdToRedis = this.addProductToCart.bind(this);
     }
 
     async componentDidMount() {
-        
         //TODO figure out what should be awaited and what should not (there are 2 awaits in each line below and two near setStates)
-        let getProduct = async () => await(await fetch(env.host+env.apiSingleProduct+this.idRouteParam)).json();
+        let getProduct = async () => await(await fetch(env.host+env.apiSingleProduct+this.idRouteParam)).json(); // ? shouldnt these be methods (in the Component body) instead of functions?
         let getPrice = async () => await(await fetch(env.host+env.apiSinglePrice+this.state.product[env.product.currentPriceId])).json();
         
-        this.setState({product: await getProduct()}); 
+        this.setState({product: await getProduct()}); //TODO figure out if this can be done in one setState
         this.setState({price: (await getPrice())[env.price.value]});
     }
 
-    //TODO handle what happens when the id is invalid (doesnt exist in db etc)
 
-    //TODO add product counter
-
+    
     addProductToCart(e) {
         const guidCookieName = "guid";
         let guid = localStorage.getItem(guidCookieName);
@@ -69,15 +64,36 @@ export class ProductDetails extends Component {
         })
     }
 
-
     render() {
+        
+        const Counter = props => {
+            const changeCounter = delta => { 
+                let currentCopies = this.state.numberOfCopiesToBuy;
+                if(currentCopies+delta <= 0) 
+                    return;
+                this.setState({numberOfCopiesToBuy: this.state.numberOfCopiesToBuy+delta}) 
+            }
+    
+            const p = 1;
+            const m = -1;
+            return( //TODO Add classNames to ProductDetails counter divs
+                <div>
+                    <button onClick={() => changeCounter(p)}>+{p}</button>
+                    <button onClick={() => changeCounter(m)}>{m}</button>
+                    <div>{this.state.numberOfCopiesToBuy}</div>
+                </div>
+            )
+        }
+        
         return (
             <div id="wrapper">
                 <img id="image" src={this.state.product[env.product.img]} alt={this.state.product[env.product.name]} />
                 <h1 id="name">{this.state.product[env.product.name]}</h1>
                 <p id="description">{this.state.product[env.product.description]}</p>
                 <p id="price"><b>{this.state.price}</b></p>
-
+                
+                <Counter/>
+                
                 <button onClick={this.addProductToCart}>Dodaj do koszyka</button>
             </div>
         )
