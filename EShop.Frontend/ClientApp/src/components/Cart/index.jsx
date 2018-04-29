@@ -35,6 +35,7 @@ export class Cart extends Component {
             let joinedProduct = { //here we join the cartElement fetch (it's outside this map()), the product fetch and price fetch into one object containg all the things we need
                 id: cartElement[env.redisCartElement.id],
                 img: product[env.product.img],
+                name: product[env.product.name],
                 description: product[env.product.description],
                 quantity: cartElement[env.redisCartElement.quantity],
                 price: price[env.price.value],
