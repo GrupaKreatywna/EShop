@@ -13,6 +13,7 @@ using System.Text;
 using Microsoft.AspNetCore.Hosting.Internal;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Cors;
 
 namespace Eshop
 {
@@ -34,6 +35,20 @@ namespace Eshop
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
+
+            services.AddCors(options => //dont remove this unless you're preparing the project to ship it to some live website
+            {
+                options.AddPolicy("AllowAll",
+                    builder =>
+                    {
+                        builder
+                        .AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .AllowCredentials();
+                    });
+            });
+
             services.AddIdentity<IdentityUser, IdentityRole>()
                 .AddDefaultTokenProviders();
 
@@ -83,6 +98,8 @@ namespace Eshop
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
 
+            app.UseCors("AllowAll"); //do not remove this unless shipping to a live website
+            app.UseMvc();
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
@@ -101,8 +118,6 @@ namespace Eshop
 
             app.UseAuthentication();
             app.UseStaticFiles();
-
-            app.UseMvc();
         }
     }
 }
