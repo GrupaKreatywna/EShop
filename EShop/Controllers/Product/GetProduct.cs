@@ -39,14 +39,17 @@ namespace EShop.Controllers.Product
                     var result = await _uow.ProductRepository.Query().Where(x => x.Id == query.ID).Select(x => new Result()
                     {
                         Name = x.Name,
-                        Picture = x.Picture,
+                        Img = x.Picture,
                         Description = x.Description,
                         Tags = x.Tags,
-                        Count = x.Count,
+                        Quantity = x.Count,
                         CurrentPriceId = x.CurrentPriceId,
+                        Price = null,
                         CategoryId = x.CategoryId
                     }
                     ).FirstOrDefaultAsync();
+
+                result.Price = await _uow.PriceRepository.Query().Where(x => x.Id == result.CurrentPriceId).Select(x => x.Value).FirstOrDefaultAsync();
                     return result;                
             }
 
@@ -66,14 +69,15 @@ namespace EShop.Controllers.Product
                 {
                     ID = x.Id,
                     Name = x.Name,
-                    Picture = x.Picture,
+                    Img = x.Picture,
                     Description = x.Description,
                     Tags = x.Tags,
-                    Count = x.Count,
+                    Quantity = x.Count,
                     CurrentPriceId = x.CurrentPriceId,
-                    CategoryId = x.CategoryId
+                    Price = __uow.PriceRepository.Query().Where(y => y.Id == x.CurrentPriceId).Select(y => y.Value).FirstOrDefault(),
+                CategoryId = x.CategoryId
                 }).ToListAsync();
-
+                
                 return result;
             }
         }
@@ -87,11 +91,12 @@ namespace EShop.Controllers.Product
         {
             public int ID { get; set; }
             public string Name { get; set; }
-            public string Picture { get; set; }
+            public string Img { get; set; }
             public string Description { get; set; }
             public string Tags { get; set; }
-            public int Count { get; set; }
+            public int Quantity { get; set; }
             public int? CurrentPriceId { get; set; }
+            public decimal? Price { get; set; }
             public int CategoryId { get; set; }
         }
 

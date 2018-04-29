@@ -1,5 +1,6 @@
 ﻿using Eshop.Core.CQRS;
 using Eshop.Core.Data;
+using FluentValidation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +31,16 @@ namespace EShop.Controllers.User
                 user.Password = hash.ToSaltedPassword();
                 _uow.UserRepository.Insert(user.ToUserEntity());
                 await _uow.SaveChangesAsync();
+            }
+        }
+
+        public class Validator : AbstractValidator<Command>
+        {
+
+            public Validator()
+            {
+                RuleFor(x => x._data.Email).EmailAddress();
+                RuleFor(x => x._data.Password).MinimumLength(6);
             }
         }
 

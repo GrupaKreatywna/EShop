@@ -1,5 +1,6 @@
 ﻿using Eshop.Core.CQRS;
 using Eshop.Core.Data;
+using FluentValidation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace EShop.Controllers.Order
     {
         public class Command : ICommand
         {
-            public Data data;
+            public Data _data;
         }
 
         public class Handler: ICommandHandler<Command>
@@ -25,9 +26,19 @@ namespace EShop.Controllers.Order
 
             public async Task Execute(Command command)
             {
-                _uow.OrderRepository.Insert(command.data.ToOrderEntity());
+                _uow.OrderRepository.Insert(command._data.ToOrderEntity());
                 
                 await _uow.SaveChangesAsync();
+            }
+        }
+        public class Validator : AbstractValidator<Command>
+        {
+
+            public Validator()
+            {
+                RuleFor(x => x._data.Adress).NotEmpty();
+                RuleFor(x => x._data.City).NotEmpty();
+                RuleFor(x => x._data.PostalCode).NotEmpty();
             }
         }
 

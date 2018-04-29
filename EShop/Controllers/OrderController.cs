@@ -50,7 +50,7 @@ namespace EShop.Controllers
         [HttpPost("")]
         public async Task CreateOrder(DateTime orderDate, string adress, string contractingAuthority, string city, string postalCode, int? discountCouponId)
         {
-            await _commandDispatcher.Dispatch<CreateOrder.Command>(new CreateOrder.Command{ data = new CreateOrder.Data(orderDate,adress,contractingAuthority,city,postalCode,discountCouponId) });
+            await _commandDispatcher.Dispatch<CreateOrder.Command>(new CreateOrder.Command{ _data = new CreateOrder.Data(orderDate,adress,contractingAuthority,city,postalCode,discountCouponId) });
 
         }
     }

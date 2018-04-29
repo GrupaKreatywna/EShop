@@ -40,12 +40,12 @@ namespace EShop.Controllers
 
         [HttpPost("")]
         [Authorize]
-        public async Task Create(string name, string picture, string description, string tags,
-                int count, int? currentPriceId, int categoryId)
+        public async Task Create(string name, string img, string description, string tags,
+                int quantity, int? currentPriceId, int categoryId)
         {
             await _commandDispatcher.Dispatch<CreateProduct.Command>(new CreateProduct.Command()
             {
-                _data = new CreateProduct.Data(name,picture,description,tags,count,currentPriceId,categoryId)
+                _data = new CreateProduct.Data(name,img,description,tags,quantity,currentPriceId,categoryId)
             });   
         }
         [HttpGet("/api/Products/Search/{word}")]

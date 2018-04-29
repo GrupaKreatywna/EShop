@@ -35,10 +35,10 @@ namespace EShop.Controllers.Product
                 {
                     ID = x.Id,
                     Name = x.Name,
-                    Picture = x.Picture,
+                    Img = x.Picture,
                     Description = x.Description,
                     Tags = x.Tags,
-                    Count = x.Count,
+                    Quantity = x.Count,
                     CurrentPriceId = x.CurrentPriceId,
                     CategoryId = x.CategoryId
                 }).ToListAsync();
@@ -51,10 +51,10 @@ namespace EShop.Controllers.Product
         {
             public int ID { get; set; }
             public string Name { get; set; }
-            public string Picture { get; set; }
+            public string Img { get; set; }
             public string Description { get; set; }
             public string Tags { get; set; }
-            public int Count { get; set; }
+            public int Quantity { get; set; }
             public int? CurrentPriceId { get; set; }
             public int CategoryId { get; set; }
         }
