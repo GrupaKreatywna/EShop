@@ -30,6 +30,8 @@ namespace EShop.Controllers.Product
             }
         }
 
+        //Validator
+
         public class Data
         {
             public string Name { get; set; }
