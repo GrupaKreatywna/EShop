@@ -46,8 +46,8 @@ export class ProductDetails extends Component {
             }                  
             
             guid = uuidv4();
+            localStorage.setItem(guidCookieName, guid);
         }
-        localStorage.setItem(guidCookieName, guid);
         
         // ! POSTing to Redis as JSON doesn't work at the time I'm writing this. Use query string params instead (see the url inside swagger)
         fetch(env.host+env.apiCartRedis, { //send items to redis
@@ -59,7 +59,7 @@ export class ProductDetails extends Component {
             body: JSON.stringify({
                 [env.redisCartElement.key]: guid,
                 [env.redisCartElement.id]: this.idRouteParam,
-                [env.redisCartElement.quanity]: this.state.numberOfCopiesToBuy
+                [env.redisCartElement.quantity]: this.state.numberOfCopiesToBuy
             })
         })
     }
@@ -83,7 +83,8 @@ export class ProductDetails extends Component {
         )
     }
     
-    render() {
+    render() { //TODO make "Add to cart" button grey out when pressed, and then make it display the status of the order, like "Item added to cart in quantity: 5"
+    //TODO add remove from cart button
         return (
             <div id="wrapper">
                 <img id="image" src={this.state.product[env.product.img]} alt={this.state.product[env.product.name]} />
