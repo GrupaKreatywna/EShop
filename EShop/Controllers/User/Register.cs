@@ -11,7 +11,7 @@ namespace EShop.Controllers.User
     {
         public class Command : ICommand
         {
-            public Data _data;
+            public Data _data { get; set; }
         }
 
         public class Handler : ICommandHandler<Command>
@@ -40,7 +40,7 @@ namespace EShop.Controllers.User
             public string Surname { get; set; }
             public string Email { get; set; }
             public string Password { get; set; }
-            public bool Verified { get; set; } = false;
+            public bool Verified { get; set; }
 
             public Data(string name, string surname, string email, string password, bool verified = false)
             {
@@ -53,7 +53,7 @@ namespace EShop.Controllers.User
 
             public Core.Entities.User ToUserEntity()
             {
-                var user = new Core.Entities.User()
+                var user = new Core.Entities.User
                 {
                     Name = this.Name,
                     Surname = this.Surname,

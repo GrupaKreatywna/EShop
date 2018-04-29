@@ -37,13 +37,14 @@ namespace EShop.Controllers.User
 
             public async Task<bool> Handle(Query query)
             {
-                var result = await _uow.UserRepository.Query().Where(x => query.Email == x.Email).Select(x => new LoginData()
+                var result = await _uow.UserRepository.Query().Where(x => query.Email == x.Email).Select(x => new LoginData
                 {
                     Email = x.Email,
                     Password = x.Password
                 }).FirstOrDefaultAsync();
 
-               
+                if (result == null)
+                    return false;
                 string saltedPassword = result.Password;
                 return PasswordHelper.ValidatePassword(query.Password, saltedPassword);
             }

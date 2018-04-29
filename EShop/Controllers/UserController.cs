@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,7 +32,7 @@ namespace EShop.Controllers
         [HttpPost("/api/register")]
         public async Task Register([FromBody] Register.Data data)
         {
-            await _commandDispatcher.Dispatch<Register.Command>(new Register.Command()
+            await _commandDispatcher.Dispatch<Register.Command>(new Register.Command
             {
                 _data = data
             });
@@ -44,7 +46,7 @@ namespace EShop.Controllers
             {
                 return GenerateJwtToken(data.Email);
             }
-            throw new ApplicationException("INVALID_LOGIN_ATTEMPT");
+            return Unauthorized();
         }
 
         private string GenerateJwtToken(string email)

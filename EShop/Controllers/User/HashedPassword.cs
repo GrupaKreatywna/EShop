@@ -50,9 +50,9 @@ namespace EShop.Controllers.User
 
     public static class PasswordHelper
     {
-        public const int SALT_BYTE_SIZE = 16;
-        public const int HASH_BYTE_SIZE = 16;
-        public const int PBKDF2_ITERATIONS = 40000;
+        private static readonly int SALT_BYTE_SIZE = 16;
+        private static readonly int HASH_BYTE_SIZE = 16;
+        private static readonly int PBKDF2_ITERATIONS = 40000;
 
         public static string CreateHash(string password)
         {
@@ -76,7 +76,7 @@ namespace EShop.Controllers.User
 
         private static byte[] PBKDF2(string password, byte[] salt, int iterations, int outputBytes)
         {
-            using (var pbkdf2 = new Rfc2898DeriveBytes(password, salt, PBKDF2_ITERATIONS))
+            using (var pbkdf2 = new Rfc2898DeriveBytes(password, salt, iterations))
             {
                 return pbkdf2.GetBytes(outputBytes);
             }
