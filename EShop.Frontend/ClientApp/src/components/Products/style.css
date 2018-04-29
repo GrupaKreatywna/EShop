@@ -1,0 +1,68 @@
+:local(.wrapper) {
+    
+    display: inline-flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    width: inherit;
+    height: inherit;
+
+    background-color: red;
+}
+
+:local(.product) {
+    display:grid;
+    
+    grid-template-rows: 15vh 
+                        20vh;
+    grid-template-columns: 1fr;
+
+    --product-min-width: 100px;
+    
+    flex: 0 1 var(--product-min-width);
+    
+    min-width: var(--product-min-width);
+    width:150px;
+    max-width:200px;
+    
+    height:auto;
+
+    background-color: blue;
+}
+
+:local(.image) {
+    min-width: 0;
+    width:auto;
+    max-width:100%;
+
+    min-height: 0;    
+    height:100%;
+    max-height:100%;
+
+    align-self: center;
+    justify-self: center;
+    object-fit: contain;
+
+    overflow: hidden;
+}
+
+:local(.text) {
+    min-width: 0;
+    width:100%;
+    max-width:100%;
+    
+    min-height: 0;
+    height:100%;
+    max-height: 100%;
+
+    align-self: top;
+    text-align: center;
+    text-overflow: ellipsis;
+    word-break: normal;
+
+    overflow:hidden;
+
+    background-color: orange;
+    color: brown;
+    
+}
