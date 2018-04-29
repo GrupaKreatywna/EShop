@@ -31,7 +31,7 @@ export const price = {
 export const redisCartElement = {
     key: "key",
     id: "id",
-    quanity: "quantity",
+    quantity: "quantity",
 }
 //TODO make this work 
 

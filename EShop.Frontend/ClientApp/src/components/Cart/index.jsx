@@ -3,64 +3,71 @@ import React, {Component} from 'react';
 import * as env from '../../env'
 import style from './style.css'
 
-
-//TODO rewrite this completely this is not how it's supposed to be done
-//async, await may be useful here but idk
 export class Cart extends Component {
     constructor() {
         super();
         this.state = {
-            products: []
+            productIds: [],
+            products: [],
+            guidCookieExists: false,
         }
-    
-        this.getCartItemIdsFromStorage = JSON.parse(localStorage.getItem("cart")).products;
-        this.mapProductIdsToFetchedProducts = this.mapProductIdsToFetchedProducts.bind(this);
-        this.appendToProductsState = this.appendToProductsState.bind(this);
+    }
 
-        /*cart={
-            uuid:"somethingfoobar",
-            products: [
-                {
-                    id:0,
-                    count:5
-                },
-                {
-                    id:1,
-                    count:5,
-                }
-            ]
-        }*/
+    async componentDidMount() {
+        const guid = localStorage.getItem("guid");
+
+        this.setState({
+            guidCookieExists: (guid ? true : false), //guidCookieExists will be used to display a message like "whoops looks like you didnt add anything to cart"
+        })
+
+        if(!guid) return;
         
+        let query = env.apiCartRedis.slice(0,-1)+'?'+env.redisCartElement.key+'='+guid // /api/Cart?key=[guidhere]
+        let cartProductIdsQuantitiesForGuid = await fetch(env.host + query); //[{id: [ID here], quantity: [how much of that product someone wants to buy]}, {id:.., quantity:..}] and so on
+        let productIdsAndQuantities = await cartProductIdsQuantitiesForGuid.json(); 
+        
+        //TODO refactor this
+        let finalProducts = productIdsAndQuantities.map(async (cartElement)=>{
+            
+            let product = await (await fetch(env.host+env.apiSingleProduct+cartElement.id)).json();
+            let price = await (await fetch(env.host+env.apiSinglePrice+product[env.product.currentPriceId])).json(); //the "product" object contains the priceId, not the price itself. We need to fetch the price value
+
+            let joinedProduct = { //here we join the cartElement fetch (it's outside this map()), the product fetch and price fetch into one object containg all the things we need
+                id: cartElement[env.redisCartElement.id],
+                img: product[env.product.img],
+                description: product[env.product.description],
+                quantity: cartElement[env.redisCartElement.quantity],
+                price: price[env.price.value],
+            }
+
+            console.log(joinedProduct);
+            let productAsComponent = this.productComponent(joinedProduct);
+
+            let currentProducts = this.state.products;
+            currentProducts.push(productAsComponent);
+            this.setState({products: currentProducts});
+        });
+        console.log(this.state.products)
     }
 
-    componentDidMount() {
-        this.mapProductIdsToFetchedProducts(this.getCartItemIdsFromStorage);
-    }
-
-    mapProductIdsToFetchedProducts(productIds) {
-        return productIds.map(product=>(
-            fetch(env.host+env.apiSingleProduct + product.id)
-                .then(response => response.json())
-                .then(json=>this.productComponent(json)) //take a fetched product and turn it into a component
-                .then(component=>this.appendToProductsState(component)) //append component to state
-        ))
-    }
-
-    appendToProductsState(arg) {
-        let newarray = this.state.products;
-        newarray.push(arg);
-        this.setState({ products: newarray})
-    }
-
-    productComponent = product => (
-        <div>
-            <div>{product[env.product.name]}</div>
-            <div>{product[env.product.description]}</div>
+    //TODO add remove from cart button
+    productComponent = joinedProduct => (
+        <div key={joinedProduct.id}>
+            <div>{joinedProduct.name}</div>
+            <div>{joinedProduct.description}</div>
+            <div>
+                <span>Należność: {joinedProduct.quantity*joinedProduct.price} zł</span>
+                <div>{joinedProduct.quantity} x {joinedProduct.price}</div>
+            </div>
         </div>
     )
 
     render() {
-        return this.state.products
+        return (
+            <div>
+                {this.state.products}
+            </div>
+        )
     }
 }
 
