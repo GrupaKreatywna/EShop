@@ -11,6 +11,9 @@ export const apiCategories = '/api/Categories/';
 
 export const apiCartRedis = '/api/Cart/';
 
+export const apiRegister = '/api/register/';
+export   const apiLogin = '/api/login';
+
 export const product = {
     id:'id',
     img: 'picture',
@@ -34,6 +37,14 @@ export const redisCartElement = {
     quantity: "quantity",
 }
 //TODO make this work 
+
+export const userRegister = {
+    name: "name",
+    surname: "surname",
+    email: "email",
+    password: "password",
+    verified: "verified",
+}
 
 export const helpers = {
     
