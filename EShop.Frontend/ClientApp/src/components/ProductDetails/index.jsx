@@ -73,6 +73,7 @@ export class ProductDetails extends Component {
 
         const one = 1;
         //TODO add numberOfCopiesToBuy as a input field (so the user can manually input the required value)
+        //TODO make the "-1" button not appear when you have only 1 product
         return( //TODO Add classNames to ProductDetails counter divs
             <div>
                 <button onClick={() => changeCounterBy(one)}>+{one}</button>
