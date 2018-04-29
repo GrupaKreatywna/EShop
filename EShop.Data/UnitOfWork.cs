@@ -63,6 +63,14 @@ namespace Eshop.Data
             }
         }
 
+        public IRepository<User, int> UserRepository
+        {
+            get
+            {
+                return Repository<User, int>();
+            }
+        }
+
         public void BeginTransaction()
         {
             //_context.BeginTransaction();

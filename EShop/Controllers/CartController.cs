@@ -28,11 +28,11 @@ namespace EShop.Controllers
         }
    
         [HttpPost("")]
-        public async Task AddToCart(Guid key, int id, int quantity)
+        public async Task AddToCart([FromBody]AddProductToCart.Data data)
         {
             await _commandDispatcher.Dispatch<AddProductToCart.Command>(new AddProductToCart.Command()
             {
-                _data = new AddProductToCart.Data(key, id, quantity)
+                _data = data
 
             });
         }
