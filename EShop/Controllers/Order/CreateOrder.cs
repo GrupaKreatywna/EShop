@@ -26,6 +26,7 @@ namespace EShop.Controllers.Order
             public async Task Execute(Command command)
             {
                 _uow.OrderRepository.Insert(command.data.ToOrderEntity());
+                
                 await _uow.SaveChangesAsync();
             }
         }
@@ -39,14 +40,16 @@ namespace EShop.Controllers.Order
             public string PostalCode { get; set; }
             public int? DiscountCouponId { get; set; }
 
-            public Data(DateTime _OrderDate,string _Adress,string _ContractingAuthority, string _City, string _PostalCode, int? _DiscountCouponId)
+            
+
+            public Data(DateTime orderDate, string adress, string contractingAuthority, string city, string postalCode, int? discountCouponId)
             {
-                OrderDate = _OrderDate;
-                Adress = _Adress;
-                ContractingAuthority = _ContractingAuthority;
-                City = _City;
-                PostalCode = _PostalCode;
-                DiscountCouponId = _DiscountCouponId;
+                OrderDate = orderDate;
+                Adress = adress;
+                ContractingAuthority = contractingAuthority;
+                City = city;
+                PostalCode = postalCode;
+                DiscountCouponId = discountCouponId;
             }
 
             public Core.Entities.Order ToOrderEntity()
@@ -59,6 +62,7 @@ namespace EShop.Controllers.Order
                 City = City,
                 PostalCode = PostalCode,
                 DiscountCouponId = DiscountCouponId
+                
             };
                 return o;
             }

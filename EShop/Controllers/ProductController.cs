@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Eshop.Core.CQRS;
 using EShop.Controllers.Product;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EShop.Controllers
@@ -38,6 +39,7 @@ namespace EShop.Controllers
         }
 
         [HttpPost("")]
+        [Authorize]
         public async Task Create(string name, string picture, string description, string tags,
                 int count, int? currentPriceId, int categoryId)
         {
