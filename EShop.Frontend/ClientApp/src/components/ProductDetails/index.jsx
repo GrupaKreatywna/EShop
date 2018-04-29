@@ -24,16 +24,16 @@ export class ProductDetails extends Component {
 
     async componentDidMount() {
         //TODO figure out what should be awaited and what should not (there are 2 awaits in each line below and two near setStates)
-        let getProduct = async () => await(await fetch(env.host+env.apiSingleProduct+this.idRouteParam)).json(); // ? shouldnt these be methods (in the Component body) instead of functions?
-        let getPrice = async () => await(await fetch(env.host+env.apiSinglePrice+this.state.product[env.product.currentPriceId])).json();
+        let _product = await(await fetch(env.host+env.apiSingleProduct+this.idRouteParam)).json(); // ? shouldnt these be methods (in the Component body) instead of functions?
+        let _price = async () => await(await fetch(env.host+env.apiSinglePrice+this.state.product[env.product.currentPriceId])).json();
         
-        this.setState({product: await getProduct()}); //TODO figure out if this can be done in one setState
-        this.setState({price: (await getPrice())[env.price.value]}); // ! getPrice() is dependent on getProduct()
+        this.setState({product: _product}); //TODO figure out if this can be done in one setState
+        this.setState({price: _price[env.price.value]}); // ! getPrice() is dependent on getProduct() - that's why setStates are separate
     }
 
 
     
-    addProductToCart(e) {
+    addProductToCart() {
         const guidCookieName = "guid";
         let guid = localStorage.getItem(guidCookieName);
 
@@ -72,10 +72,11 @@ export class ProductDetails extends Component {
         }
 
         const one = 1;
+        //TODO add numberOfCopiesToBuy as a input field (so the user can manually input the required value)
         return( //TODO Add classNames to ProductDetails counter divs
             <div>
                 <button onClick={() => changeCounterBy(one)}>+{one}</button>
-                <button onClick={() => changeCounterBy(-one)}>{-one}</button>
+                <button onClick={() => changeCounterBy(-one)}>-{one}</button>
                 <div>{this.state.numberOfCopiesToBuy}</div>
             </div>
         )
