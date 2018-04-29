@@ -20,22 +20,6 @@ export class ProductDetails extends Component {
         this.idRouteParam = this.props.match.params.id; // this is the ID of the product this component views (from URL - localhost/product/[:id])        
         this.addProductToCart = this.addProductToCart.bind(this);
 
-        const Counter = props => {
-            const changeCounterBy = delta => { 
-                let currentCopies = this.state.numberOfCopiesToBuy;
-                if(currentCopies+delta <= 0) return;
-                this.setState({numberOfCopiesToBuy: currentCopies+delta}) 
-            }
-    
-            const one = 1;
-            return( //TODO Add classNames to ProductDetails counter divs
-                <div>
-                    <button onClick={() => changeCounterBy(one)}>+{one}</button>
-                    <button onClick={() => changeCounterBy(-one)}>{-one}</button>
-                    <div>{this.state.numberOfCopiesToBuy}</div>
-                </div>
-            )
-        }
     }
 
     async componentDidMount() {
@@ -80,6 +64,23 @@ export class ProductDetails extends Component {
         })
     }
 
+    Counter = props => {
+        const changeCounterBy = delta => { 
+            let currentCopies = this.state.numberOfCopiesToBuy;
+            if(currentCopies+delta <= 0) return;
+            this.setState({numberOfCopiesToBuy: currentCopies+delta}) 
+        }
+
+        const one = 1;
+        return( //TODO Add classNames to ProductDetails counter divs
+            <div>
+                <button onClick={() => changeCounterBy(one)}>+{one}</button>
+                <button onClick={() => changeCounterBy(-one)}>{-one}</button>
+                <div>{this.state.numberOfCopiesToBuy}</div>
+            </div>
+        )
+    }
+    
     render() {
         return (
             <div id="wrapper">
@@ -88,7 +89,7 @@ export class ProductDetails extends Component {
                 <p id="description">{this.state.product[env.product.description]}</p>
                 <p id="price"><b>{this.state.price}</b></p>
                 
-                <Counter/>
+                <this.Counter/>
                 
                 <button onClick={this.addProductToCart}>Dodaj do koszyka</button>
             </div>
