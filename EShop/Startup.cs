@@ -1,4 +1,4 @@
-﻿using Autofac;
+using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Eshop.Filters;
 using Microsoft.AspNetCore.Builder;
@@ -55,11 +55,11 @@ namespace Eshop
                         ValidIssuer = Configuration["Jwt:Issuer"],
                         ValidAudience = Configuration["Jwt:Issuer"],
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"])),
-                        ClockSkew = TimeSpan.Zero // remove delay of token when expire
+                        ClockSkew = TimeSpan.Zero 
                     };
                 });
-
-            services.AddMvc(options =>
+          
+			services.AddMvc(options =>
             {
                 options.Filters.Add(typeof(ApiExceptionAttribute));
             });
@@ -75,12 +75,14 @@ namespace Eshop
             });
 
             ApplicationContainer = IocConfig.RegisterDependencies(services);
+			
             return new AutofacServiceProvider(ApplicationContainer);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {

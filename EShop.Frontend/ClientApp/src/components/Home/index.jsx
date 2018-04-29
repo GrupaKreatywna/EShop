@@ -20,10 +20,25 @@ let placeholderItems = [
 
 export const Home = () => (
   <div className={style.Layout}>
-      
-      <UnnumberedList data={placeholderCategories} display='name' primaryKey='id'/>
-      <SearchAutocomplete searchThrough={placeholderItems} display='productname' primaryKey='id' />
+
+    <div className={style.gridCategories}>
+      <UnnumberedList/>
+    </div>
+    
+    <div className={style.gridSearchAutocomplete}>  
+      <SearchAutocomplete/>
+    </div>
+
+    <div className={style.gridProductsMostPopular}>  
+      <p><b>Najczęściej kupowane</b></p>
       <Products/>
+    </div>
+    
+    <div className={style.gridProductsRecentlyAdded}>
+      <p><b>Ostatnio dodane</b></p>
+
+      <Products/>
+    </div>
   
   </div>
 )
