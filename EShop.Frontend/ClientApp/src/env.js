@@ -12,7 +12,10 @@ export const apiCategories = '/api/Categories/';
 export const apiCartRedis = '/api/Cart/';
 
 export const apiRegister = '/api/register/';
-export   const apiLogin = '/api/login';
+export const apiLogin = '/api/login';
+
+export const tokenCookieName = 'token';
+export const guidCookieName = 'guid';
 
 export const product = {
     id:'id',

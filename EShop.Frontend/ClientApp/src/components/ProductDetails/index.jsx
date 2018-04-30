@@ -31,11 +31,8 @@ export class ProductDetails extends Component {
         this.setState({price: _price[env.price.value]}); // ! getPrice() is dependent on getProduct() - that's why setStates are separate
     }
 
-
-    
     addProductToCart() {
-        const guidCookieName = "guid";
-        let guid = localStorage.getItem(guidCookieName);
+        let guid = localStorage.getItem(env.guidCookieName);
 
         if (!guid) {       
             function uuidv4() {
@@ -46,7 +43,7 @@ export class ProductDetails extends Component {
             }                  
             
             guid = uuidv4();
-            localStorage.setItem(guidCookieName, guid);
+            localStorage.setItem(env.guidCookieName, guid);
         }
         
         // ! POSTing to Redis as JSON doesn't work at the time I'm writing this. Use query string params instead (see the url inside swagger)

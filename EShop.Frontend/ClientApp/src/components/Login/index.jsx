@@ -10,7 +10,7 @@ export class Login extends Component {
                 email: '',
                 password: '',
             },
-            loginTokenExists: (localStorage.getItem("token") ? true : false),
+            loginTokenExists: (localStorage.getItem(env.tokenCookieName) ? true : false),
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -55,7 +55,7 @@ export class Login extends Component {
         }
         
         let token = await (await fetch(env.host+env.apiLogin, fetchParams)).json();
-        localStorage.setItem("token", token);
+        localStorage.setItem(env.tokenCookieName, token);
         this.setState({loginTokenExists: true});
     }
     
