@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import * as env from '../../env.js';
 
 //i am actually ashamed of myself this is exactly the same code as in <Register/>
+//TODO
+// ! TOKEN __NEEDS__ TO BE HELD IN RESTRICTED COOKIES INSTEAD OF LOCAL/SESSIONSTORAGE - see react-cookie lib
 export class Login extends Component {
     constructor(props) {
         super(props);        
