@@ -65,7 +65,7 @@ export class Login extends Component {
     //TODO add classNames for CSS
     render() {
         if(this.state.loginTokenExists)
-            return <div>Jesteś już zalogowany</div>
+            return <div>Jesteś zalogowany!</div>
         else return this.userNotLoggedIn();
     }
 }
