@@ -10,10 +10,19 @@ export class Login extends Component {
                 email: '',
                 password: '',
             },
+            loginTokenExists: (localStorage.getItem("token") ? true : false),
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
+
+    userNotLoggedIn = () => (
+        <form onSubmit={this.handleSubmit}>
+            <p>E-mail:<input type="text" onChange={this.handleChange} name="email"/></p>
+            <p>Hasło:<input type="password" onChange={this.handleChange} name="password"/></p>
+            <input type="submit"/>
+        </form>
+    )
 
     handleChange(e) {
         e.persist();
@@ -47,18 +56,16 @@ export class Login extends Component {
         
         let token = await (await fetch(env.host+env.apiLogin, fetchParams)).json();
         localStorage.setItem("token", token);
+        this.setState({loginTokenExists: true});
     }
+    
     
     //TODO add e-mail address verification
     //TODO add password strength indicator (get one from npm probably)
     //TODO add classNames for CSS
     render() {
-        return(
-            <form onSubmit={this.handleSubmit}>
-                <p>E-mail:<input type="text" onChange={this.handleChange} name="email"/></p>
-                <p>Hasło:<input type="password" onChange={this.handleChange} name="password"/></p>
-                <input type="submit"/>
-            </form>
-        )
+        if(this.state.loginTokenExists)
+            return <div>Jesteś już zalogowany</div>
+        else return this.userNotLoggedIn();
     }
 }
