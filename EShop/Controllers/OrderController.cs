@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace EShop.Controllers
 {
     [Route("api/[controller]")]
-    [Authorize]
+   // [Authorize]
     public class OrderController : Controller
     {
         private IQueryDispatcher _queryDispatcher;
@@ -48,9 +48,9 @@ namespace EShop.Controllers
         }
 
         [HttpPost("")]
-        public async Task CreateOrder(DateTime orderDate, string adress, string contractingAuthority, string city, string postalCode, int? discountCouponId)
+        public async Task CreateOrder(Guid key, DateTime orderDate, string adress, string contractingAuthority, string city, string postalCode, int? discountCouponId, int? userId)
         {
-            await _commandDispatcher.Dispatch<CreateOrder.Command>(new CreateOrder.Command{ _data = new CreateOrder.Data(orderDate,adress,contractingAuthority,city,postalCode,discountCouponId) });
+            await _commandDispatcher.Dispatch<CreateOrder.Command>(new CreateOrder.Command{ _data = new CreateOrder.Data(key,orderDate,adress,contractingAuthority,city,postalCode,discountCouponId) });
 
         }
     }

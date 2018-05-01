@@ -50,10 +50,6 @@ namespace EShop.Controllers.Cart
                     };
                     results.Add(result);
                 }
-
-                
-
-
                 return results;
             }
 

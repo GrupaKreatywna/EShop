@@ -39,7 +39,7 @@ namespace EShop.Controllers
         }
 
         [HttpPost("")]
-        [Authorize]
+       // [Authorize]
         public async Task Create(string name, string img, string description, string tags,
                 int quantity, int? currentPriceId, int categoryId)
         {
