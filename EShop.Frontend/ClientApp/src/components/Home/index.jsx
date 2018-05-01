@@ -11,6 +11,7 @@ export const Home = () => (
   <div className={style.Layout}>
 
     <div className={style.gridCategories}>
+      <b>I am broken and I do not render parentId=NULL categories</b>
       <UnnumberedList/>
     </div>
     
