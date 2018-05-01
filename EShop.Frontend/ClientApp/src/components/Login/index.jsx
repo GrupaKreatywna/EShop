@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import * as env from '../../env.js';
 
+import * as env from '../../env.js';
+import style from './style.css';
 //i am actually ashamed of myself this is exactly the same code as in <Register/>
 //TODO
 // ! TOKEN __NEEDS__ TO BE HELD IN RESTRICTED COOKIES INSTEAD OF LOCAL/SESSIONSTORAGE - see react-cookie lib
@@ -19,11 +20,13 @@ export class Login extends Component {
     }
 
     userNotLoggedIn = () => (
-        <form onSubmit={this.handleSubmit}>
-            <p>E-mail:<input type="text" onChange={this.handleChange} name="email"/></p>
-            <p>Hasło:<input type="password" onChange={this.handleChange} name="password"/></p>
-            <input type="submit"/>
-        </form>
+        <div className={style.login}>
+            <form onSubmit={this.handleSubmit} className={style.login__form}>
+                <input type="email" onChange={this.handleChange} name="email" placeholder="twojemail@przyklad.com"/>
+                <input type="password" onChange={this.handleChange} name="password" placeholder="Hasło"/>
+                <input type="submit" value="Zaloguj"/>
+            </form>
+        </div>
     )
 
     handleChange(e) {
