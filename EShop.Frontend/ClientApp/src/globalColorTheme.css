@@ -1,0 +1,22 @@
+/*http://paletton.com/palette.php?uid=70u0u0kFWsvpaDbzVDCJhn6NYhy*/
+:root {
+    --color-main: #FF7400;
+    --color-secondary: #B85300;
+    --color-tertiary: #1247C1;
+    
+    --color-dark: dimgrey;
+    --color-light: ivory;
+
+    --color-font-dark: #2d2d2d;
+    --color-font-dark-subdued: lightgray;
+    --color-font-light: ivory;
+}
+
+input[type="text"], input[type="password"], input[type="email"] {
+    border-radius: 5px;
+    border-width: 1px;
+    border-color: var(--color-tertiary);
+    
+    box-shadow: 3px 2px;
+    text-align: center;
+}
