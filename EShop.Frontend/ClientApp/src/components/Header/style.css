@@ -1,4 +1,59 @@
-.header {
+@import "../../globalColorTheme.css";
+
+:root {
+    --margin-horizontal: ;
+    --margin-vertical: 0.5vh;
+}
+
+:local(.header) {
     display: flex;
-    background-color: red;
+
+    z-index: 2;
+    width: 100%;
+    min-height:100px;
+    height: 10vh;
+    max-height:150px;
+    background: var(--color-main);
+}
+
+:local(.header div:last-child) {
+    margin-left: auto;
+}
+
+:local(.header__logo) {
+    max-height:100%;
+    max-width: 10%;
+    object-fit: scale-down;
+    
+    font-weight: bold;
+    background: var(--color-light);
+    margin: 0 var(--margin-horizontal);
+}
+
+:local(.header__button) {
+    display: block;
+    align-self: flex-end;
+    bottom:0;
+
+    height: 60%;
+    min-width: 10%;
+    width: 10%;
+    max-width: 10%;
+
+    margin: 0 0 0 var(--margin-horizontal); /*margin from top and from left*/
+    background: var(--color-secondary);
+
+    text-align: center;
+    font-size: 2em;
+    color: var(--color-font-light);        
+}
+
+:local(.header__loginContainer) { /*TODO clean up the loginContainer/logininfo and header__button mess*/
+    display: flex;
+    color: var(--color-font-dark-subdued);
+}
+
+:local(.header__logininfo) {
+    margin: 0 0 0 var(--margin-horizontal);
+    background: var(--color-secondary);
 }
