@@ -27,7 +27,8 @@ export const product = {
 
 export const category = {
     id:'id',
-    name: 'categoryname',
+    name: 'categoryName',
+    children: 'children',
 }
 
 export const price = {
