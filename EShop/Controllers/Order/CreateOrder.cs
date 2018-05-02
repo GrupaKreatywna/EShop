@@ -13,7 +13,7 @@ namespace EShop.Controllers.Order
     {
         public class Command : ICommand
         {
-            public Data _data;
+            public Data _data { get; set; }
         }
 
         public class Handler: ICommandHandler<Command>
@@ -39,7 +39,6 @@ namespace EShop.Controllers.Order
                 Dictionary<string, string> s = cart.ToStringDictionary();
 
                 var keys = s.Keys;
-                var Values = s.Values;
 
                 foreach (string x in keys)
                 {
@@ -48,7 +47,7 @@ namespace EShop.Controllers.Order
                     _uow.OrderProductsRepository.Insert(new Core.Entities.OrderProduct
                     {
                         ProductId = int.Parse(x),
-                        OrderId = order.Id,
+                        OrderId = id,
                         Quantity = int.Parse(val)
                     }); 
                 }
@@ -94,7 +93,7 @@ namespace EShop.Controllers.Order
 
             public Core.Entities.Order ToOrderEntity()
             {
-                Core.Entities.Order o = new Core.Entities.Order()
+                Core.Entities.Order o = new Core.Entities.Order
                 {
                 OrderDate = this.OrderDate,
                 Adress = this.Adress,

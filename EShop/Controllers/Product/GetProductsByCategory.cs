@@ -30,7 +30,7 @@ namespace EShop.Controllers.Product
 
             public async Task<List<Result>> Handle(Query query)
             {
-                var result = await _uow.ProductRepository.Query().Where(x=> x.CategoryId == query.CategoryId).Select(x => new Result()
+                var result = await _uow.ProductRepository.Query().Where(x=> x.CategoryId == query.CategoryId).Select(x => new Result
                 {
                     ID = x.Id,
                     Name = x.Name,
