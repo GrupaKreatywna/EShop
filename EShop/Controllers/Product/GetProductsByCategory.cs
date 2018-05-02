@@ -8,25 +8,31 @@ using System.Threading.Tasks;
 
 namespace EShop.Controllers.Product
 {
-    public class SearchProduct
+    public class GetProductsByCategory
     {
         public class Query : IQuery
         {
-            public string Word;
+            public int CategoryId { get; private set; }
+
+            public Query(int categoryId)
+            {
+                CategoryId = categoryId;
+            }
         }
 
-        public class SearchHandler : IQueryHandler<Query, List<Result>>
+        public class HandlerList : IQueryHandler<Query, List<Result>>
         {
-            private IUnitOfWork _uow;
-            public SearchHandler(IUnitOfWork uow)
+            private readonly IUnitOfWork _uow;
+            public HandlerList(IUnitOfWork uow)
             {
                 _uow = uow;
             }
 
             public async Task<List<Result>> Handle(Query query)
             {
-                var result = await _uow.ProductRepository.Query().Where(x=>x.Name.Contains(query.Word)).Select(x => new Result()
+                var result = await _uow.ProductRepository.Query().Where(x=> x.CategoryId == query.CategoryId).Select(x => new Result()
                 {
+                    ID = x.Id,
                     Name = x.Name,
                     Img = x.Picture,
                     Description = x.Description,
@@ -35,13 +41,14 @@ namespace EShop.Controllers.Product
                     CurrentPriceId = x.CurrentPriceId,
                     Price = _uow.PriceRepository.Query().Where(y => y.Id == x.CurrentPriceId).Select(y => y.Value).FirstOrDefault(),
                     CategoryId = x.CategoryId
-                }
-                ).ToListAsync();
+                }).ToListAsync();
+
                 return result;
             }
         }
         public class Result
         {
+            public int ID { get; set; }
             public string Name { get; set; }
             public string Img { get; set; }
             public string Description { get; set; }

@@ -40,6 +40,7 @@ namespace EShop.Controllers.Product
                     Tags = x.Tags,
                     Quantity = x.Count,
                     CurrentPriceId = x.CurrentPriceId,
+                    Price = _uow.PriceRepository.Query().Where(y => y.Id == x.CurrentPriceId).Select(y => y.Value).FirstOrDefault(),
                     CategoryId = x.CategoryId
                 }).ToListAsync();
 
@@ -56,6 +57,7 @@ namespace EShop.Controllers.Product
             public string Tags { get; set; }
             public int Quantity { get; set; }
             public int? CurrentPriceId { get; set; }
+            public decimal? Price { get; set; }
             public int CategoryId { get; set; }
         }
     }

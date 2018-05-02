@@ -32,6 +32,13 @@ namespace EShop.Controllers
         {
                 return await _queryDispatcher.Dispatch<GetProduct.Query, List<GetProduct.Result>>(new GetProduct.Query());
         }
+
+        [HttpGet("/api/Products/{categoryId}")]
+        public async Task<List<GetProductsByCategory.Result>> GetAllByCategory(int categoryId)
+        {
+            return await _queryDispatcher.Dispatch<GetProductsByCategory.Query, List<GetProductsByCategory.Result>>(new GetProductsByCategory.Query(categoryId));
+        }
+
         [HttpGet("/api/Product/Latest")]
         public async Task<List<GetTenLastProducts.Result>> GetTenLast()
         {

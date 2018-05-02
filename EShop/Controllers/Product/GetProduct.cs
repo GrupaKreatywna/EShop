@@ -57,15 +57,15 @@ namespace EShop.Controllers.Product
 
         public class HandlerList : IQueryHandler<Query, List<Result>>
         {
-            private readonly IUnitOfWork __uow;
+            private readonly IUnitOfWork _uow;
             public HandlerList(IUnitOfWork uow)
             {
-                __uow = uow;
+                _uow = uow;
             }
 
             public async Task<List<Result>> Handle(Query query)
             {
-                var result = await __uow.ProductRepository.Query().Select(x => new Result()
+                var result = await _uow.ProductRepository.Query().Select(x => new Result()
                 {
                     ID = x.Id,
                     Name = x.Name,
@@ -74,7 +74,7 @@ namespace EShop.Controllers.Product
                     Tags = x.Tags,
                     Quantity = x.Count,
                     CurrentPriceId = x.CurrentPriceId,
-                    Price = __uow.PriceRepository.Query().Where(y => y.Id == x.CurrentPriceId).Select(y => y.Value).FirstOrDefault(),
+                    Price = _uow.PriceRepository.Query().Where(y => y.Id == x.CurrentPriceId).Select(y => y.Value).FirstOrDefault(),
                 CategoryId = x.CategoryId
                 }).ToListAsync();
                 

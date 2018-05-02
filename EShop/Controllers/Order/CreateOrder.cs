@@ -80,7 +80,7 @@ namespace EShop.Controllers.Order
 
             
 
-            public Data(Guid key, DateTime orderDate, string adress, string contractingAuthority, string city, string postalCode, int? discountCouponId, int userId)
+            public Data(Guid key, DateTime orderDate, string adress, string contractingAuthority, string city, string postalCode, int? discountCouponId, int? userId)
             {
                 Key = key;
                 OrderDate = orderDate;
