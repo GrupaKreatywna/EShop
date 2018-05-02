@@ -21,11 +21,11 @@ export class Header extends Component {
         
         return(
             <div className={style.header}>
-                <div className={style.header__logo}>
-                    <img src="https://placehold.it/100/F00FFF/FFFF00?text=Logo+Placeholder" alt="EShop"/>
+                <div className={style.button + ' ' + style.logo}>
+                    <Link to='/'><img src="https://placehold.it/100/F00FFF/FFFF00?text=Logo+Placeholder" alt="EShop"/></Link>
                 </div>
-                <Link to='/' className={style.header__button}>Home</Link>
-                <Link to='/cart' className={style.header__button}>Koszyk</Link>
+                <Link to='/' className={style.button}>Home</Link>
+                <Link to='/cart' className={style.button}>Koszyk</Link>
                 <LoginStatus isLoggedIn={this.state.userLoggedIn}/>
             </div>
             )
@@ -34,12 +34,17 @@ export class Header extends Component {
 }
 
 const LoginStatus = props => {
+    let returnValue;
+    
     if(props.isLoggedIn)
-        return <div className={style.header__loginContainer}>Zalogowano jako __PLACEHOLDER__</div>
-    else return (
-        <div className={style.header__loginContainer + ' ' +style.header__button}>
-            <Link to='/login' className={style.header__logininfo}>Logowanie</Link>
-            <Link to ='/register' className={style.header__logininfo}>Rejestracja</Link>
-        </div>
-    )
+        returnValue = (<div className={style.loginContainer + ' ' + style.button}>Zalogowano jako __PLACEHOLDER__</div>);
+    
+    else
+        returnValue = (
+            <div className={style.loginContainer}>
+                <Link to='/login' className={style.button + ' ' + style.loginInfo}>Logowanie</Link>
+                <Link to ='/register' className={style.button + ' ' + style.loginInfo}>Rejestracja</Link>
+            </div>)
+
+    return returnValue;
 }

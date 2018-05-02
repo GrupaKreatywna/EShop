@@ -1,17 +1,16 @@
 @import "../../globalColorTheme.css";
 
 :root {
-    --margin-horizontal: ;
-    --margin-vertical: 0.5vh;
+    --margin-horizontal: 1vw;
+    --margin-vertical: 0.5vh; 
 }
 
 :local(.header) {
     display: flex;
 
-    z-index: 2;
     width: 100%;
-    min-height:100px;
-    height: 10vh;
+    min-height:75px;
+    height: 5vh;
     max-height:150px;
     background: var(--color-main);
 }
@@ -20,40 +19,59 @@
     margin-left: auto;
 }
 
-:local(.header__logo) {
+:local(.logo) {
     max-height:100%;
     max-width: 10%;
     object-fit: scale-down;
     
     font-weight: bold;
-    background: var(--color-light);
     margin: 0 var(--margin-horizontal);
 }
 
-:local(.header__button) {
+:local(.button) {
     display: block;
     align-self: flex-end;
     bottom:0;
 
-    height: 60%;
-    min-width: 10%;
+    height: 50%;
+    min-width: min-content;
     width: 10%;
-    max-width: 10%;
+    max-width: 20%;
 
-    margin: 0 0 0 var(--margin-horizontal); /*margin from top and from left*/
+    margin: 0 0 0 var(--margin-horizontal); /*margin from left*/
     background: var(--color-secondary);
 
     text-align: center;
     font-size: 2em;
-    color: var(--color-font-light);        
+    color: var(--color-font-light);  
+    
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: clip;      
+}
+:local(.button):hover {
+    background: var(--color-tertiary);
+    color: var(--color-light);
 }
 
-:local(.header__loginContainer) { /*TODO clean up the loginContainer/logininfo and header__button mess*/
+:local(.button.logo) { /*logo is treated similar to a button but some CSS needs to be changed*/
+    height:100%;
+    background: inherit;
+}
+
+:local(.button.loginInfo) { /*login buttons are normal buttons, but make them a bit smaller*/
+    height: 20%;
+    font-size: .75em;
+    font-weight: bold;
+}
+
+:local(.loginContainer) {
     display: flex;
+    width: 20%;
     color: var(--color-font-dark-subdued);
 }
 
-:local(.header__logininfo) {
-    margin: 0 0 0 var(--margin-horizontal);
+:local(.loginInfo) {
+    min-width: min-content;
     background: var(--color-secondary);
 }
