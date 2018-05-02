@@ -19,6 +19,7 @@ export class ProductDetails extends Component {
 
         this.idRouteParam = this.props.match.params.id; // this is the ID of the product this component views (from URL - localhost/product/[:id])        
         this.addProductToCart = this.addProductToCart.bind(this);
+        this.changeCounter = this.changeCounter.bind(this);
 
     }
 
@@ -60,39 +61,47 @@ export class ProductDetails extends Component {
             })
         })
     }
-
-    Counter = props => {
-        const changeCounterBy = delta => { 
-            let currentCopies = this.state.numberOfCopiesToBuy;
-            if(currentCopies+delta <= 0) return;
-            this.setState({numberOfCopiesToBuy: currentCopies+delta}) 
-        }
-
-        const one = 1;
-        //TODO add numberOfCopiesToBuy as a input field (so the user can manually input the required value)
-        //TODO make the "-1" button not appear when you have only 1 product
-        return( //TODO Add classNames to ProductDetails counter divs
-            <div>
-                <button onClick={() => changeCounterBy(one)}>+{one}</button>
-                <button onClick={() => changeCounterBy(-one)}>-{one}</button>
-                <div>{this.state.numberOfCopiesToBuy}</div>
-            </div>
-        )
-    }
     
     render() { //TODO make "Add to cart" button grey out when pressed, and then make it display the status of the order, like "Item added to cart in quantity: 5"
     //TODO add remove from cart button
         return (
-            <div id="wrapper">
-                <img id="image" src={this.state.product[env.product.img]} alt={this.state.product[env.product.name]} />
-                <h1 id="name">{this.state.product[env.product.name]}</h1>
-                <p id="description">{this.state.product[env.product.description]}</p>
-                <p id="price"><b>{this.state.price}</b></p>
+            <div className={style.product}>
+                <img className={style.product__image} src={this.state.product[env.product.img]} alt={this.state.product[env.product.name]} />
+                <h1 className={style.product__name}>{this.state.product[env.product.name]}</h1>
+                <p className={style.product__description}>{this.state.product[env.product.description]}</p>
+                <p className={style.product__price}><b>{this.state.price}</b></p>
                 
-                <this.Counter/>
+                <Counter currentCount={this.state.numberOfCopiesToBuy} changeCounterCallback={delta => this.changeCounter(delta)}/>
                 
                 <button onClick={this.addProductToCart}>Dodaj do koszyka</button>
             </div>
         )
     }
+
+    changeCounter(delta) {
+        this.setState(prevState => ({numberOfCopiesToBuy: prevState.numberOfCopiesToBuy+delta}));
+    }
+}
+
+const Counter = props => {
+    let currentCopies = props.currentCount;
+    const changeCounterCallback = props.changeCounterCallback;
+    
+    const changeCounterBy = delta => { 
+        if(currentCopies+delta <= 0) return;
+        changeCounterCallback(delta); 
+    }
+    
+    const one = 1;
+    //TODO add numberOfCopiesToBuy as a input field (so the user can manually input the required value)
+    
+    
+    return( //TODO Add classNames to ProductDetails counter divs
+        <div className={style.product__counter}>
+            <button onClick={() => changeCounterBy(one)} className={style.product__counter__button}>+{one}</button>
+            <button onClick={() => changeCounterBy(-one)} disabled={currentCopies<=1} >-{one}</button>
+            <div>{currentCopies}</div>
+        </div>
+    )
+    
 }
