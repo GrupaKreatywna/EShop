@@ -26,8 +26,7 @@ export class ProductDetails extends Component {
 
     async componentDidMount() {
         let _product = await(await fetch(env.host+env.apiSingleProduct+this.idRouteParam)).json(); // ? shouldnt these be methods (in the Component body) instead of functions?
-        let _price = async () => await(await fetch(env.host+env.apiSinglePrice+this.state.product[env.product.currentPriceId])).json();
-        
+        let _price = await(await fetch(env.host+env.apiSinglePrice+_product[env.product.currentPriceId])).json();
         this.setState({product: _product}); //TODO figure out if this can be done in one setState
         this.setState({price: _price[env.price.value]}); // ! getPrice() is dependent on getProduct() - that's why setStates are separate
     }
