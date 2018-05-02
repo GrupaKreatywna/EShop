@@ -32,6 +32,13 @@ namespace EShop.Controllers
         {
                 return await _queryDispatcher.Dispatch<GetProduct.Query, List<GetProduct.Result>>(new GetProduct.Query());
         }
+
+        [HttpGet("/api/Products/{categoryId}")]
+        public async Task<List<GetProductsByCategory.Result>> GetAllByCategory(int categoryId)
+        {
+            return await _queryDispatcher.Dispatch<GetProductsByCategory.Query, List<GetProductsByCategory.Result>>(new GetProductsByCategory.Query(categoryId));
+        }
+
         [HttpGet("/api/Product/Latest")]
         public async Task<List<GetTenLastProducts.Result>> GetTenLast()
         {
@@ -39,13 +46,13 @@ namespace EShop.Controllers
         }
 
         [HttpPost("")]
-        [Authorize]
-        public async Task Create(string name, string picture, string description, string tags,
-                int count, int? currentPriceId, int categoryId)
+       // [Authorize]
+        public async Task Create(string name, string img, string description, string tags,
+                int quantity, int? currentPriceId, int categoryId)
         {
             await _commandDispatcher.Dispatch<CreateProduct.Command>(new CreateProduct.Command()
             {
-                _data = new CreateProduct.Data(name,picture,description,tags,count,currentPriceId,categoryId)
+                _data = new CreateProduct.Data(name,img,description,tags,quantity,currentPriceId,categoryId)
             });   
         }
         [HttpGet("/api/Products/Search/{word}")]
