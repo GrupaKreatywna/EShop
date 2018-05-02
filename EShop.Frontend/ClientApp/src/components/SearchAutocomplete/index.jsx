@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import Autocomplete from 'react-autocomplete';
@@ -12,22 +13,19 @@ export default class SearchAutocomplete extends Component {
         super();
         this.state = {
             value: "",
-            data: [{},{},]
+            data: [{},{},],
+            redirect:false,
         };
+        this.onSelect = this.onSelect.bind(this);
     }
-    componentDidMount() {
-        fetch(env.host+env.apiProducts)
-            .then(response => response.json())
-            .then(json => this.setState( { data: json } ));
+    async componentDidMount() {
+        let searchresults = await(await fetch(env.host+env.apiProducts)).json();
+        this.setState({data: searchresults})
     }
-    
 
     render() {
-        const searchResultItemStyle = (product, isHighlighted) => (
-            <div key={product[env.product.id]} className={style.element + ' ' + (isHighlighted ? style.elementHighlighted : style.elementNormal)} >
-                {product[env.product.name]}
-            </div>
-        );
+        if(this.state.redirect)
+            return this.state.redirect;
 
         return (
             <div className={style.main + ' ' + style.elementsWrapper}>
@@ -35,14 +33,33 @@ export default class SearchAutocomplete extends Component {
                     items={this.state.data}
                     getItemValue={item => item[env.product.name]}
                     shouldItemRender={(item, value) => item[env.product.name].toLowerCase().indexOf(value.toLowerCase()) > -1}
-                    renderItem={searchResultItemStyle}
+                    renderItem={SearchResult}
 
                     value={this.state.value}
                     onChange={e => this.setState({ value: e.target.value })}
-                    onSelect={val => this.setState({ value: val })}
+                    onSelect={this.onSelect}
                     wrapperStyle={{}}
                 />
             </div>
         );
     }
+    //this fires when a user clicks on a search result/presses enter
+    onSelect(productName, productItem) { 
+        this.setState({ value: productName }); //set input field to chosen product
+        this.setState({redirect: <Redirect to={'/product/' + productItem[env.product.id]}/>}); //redirect to product page
+    }
+}
+
+const SearchResult = (product, isHighlighted) => {
+    let isHovered =  (isHighlighted ? style.elementHighlighted : style.elementNormal);
+    
+    return (
+        <div key={product[env.product.id]} className={style.element + ' ' + isHovered}  >
+            <div className={style.elementImageWrapper}>
+                <img src={product[env.product.img]} className={style.elementImage} alt={product[env.product.name]}/>
+            </div>
+            
+            <div className={style.elementText}>{product[env.product.name]}</div>
+        </div>
+    )
 }

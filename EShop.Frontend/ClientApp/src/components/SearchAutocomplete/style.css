@@ -1,3 +1,4 @@
+@import "../../globalColorTheme.css";
 /*You may need to tinker with the selectors a bit
 because the <Autocomplete/> component hates
 CSS modules*/
@@ -15,8 +16,6 @@ CSS modules*/
     letter-spacing: 1px;
 
     top:50%;
-    transform: translateY(-50%);
-
 
 }
 
@@ -32,11 +31,34 @@ CSS modules*/
 } 
 
 :local(.elementHighlighted) {
-    background-color: lightsalmon;
+    background-color: var(--color-tertiary);
 }
 
 :local(.elementNormal) {
-    background-color: white;
+    background-color: var(--color-light);
 }
 
-@keyframes toTheTop
+
+:local(.element) {
+    width: 100%;
+    height: 9vh;
+    min-height: 30px;
+    padding: 3px;
+}
+
+:local(.elementText) {
+    display: inline-block;
+    margin: 1%;
+}
+
+:local(.elementImageWrapper) {
+    height: 100%;
+    width: 10%;
+    display:inline-block;
+}
+
+:local(.elementImage) {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+}
