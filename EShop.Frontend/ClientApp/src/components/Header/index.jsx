@@ -9,7 +9,7 @@ export class Header extends Component {
         super();
         
         let cartExists = ( localStorage.getItem(env.guidCookieName)) ? true : false;
-        let userLoggedIn = localStorage.getItem(env.tokenCookieName) ? true : false; //! you will need to change this later because the token will be moved from localStorage to cookies
+        let userLoggedIn = (localStorage.getItem(env.tokenCookieName)) ? true : false; //! you will need to change this later because the token will be moved from localStorage to cookies
 
         this.state = {
             cartExists: cartExists, //TODO use redux to track cart state (number of items etc.)
