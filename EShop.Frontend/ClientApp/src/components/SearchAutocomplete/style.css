@@ -16,19 +16,13 @@ CSS modules*/
     letter-spacing: 1px;
 
     top:50%;
-
 }
 
-:local(.main) {
-}
 
-/*dropdown that contains all search results*/
-
-
-:local(.elementsWrapper) > div {
+:local(.main) > div {
     min-width: 0 !important;
     width:100% !important;
-} 
+}
 
 :local(.elementHighlighted) {
     background-color: var(--color-tertiary);

@@ -28,7 +28,7 @@ export default class SearchAutocomplete extends Component {
             return this.state.redirect;
 
         return (
-            <div className={style.main + ' ' + style.elementsWrapper}>
+            <div className={style.main}>
                 <Autocomplete
                     items={this.state.data}
                     getItemValue={item => item[env.product.name]}
@@ -38,14 +38,16 @@ export default class SearchAutocomplete extends Component {
                     value={this.state.value}
                     onChange={e => this.setState({ value: e.target.value })}
                     onSelect={this.onSelect}
-                    wrapperStyle={{}}
+
+                    wraperStyle={{position: 'relative'}} //see comment by CMTenger on https://github.com/reactjs/react-autocomplete/issues/284
+                    menuStyle={{position: 'absolute'}}
                 />
             </div>
         );
     }
     //this fires when a user clicks on a search result/presses enter
     onSelect(productName, productItem) { 
-        this.setState({ value: productName }); //set input field to chosen product
+        this.setState({ value: productName }); //set input field to chosen product (more of an UX thing)
         this.setState({redirect: <Redirect to={'/product/' + productItem[env.product.id]}/>}); //redirect to product page
     }
 }
@@ -60,6 +62,7 @@ const SearchResult = (product, isHighlighted) => {
             </div>
             
             <div className={style.elementText}>{product[env.product.name]}</div>
+            <div className={style.elementPrice}>{product[env.product.price]}</div>
         </div>
     )
 }
