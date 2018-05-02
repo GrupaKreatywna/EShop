@@ -1,3 +1,129 @@
+:root{
+    --infomargin: 2vh;
+}
+
+:local(.productWrapper) {
+    width: 40vw;
+    min-width: fit-content;
+    min-height: fit-content;
+    height: 30vh;
+    max-height:100%;
+
+}
+
 :local(.product) {
-    display: grid;
+    display: grid; 
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 100%;
+    width: 100%;
+    height: 100%;
+    
+    grid-column-gap: 1vw;
+
+    margin:5%;
+
+    align-content: center;
+    justify-items: center;
+}
+
+:local(.infoWrapper) { /*this is on the right column (contains .name, .description etc)*/
+    cursor: default;
+}
+
+
+:local(.imageWrapper) { /*left column (image)*/
+}
+
+:local(.imageWrapper) > img {   
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+:local(.name),
+:local(.description),
+:local(.counterWrapper) {
+    margin: var(--infomargin) 0;    
+}
+
+:local(.name) {
+    font-size: 1.5em;
+    line-height: .9em;
+}
+
+
+:local(.counter__button),
+:local(.buyButton) {
+    box-shadow: 5px 5px lightgray;
+    transition: all ease 0.1s;
+}
+
+:local(.buyButton):active,
+:local(.counter__button):active {
+    box-shadow: 1px 1px dimgray;
+    background: var(--color-good-dark);
+}
+
+
+:local(.counterWrapper) {
+    user-select: ;    
+}
+
+:local(.counter__button){
+    border: 0;
+    background: var(--color-good);
+    color: var(--color-light);
+    
+    border-radius: 3px;
+
+    width:25px;
+    height: 25px;
+
+    text-align: center;
+
+    font-size: 1.25em;
+    font-weight: 700;
+    overflow: hidden;
+}
+
+:local(.counter__button):hover, :local(.buyButton):hover {
+    background: var(--color-good-light);
+    cursor: pointer;
+}
+
+:local(.counter__number) {
+    color: var(--color-font-dark);
+    margin: 0 10px;
+    
+    font-weight: 900;
+    font-size: 1.25em;
+
+
+}
+
+:local(.buyButton) {
+    background: var(--color-good);
+    color: var(--color-light);
+    
+    border: 0;
+    border-radius: 3px;
+    font-weight: bold;
+    font-size: 1.25em;
+
+    padding: 2vh;
+}
+
+:local(.disabled) {
+    background: var(--color-disabled);
+    color: var(--color-dark);
+    box-shadow: 0 0;
+}
+
+:local(.counter__button.disabled):hover {
+    color: var(--color-disabled);
+    cursor: not-allowed;
+}
+
+:local(.counter__button.disabled):active {
+    box-shadow: 0;
 }

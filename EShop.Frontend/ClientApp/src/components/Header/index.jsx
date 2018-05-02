@@ -22,7 +22,7 @@ export class Header extends Component {
         return(
             <div className={style.header}>
                 <div className={style.button + ' ' + style.logo}>
-                    <Link to='/'><img src="https://placehold.it/100/F00FFF/FFFF00?text=Logo+Placeholder" alt="EShop"/></Link>
+                    <Link to='/'><img src="https://unsplash.it/100?random" alt="EShop"/></Link>
                 </div>
                 <Link to='/' className={style.button}>Home</Link>
                 <Link to='/cart' className={style.button}>Koszyk</Link>

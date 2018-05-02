@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import style from './style.css'
 import * as env from '../../env.js'
 
+//TODO handle history (this.props.history if you use react-router idk)
 //TODO handle what happens when the id is invalid (doesnt exist in db/is negative etc)
 //TODO handle invalid fetches (this should be the same as the above TODO)
 
@@ -24,7 +25,6 @@ export class ProductDetails extends Component {
     }
 
     async componentDidMount() {
-        //TODO figure out what should be awaited and what should not (there are 2 awaits in each line below and two near setStates)
         let _product = await(await fetch(env.host+env.apiSingleProduct+this.idRouteParam)).json(); // ? shouldnt these be methods (in the Component body) instead of functions?
         let _price = async () => await(await fetch(env.host+env.apiSinglePrice+this.state.product[env.product.currentPriceId])).json();
         
@@ -64,17 +64,41 @@ export class ProductDetails extends Component {
     
     render() { //TODO make "Add to cart" button grey out when pressed, and then make it display the status of the order, like "Item added to cart in quantity: 5"
     //TODO add remove from cart button
+        
+    let fetchedProduct = this.state.product;
+        
         return (
+            <div className={style.productWrapper}>
             <div className={style.product}>
-                <img className={style.product__image} src={this.state.product[env.product.img]} alt={this.state.product[env.product.name]} />
-                <h1 className={style.product__name}>{this.state.product[env.product.name]}</h1>
-                <p className={style.product__description}>{this.state.product[env.product.description]}</p>
-                <p className={style.product__price}><b>{this.state.price}</b></p>
                 
-                <Counter currentCount={this.state.numberOfCopiesToBuy} changeCounterCallback={delta => this.changeCounter(delta)}/>
+                <div className={style.imageWrapper}>
+                    <img src={fetchedProduct[env.product.img]} alt={fetchedProduct[env.product.name]} />
+                </div>
                 
-                <button onClick={this.addProductToCart}>Dodaj do koszyka</button>
+                <div className={style.infoWrapper}>
+                    <div className={style.name}>
+                        <b>{fetchedProduct[env.product.name]}</b>
+                    </div>
+
+                    <div className={style.price}>
+                        {this.state.price}
+                    </div>
+                
+                    <div className={style.description}>
+                        <div><b>Opis:</b></div>
+                        {fetchedProduct[env.product.description]}
+                    </div>
+            
+                    <div className={style.counterWrapper}>
+                        <div><b>Ilość sztuk:</b></div>
+                        <Counter currentCount={this.state.numberOfCopiesToBuy} changeCounterCallback={delta => this.changeCounter(delta)}/>
+                    </div>
+                    <button onClick={this.addProductToCart} className={style.buyButton}>Dodaj do koszyka</button>
+                
+                </div>
+                
             </div>
+        </div>
         )
     }
 
@@ -92,15 +116,16 @@ const Counter = props => {
         changeCounterCallback(delta); 
     }
     
-    const one = 1;
     //TODO add numberOfCopiesToBuy as a input field (so the user can manually input the required value)
     
-    
-    return( //TODO Add classNames to ProductDetails counter divs
-        <div className={style.product__counter}>
-            <button onClick={() => changeCounterBy(one)} className={style.product__counter__button}>+{one}</button>
-            <button onClick={() => changeCounterBy(-one)} disabled={currentCopies<=1} >-{one}</button>
-            <div>{currentCopies}</div>
+    let buttonDisabled = (currentCopies<=1) ? style.disabled : ''; 
+
+    const one = 1;
+    return(
+        <div className={style.counter}>
+            <button onClick={() => changeCounterBy(-one)} className={style.counter__button + ' ' + buttonDisabled} disabled={currentCopies<=1} >-</button>
+            <span className={style.counter__number}>{currentCopies}</span>
+            <button onClick={() => changeCounterBy(one)} className={style.counter__button}>+</button>            
         </div>
     )
     
