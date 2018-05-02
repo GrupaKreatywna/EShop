@@ -11,12 +11,3 @@
     --color-font-dark-subdued: lightgray;
     --color-font-light: ivory;
 }
-
-input[type="text"], input[type="password"], input[type="email"] {
-    border-radius: 5px;
-    border-width: 1px;
-    border-color: var(--color-tertiary);
-    
-    box-shadow: 3px 2px;
-    text-align: center;
-}
