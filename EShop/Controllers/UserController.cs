@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Eshop.Core.CQRS;
 using EShop.Controllers.User;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -37,7 +38,27 @@ namespace EShop.Controllers
                 _data = data
             });
         }
-        
+
+        [HttpGet("/api/user/orders")]
+        [Authorize]
+        public async Task<List<GetUserOrders.Result>> GetOrders()
+        {
+            string email;
+            if ((email = GetEmailFromToken()) != null)
+                return await _queryDispatcher.Dispatch<GetUserOrders.Query, List<GetUserOrders.Result>>(new GetUserOrders.Query(email));
+            return null;
+        }
+
+        [HttpGet("/api/user/info")]
+        [Authorize]
+        public async Task<object> GetInfo()
+        {
+            string email;
+            if((email= GetEmailFromToken()) != null)
+            return await _queryDispatcher.Dispatch<GetUserInfo.Query, GetUserInfo.Result>(new GetUserInfo.Query(email));
+            return Unauthorized();
+        }
+
         [HttpPost("/api/login")]
         public async Task<object> Login([FromBody] Login.Query data)
         {
@@ -49,6 +70,20 @@ namespace EShop.Controllers
             return Unauthorized();
         }
 
+        private string GetEmailFromToken()
+        {
+            string email;
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            if (identity != null)
+            {
+                email = identity.FindFirst("Email").Value;
+            }
+            else
+            {
+                return null;
+            }
+            return email;
+        }
         private string GenerateJwtToken(string email)
         {
             var claims = new List<Claim>

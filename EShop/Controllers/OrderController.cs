@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Eshop.Core.CQRS;
 using EShop.Controllers.Order;
@@ -31,7 +32,7 @@ namespace EShop.Controllers
         [HttpGet("/api/Orders")]
         public async Task<List<GetOrders.Result>> GetList()
         {
-            return await _queryDispatcher.Dispatch<GetOrders.Query, List<GetOrders.Result>> (new GetOrders.Query());
+           return await _queryDispatcher.Dispatch<GetOrders.Query, List<GetOrders.Result>> (new GetOrders.Query());
         }
 
         [HttpGet("/api/Orders/SearchByDate/{orderDate}")]
@@ -48,9 +49,9 @@ namespace EShop.Controllers
         }
 
         [HttpPost("")]
-        public async Task CreateOrder(Guid key, DateTime orderDate, string adress, string contractingAuthority, string city, string postalCode, int? discountCouponId, int? userId)
+        public async Task CreateOrder(Guid key, DateTime orderDate, string adress, string contractingAuthority, string city, string postalCode, int? discountCouponId, string email)
         {
-            await _commandDispatcher.Dispatch<CreateOrder.Command>(new CreateOrder.Command{ _data = new CreateOrder.Data(key,orderDate,adress,contractingAuthority,city,postalCode,discountCouponId, userId) });
+            await _commandDispatcher.Dispatch<CreateOrder.Command>(new CreateOrder.Command{ _data = new CreateOrder.Data(key,orderDate,adress,contractingAuthority,city,postalCode,discountCouponId, email) });
 
         }
     }
