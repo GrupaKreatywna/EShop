@@ -41,7 +41,6 @@ export class Cart extends Component {
                 price: price[env.price.value],
             }
 
-            console.log(joinedProduct);
             let productAsComponent = this.productComponent(joinedProduct);
 
             let currentProducts = this.state.products;
@@ -65,8 +64,8 @@ export class Cart extends Component {
 
     render() {
         return (
-            <div>
-                {this.state.products}
+            <div className={style.wrapper} >
+                {(this.state.products.length > 0 ? this.state.products : "Twój koszyk jest pusty")}
             </div>
         )
     }
