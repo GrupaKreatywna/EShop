@@ -14,6 +14,7 @@ namespace Eshop.Core.Data
         IRepository<Category, int> CategoryRepository { get; }
         IRepository<Price, int> PriceRepository { get; }
         IRepository<User, int> UserRepository { get; }
+        IRepository<OrderProduct, int> OrderProductsRepository { get; }
         void BeginTransaction();
 
         int Commit();

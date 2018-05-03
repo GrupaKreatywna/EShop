@@ -1,5 +1,6 @@
 ﻿using Eshop.Core.CQRS;
 using Eshop.Core.Data;
+using FluentValidation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,15 @@ namespace EShop.Controllers.Category
             {
                 _uow.CategoryRepository.Insert(command._data.ToCategoryEntity());
                 await _uow.SaveChangesAsync();
+            }
+        }
+
+        public class Validator : AbstractValidator<Command>
+        {
+
+            public Validator()
+            {
+                RuleFor(x => x._data.CategoryName).NotEmpty();
             }
         }
 

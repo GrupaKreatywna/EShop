@@ -1,5 +1,6 @@
 ﻿using Eshop.Core.CQRS;
 using Eshop.Core.Data;
+using FluentValidation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,26 +31,35 @@ namespace EShop.Controllers.Product
             }
         }
 
-        //Validator
+        public class Validator : AbstractValidator<Command>
+        {
+
+            public Validator()
+            {
+                RuleFor(x => x._data.Name).NotEmpty();
+                RuleFor(x => x._data.Quantity).GreaterThanOrEqualTo(0);
+            }
+        }
+
 
         public class Data
         {
             public string Name { get; set; }
-            public string Picture { get; set; }
+            public string Img { get; set; }
             public string Description { get; set; }
             public string Tags { get; set; }
-            public int Count { get; set; }
+            public int Quantity { get; set; }
             public int? CurrentPriceId { get; set; }
             public int CategoryId { get; set; }
 
-            public Data(string _Name, string _Picture, string _Description, string _Tags, 
-                int _Count, int? _CurrentPriceId, int _CategoryId)
+            public Data(string name, string img, string description, string tags, 
+                int quantity, int? _CurrentPriceId, int _CategoryId)
             {
-                Name = _Name;
-                Picture = _Picture;
-                Description = _Description;
-                Tags = _Tags;
-                Count = _Count;
+                Name = name;
+                Img = img;
+                Description = description;
+                Tags = tags;
+                Quantity = quantity;
                 CurrentPriceId = _CurrentPriceId;
                 CategoryId = _CategoryId;
             }
@@ -59,10 +69,10 @@ namespace EShop.Controllers.Product
                 var _product = new Core.Entities.Product()
                 {
                 Name = this.Name,
-                Picture = this.Picture,
+                Picture = this.Img,
                 Description = this.Description,
                 Tags = this.Tags,
-                Count = this.Count,
+                Count = this.Quantity,
                 CurrentPriceId = this.CurrentPriceId,
                 CategoryId = this.CategoryId
             };

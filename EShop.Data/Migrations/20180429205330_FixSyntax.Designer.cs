@@ -11,9 +11,10 @@ using System;
 namespace EShop.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20180429205330_FixSyntax")]
+    partial class FixSyntax
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -71,13 +72,9 @@ namespace EShop.Data.Migrations
 
                     b.Property<string>("PostalCode");
 
-                    b.Property<int?>("UserId");
-
                     b.HasKey("Id");
 
                     b.HasIndex("DiscountCouponId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Orders");
                 });
@@ -90,8 +87,6 @@ namespace EShop.Data.Migrations
                     b.Property<int>("OrderId");
 
                     b.Property<int>("ProductId");
-
-                    b.Property<int>("Quantity");
 
                     b.HasKey("Id");
 
@@ -125,15 +120,15 @@ namespace EShop.Data.Migrations
 
                     b.Property<int>("CategoryId");
 
-                    b.Property<int>("Count");
-
                     b.Property<int?>("CurrentPriceId");
 
                     b.Property<string>("Description");
 
+                    b.Property<string>("Picture");
+
                     b.Property<string>("Name");
 
-                    b.Property<string>("Picture");
+                    b.Property<int>("Count");
 
                     b.Property<string>("Tags");
 
@@ -151,17 +146,11 @@ namespace EShop.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Adress");
-
-                    b.Property<string>("City");
-
                     b.Property<string>("Email");
 
                     b.Property<string>("Name");
 
                     b.Property<string>("Password");
-
-                    b.Property<string>("PostalCode");
 
                     b.Property<string>("Surname");
 
@@ -184,10 +173,6 @@ namespace EShop.Data.Migrations
                     b.HasOne("EShop.Core.Entities.DiscountCoupon", "DiscountCoupon")
                         .WithMany("Orders")
                         .HasForeignKey("DiscountCouponId");
-
-                    b.HasOne("EShop.Core.Entities.User", "User")
-                        .WithMany("Orders")
-                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("EShop.Core.Entities.OrderProduct", b =>

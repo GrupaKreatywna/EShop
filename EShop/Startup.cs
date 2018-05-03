@@ -99,7 +99,7 @@ namespace Eshop
         {
 
             app.UseCors("AllowAll"); //do not remove this unless shipping to a live website
-            app.UseMvc();
+           
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
@@ -118,6 +118,7 @@ namespace Eshop
 
             app.UseAuthentication();
             app.UseStaticFiles();
+            app.UseMvc();
         }
     }
 }

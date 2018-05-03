@@ -1,5 +1,6 @@
 ﻿using Eshop.Core.CQRS;
 using Eshop.Core.Data;
+using FluentValidation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,15 @@ namespace EShop.Controllers.Price
             {
                 _uow.PriceRepository.Insert(command._data.ToPriceEntity());
                 await _uow.SaveChangesAsync();
+            }
+        }
+
+        public class Validator : AbstractValidator<Command>
+        {
+
+            public Validator()
+            {
+                RuleFor(x => x._data.Value).GreaterThan(0);
             }
         }
 

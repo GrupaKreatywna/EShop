@@ -1,4 +1,5 @@
 ﻿using Eshop.Core.CQRS;
+using FluentValidation;
 using StackExchange.Redis;
 using System;
 using System.Collections.Generic;
@@ -28,6 +29,15 @@ namespace EShop.Controllers.Cart
                 RedisKey key = command._data.Key.ToString();
                 await _redis.HashIncrementAsync(key, command._data.Id, command._data.Quantity);
                 await _redis.KeyExpireAsync(key, TimeSpan.FromMinutes(15));
+            }
+        }
+
+        public class Validator : AbstractValidator<Command>
+        {
+
+            public Validator()
+            {
+                RuleFor(x => x._data.Quantity).GreaterThan(0);             
             }
         }
 

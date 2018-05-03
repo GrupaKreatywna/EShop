@@ -1,5 +1,6 @@
 ﻿using Eshop.Core.CQRS;
 using Eshop.Core.Data;
+using FluentValidation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,6 +34,16 @@ namespace EShop.Controllers.User
             }
         }
 
+        public class Validator : AbstractValidator<Command>
+        {
+
+            public Validator()
+            {
+                RuleFor(x => x._data.Email).EmailAddress();
+                RuleFor(x => x._data.Password).MinimumLength(6);
+            }
+        }
+
 
         public class Data
         {
@@ -41,14 +52,20 @@ namespace EShop.Controllers.User
             public string Email { get; set; }
             public string Password { get; set; }
             public bool Verified { get; set; }
+            public string Adress { get; set; }
+            public string City { get; set; }
+            public string PostalCode { get; set; }
 
-            public Data(string name, string surname, string email, string password, bool verified = false)
+            public Data(string name, string surname, string email, string password,  string adress, string city, string postalCode, bool verified = false)
             {
                 Name = name;
                 Surname = surname;
                 Email = email;
                 Password = password;
                 Verified = verified;
+                Adress = adress;
+                City = city;
+                PostalCode = postalCode;
             }
 
             public Core.Entities.User ToUserEntity()
@@ -59,7 +76,10 @@ namespace EShop.Controllers.User
                     Surname = this.Surname,
                     Email = this.Email,
                     Password = this.Password,
-                    Verified = this.Verified
+                    Verified = this.Verified,
+                    Adress = this.Adress,
+                    City = this.City,
+                    PostalCode = this.PostalCode
                 };
                 return user;
             }
