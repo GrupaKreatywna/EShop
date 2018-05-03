@@ -1,6 +1,120 @@
 :root{
     --infomargin: 2vh;
+    --border-radius: 5px;
 }
+
+button {
+    box-shadow: 5px 5px lightgray;
+    transition: all ease 0.1s;
+    border: 0;
+    border-radius: var(--border-radius);
+}
+
+:local(.counter__button):active {
+    box-shadow: 1px 1px var(--color-dark);
+}
+
+button[disabled=""] { /* disabled="" means the button is disabled */
+    background: var(--color-disabled);
+    color: var(--font-dark);
+
+    box-shadow: 0px 0px;
+}   
+
+button[disabled=""]:hover {
+    background: var(--color-disabled);
+    color: var(--font-dark);
+
+    box-shadow: 0px 0px;
+    cursor: default;
+}
+
+
+:local(.buyButton), 
+:local(.removeButton) {
+    display:inline-block;
+    color: var(--color-light);
+
+    font-weight: bold;
+    font-size: 1.25em;
+
+    padding: 2vh;
+}
+
+:local(.addedInfoWrapper) {
+    height:100%;
+}
+
+:local(.removeButton) {
+    min-height: 100%;
+    
+    z-index: -1;
+    /*
+    animation-name: removeSlideOut;
+    animation-duration: 50ms;
+    animation-timing-function: ease-in;
+    */
+    background: var(--color-bad);
+    font-size: .75em;
+    text-align: left;
+
+    min-height: 100% !important;
+
+    height:100%;
+    
+    border-radius: 0 var(--border-radius) var(--border-radius) 0;
+    border-style: dashed;
+    border-width: 2px;
+    border-color: var(--color-bad-dark);
+    border-left-style: none;
+}
+
+:local(.buyButton[disabled=""]) {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+:local(.counter__button){
+    border: 0;
+    color: var(--color-light);
+    
+    border-radius: 3px;
+
+    width:25px;
+    height: 25px;
+
+    text-align: center;
+
+    font-size: 1.15em;
+    font-weight: 700;
+    overflow: hidden;
+}
+
+:local(.buttonPlus),
+:local(.buyButton) {
+    background: var(--color-good);
+}
+:local(.buttonPlus:hover),
+:local(.buyButton:hover) {
+    background: var(--color-good-light);
+}
+:local(.buttonPlus:active),
+:local(.buyButton:active) {
+    background: var(--color-good-dark);
+}
+
+:local(.buttonMinus) {
+    background: var(--color-bad);
+}
+:local(.buttonMinus:hover),
+:local(.removeButton:hover) {
+    background: var(--color-bad-light);
+}
+:local(.buttonMinus:active),
+:local(.removeButton:active) {
+    background: var(--color-bad-dark);
+}
+/*-------------------------LAYOUT-----------------------------*/
 
 :local(.productWrapper) {
     width: 40vw;
@@ -8,6 +122,8 @@
     min-height: fit-content;
     height: 30vh;
     max-height:100%;
+
+    color: var(--color-font-dark);
 
 }
 
@@ -26,12 +142,12 @@
     justify-items: center;
 }
 
-:local(.infoWrapper) { /*this is on the right column (contains .name, .description etc)*/
+:local(.infoWrapper) { /*right column of .product grid (contains .name, .description etc)*/
     cursor: default;
 }
 
 
-:local(.imageWrapper) { /*left column (image)*/
+:local(.imageWrapper) { /*left column of .product (image)*/
 }
 
 :local(.imageWrapper) > img {   
@@ -51,79 +167,30 @@
     line-height: .9em;
 }
 
-
-:local(.counter__button),
-:local(.buyButton) {
-    box-shadow: 5px 5px lightgray;
-    transition: all ease 0.1s;
-}
-
-:local(.buyButton):active,
-:local(.counter__button):active {
-    box-shadow: 1px 1px dimgray;
-    background: var(--color-good-dark);
-}
-
-
 :local(.counterWrapper) {
-    user-select: ;    
-}
-
-:local(.counter__button){
-    border: 0;
-    background: var(--color-good);
-    color: var(--color-light);
-    
-    border-radius: 3px;
-
-    width:25px;
-    height: 25px;
-
-    text-align: center;
-
-    font-size: 1.25em;
-    font-weight: 700;
-    overflow: hidden;
-}
-
-:local(.counter__button):hover, :local(.buyButton):hover {
-    background: var(--color-good-light);
-    cursor: pointer;
+    user-select: none; /*avoid accidentally selecting if you press counter + - buttons*/    
 }
 
 :local(.counter__number) {
+    display:inline-block;
     color: var(--color-font-dark);
-    margin: 0 10px;
+    margin: 0 1vw;
+    
+    width: 2ch; /* so it doesent move the + - counter buttons if number is >= 10*/
+    text-align:center;
     
     font-weight: 900;
     font-size: 1.25em;
-
-
 }
 
-:local(.buyButton) {
-    background: var(--color-good);
-    color: var(--color-light);
-    
-    border: 0;
-    border-radius: 3px;
-    font-weight: bold;
-    font-size: 1.25em;
+@keyframes removeSlideOut{
+    0% {
+        transform: translateX(-30%);
+        opacity: 50%;
+    }
 
-    padding: 2vh;
-}
-
-:local(.disabled) {
-    background: var(--color-disabled);
-    color: var(--color-dark);
-    box-shadow: 0 0;
-}
-
-:local(.counter__button.disabled):hover {
-    color: var(--color-disabled);
-    cursor: not-allowed;
-}
-
-:local(.counter__button.disabled):active {
-    box-shadow: 0;
+    100% {
+        transform: translateX(0%);
+        opacity: 100%;
+    }
 }

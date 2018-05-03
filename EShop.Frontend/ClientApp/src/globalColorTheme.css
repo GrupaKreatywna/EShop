@@ -15,7 +15,14 @@
     --color-good: green;
     --color-good-dark: darkgreen;
 
+    --color-bad-light: pink;
     --color-bad: red;
+    --color-bad-dark: darkred;
 
-    --color-disabled: snow;
+    --color-info-light: lightblue;
+    --color-info: blue;
+    --color-inf-dark: darkblue;
+
+    --color-disabled: lightgray;
+    --color-disabled-dark: gray; 
 }

@@ -10,6 +10,7 @@ export const apiSinglePrice = '/api/Price/'
 export const apiCategories = '/api/Categories/';
 
 export const apiCartRedis = '/api/Cart/';
+export const apiCartRedisDelete = '/api/Cart/delete/';
 
 export const apiRegister = '/api/register/';
 export const apiLogin = '/api/login';
