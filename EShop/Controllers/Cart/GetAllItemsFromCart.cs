@@ -30,6 +30,11 @@ namespace EShop.Controllers.Cart
 
             public async Task<List<Result>> Handle(Query query)
             {
+                bool exists = await _redis.KeyExistsAsync(query.Key.ToString());
+                if (!exists)
+                {
+                    throw new KeyNotFoundException();
+                }
 
                 var items = await _redis.HashGetAllAsync(query.Key.ToString());
                 

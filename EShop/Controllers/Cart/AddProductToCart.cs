@@ -27,7 +27,7 @@ namespace EShop.Controllers.Cart
             public async Task Execute(Command command)
             {
                 RedisKey key = command._data.Key.ToString();
-                await _redis.HashIncrementAsync(key, command._data.Id, command._data.Quantity);
+                await _redis.HashSetAsync(key, command._data.Id, command._data.Quantity);
                 await _redis.KeyExpireAsync(key, TimeSpan.FromMinutes(15));
             }
         }
