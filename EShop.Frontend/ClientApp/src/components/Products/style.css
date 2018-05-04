@@ -1,7 +1,13 @@
 @import "../../globalColorTheme.css";
 
+:root {
+    --product-min-width: 100px;
+    --product-width: 150px;
+
+    --max-products-in-row: 10;
+}
+
 :local(.wrapper) {
-    
     display: inline-flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -14,21 +20,15 @@
 
 :local(.product) {
     display:grid;
-    
+    max-width: 10%; /*maximum 10 elements in one row */
+
     grid-template-rows: 15vh 
                         20vh;
     grid-template-columns: 1fr;
-
-    --product-min-width: 100px;
     
     flex: 0 1 var(--product-min-width);
     
-    min-width: var(--product-min-width);
-    width:150px;
-    max-width:200px;
-    
     height:auto;
-
     background: inherit;
 }
 

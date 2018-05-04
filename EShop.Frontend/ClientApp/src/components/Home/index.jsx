@@ -5,7 +5,7 @@ import * as env from '../../env.js';
 
 import UnnumberedList from '../UnnumberedList/'; //TODO: webpack aliases (to reove the "../")
 import SearchAutocomplete from '../SearchAutocomplete';
-import Products from '../Products/';
+import {Products} from '../Products/';
 
 export const Home = () => (
   <div className={style.Layout}>
