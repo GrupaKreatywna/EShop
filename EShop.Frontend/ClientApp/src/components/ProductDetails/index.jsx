@@ -14,13 +14,12 @@ export class ProductDetails extends Component {
 
         this.state = {
             product: {},
-            price: 0,
             numberOfCopiesToBuy: 1,
             alreadyAddedToCart: false,
         }
 
         this.idRouteParam = this.props.match.params.id; // this is the ID of the product this component views (from URL - localhost/product/[:id])        
-        this.currency = "PLN";
+        this.currency = env.currency;
 
         this.addProductToCart = this.addProductToCart.bind(this);
         this.removeProductFromCart = this.removeProductFromCart.bind(this);
@@ -29,12 +28,10 @@ export class ProductDetails extends Component {
 
     async componentDidMount() {
         let _product = await(await fetch(env.host+env.apiSingleProduct+this.idRouteParam)).json(); // ? shouldnt these be methods (in the Component body) instead of functions?
-        let _price = await(await fetch(env.host+env.apiSinglePrice+_product[env.product.currentPriceId])).json();
-        this.setState({product: _product}); //TODO figure out if this can be done in one setState
-        this.setState({price: _price[env.price.value]}); // ! getPrice() is dependent on getProduct() - that's why setStates are separate
+        this.setState({product: _product});
     }
 
-    async addProductToCart() { //TODO what happens if the api returns a non 200 response code? (fails to add to cart)
+    async addProductToCart() {
         this.setState({alreadyAddedToCart: true});
         
         let guid = this.getGuid(env.guidCookieName);
@@ -92,8 +89,7 @@ export class ProductDetails extends Component {
         return responseCode===200; //return true if removed successfully
     }
 
-    render() { //TODO make "Add to cart" button grey out when pressed, and then make it display the status of the order, like "Item added to cart in quantity: 5"
-    //TODO add remove from cart button
+    render() {
         
     let fetchedProduct = this.state.product;
         
@@ -111,7 +107,7 @@ export class ProductDetails extends Component {
                     </div>
 
                     <div className={style.price}>
-                        {this.state.price + ' ' + this.currency}
+                        {env.formatPrice(String(fetchedProduct[env.product.price])) + ' ' + this.currency}
                     </div>
                 
                     <div className={style.description}>

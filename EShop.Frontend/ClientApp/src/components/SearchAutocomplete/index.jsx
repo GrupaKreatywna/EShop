@@ -13,7 +13,7 @@ export default class SearchAutocomplete extends Component {
         super();
         this.state = {
             value: "",
-            data: [{},{},],
+            data: [],
             redirect:false,
         };
         this.onSelect = this.onSelect.bind(this);
@@ -39,8 +39,8 @@ export default class SearchAutocomplete extends Component {
                     onChange={e => this.setState({ value: e.target.value })}
                     onSelect={this.onSelect}
 
-                    wraperStyle={{position: 'relative'}} //see comment by CMTenger on https://github.com/reactjs/react-autocomplete/issues/284
-                    menuStyle={{position: 'absolute'}}
+                    wrapperStyle={{position: 'relative'}} //see comment by CMTenger on https://github.com/reactjs/react-autocomplete/issues/284
+                    menuStyle={{position: 'absolute', top: '40px', left: 0}}
                 />
             </div>
         );
@@ -54,7 +54,7 @@ export default class SearchAutocomplete extends Component {
 
 const SearchResult = (product, isHighlighted) => {
     let isHovered =  (isHighlighted ? style.elementHighlighted : style.elementNormal);
-    
+    let currency = env.currency;
     return (
         <div key={product[env.product.id]} className={style.element + ' ' + isHovered}  >
             <div className={style.elementImageWrapper}>
@@ -62,7 +62,7 @@ const SearchResult = (product, isHighlighted) => {
             </div>
             
             <div className={style.elementText}>{product[env.product.name]}</div>
-            <div className={style.elementPrice}>{product[env.product.price]}</div>
+            <div className={style.elementPrice}>{env.formatPrice(String(product[env.product.price])) + ' ' + currency }</div>
         </div>
     )
 }
