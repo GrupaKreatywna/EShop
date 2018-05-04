@@ -50,6 +50,9 @@ export const userRegister = {
     email: "email",
     password: "password",
     verified: "verified",
+    address: "address",
+    city: "city",
+    postalcode: "postalcode",
 }
 
 export const currency = "PLN";

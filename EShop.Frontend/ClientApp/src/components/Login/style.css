@@ -1,5 +1,5 @@
 @import "../../globalColorTheme.css";
-
+@import "../../inputboxes.css";
 :local(.login) {
     width:100%;
     height:100%;
