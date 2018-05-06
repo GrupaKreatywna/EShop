@@ -22,9 +22,9 @@ namespace EShop.Controllers
         }
 
         [HttpPost("/api/Cart/delete")]
-        public async Task Delete(Guid key, int id, int quantity)
+        public async Task Delete(Guid key, int id)
         {
-            await _commandDispatcher.Dispatch<DeleteProductFromCart.Command>(new DeleteProductFromCart.Command { _data = new DeleteProductFromCart.Data(key, id, quantity) });
+            await _commandDispatcher.Dispatch<DeleteProductFromCart.Command>(new DeleteProductFromCart.Command { _data = new DeleteProductFromCart.Data(key, id) });
         }
    
         [HttpPost("")]
@@ -38,9 +38,16 @@ namespace EShop.Controllers
         }
 
         [HttpGet("/api/Cart")]
-        public async Task<List<GetAllItemsFromCart.Result>> GetCart(Guid key)
+        public async Task<object> GetCart(Guid key)
         {
-            return await _queryDispatcher.Dispatch<GetAllItemsFromCart.Query, List<GetAllItemsFromCart.Result>>(new GetAllItemsFromCart.Query(key));
+            try
+            {
+                return await _queryDispatcher.Dispatch<GetAllItemsFromCart.Query, List<GetAllItemsFromCart.Result>>(new GetAllItemsFromCart.Query(key));
+            }
+            catch (KeyNotFoundException)
+            {
+                return NotFound();
+            }
         }
 
     }
