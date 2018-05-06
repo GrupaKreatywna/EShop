@@ -9,7 +9,7 @@ namespace EShop.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<string>(
-                name: "Adress",
+                name: "Address",
                 table: "Users",
                 nullable: true);
 
@@ -53,7 +53,7 @@ namespace EShop.Data.Migrations
                 table: "Orders");
 
             migrationBuilder.DropColumn(
-                name: "Adress",
+                name: "Address",
                 table: "Users");
 
             migrationBuilder.DropColumn(

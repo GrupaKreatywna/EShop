@@ -77,7 +77,7 @@ namespace EShop.Controllers.User
                     Email = this.Email,
                     Password = this.Password,
                     Verified = this.Verified,
-                    Adress = this.Adress,
+                    Address = this.Adress,
                     City = this.City,
                     PostalCode = this.PostalCode
                 };

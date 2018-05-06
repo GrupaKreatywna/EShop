@@ -36,7 +36,7 @@ namespace EShop.Controllers.User
                     Surname = x.Surname,
                     Email = x.Email,
                     Verified = x.Verified,
-                    Adress = x.Adress,
+                    Address = x.Address,
                     City = x.City,
                     PostalCode = x.PostalCode
 
@@ -51,7 +51,7 @@ namespace EShop.Controllers.User
             public string Surname { get; set; }
             public string Email { get; set; }
             public bool Verified { get; set; }
-            public string Adress { get; set; }
+            public string Address { get; set; }
             public string City { get; set; }
             public string PostalCode { get; set; }
         }
