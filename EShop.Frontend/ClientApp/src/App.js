@@ -8,19 +8,20 @@ import { ProductDetails } from './components/ProductDetails';
 import { Cart } from './components/Cart';
 import { Register } from './components/Register';
 import { Login } from './components/Login';
+import { Checkout } from './components/Checkout';
 
 export default class App extends Component {
-  displayName = App.name
-
+  displayName = App.name;
 
   render() {
     return (
         <div>
           <Header/>
           <div>
-            <Route exact path='/' component={Home} />
-            <Route path='/product/:id' component={ProductDetails}/>
+            <Route exact path='/' component={Home}/>
+            <Route path='/product/:id' render={ props => <ProductDetails {...props.match.params} />}/>
             <Route path='/cart' component={Cart}/>
+            <Route path='/checkout' component={Checkout}/>
             <Route path='/register' component={Register}/>
             <Route path='/login' component={Login}/>
           </div>
