@@ -75,3 +75,5 @@
     min-width: min-content;
     background: var(--color-secondary);
 }
+
+:local(.searchAutocompleteWrapper)

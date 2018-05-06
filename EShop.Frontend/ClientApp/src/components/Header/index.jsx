@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
+import SearchAutocomplete from '../SearchAutocomplete';
 
 import * as env from '../../env.js';
 import style from './style.css';
@@ -8,12 +9,9 @@ export class Header extends Component {
     constructor() {
         super();
         
-        let cartExists = ( localStorage.getItem(env.guidCookieName)) ? true : false;
-        let userLoggedIn = (localStorage.getItem(env.tokenCookieName)) ? true : false; //! you will need to change this later because the token will be moved from localStorage to cookies
-
         this.state = {
-            cartExists: cartExists, //TODO use redux to track cart state (number of items etc.)
-            userLoggedIn: userLoggedIn,
+            cartExists: localStorage.getItem(env.guidCookieName) ? true : false, //TODO use redux to track cart state (number of items etc.)
+            userLoggedIn: localStorage.getItem(env.tokenCookieName) ? true : false,
         }
     }
         //TODO make <Links> have className indicating that we are on the current route
@@ -26,6 +24,9 @@ export class Header extends Component {
                 </div>
                 <Link to='/' className={style.button}>Home</Link>
                 <Link to='/cart' className={style.button}>Koszyk</Link>
+                <div className={ style.button + ' ' + style.searchAutocompleteWrapper} >
+                    <SearchAutocomplete/>
+                </div>
                 <LoginStatus isLoggedIn={this.state.userLoggedIn}/>
             </div>
             )

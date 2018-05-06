@@ -1,23 +1,29 @@
 import React, {Component} from 'react';
+import {Redirect} from 'react-router-dom';
 
 import * as env from '../../env.js';
 import style from '../Login/style.css'; //! Reusing css from <Login/>
 
+const {name,surname,email,password,address,city,postalcode} = env.userRegister;
+
 export class Register extends Component {
     constructor(props) {
         super(props);        
+
         this.state = {
             fields: {
-                firstname: '',
-                lastname: '',
-                email: '',
-                password: '',
-                passwordconfirm: '',
-                address: '',
-                city: '',
-                postalcode: '',
+                [name]: '',
+                [surname]: '',
+                [email]: '',
+                [password]: '',
+                [address]: '',
+                [city]: '',
+                [postalcode]: '',
+
+                passwordconfirm: '', //this is not part of the "register user" POST
             },
             issues: [],
+            redirect: null,
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -45,14 +51,15 @@ export class Register extends Component {
         let appendIssue = issue => _issues.push(issue);
 
         const mapNamesToStrings = {
-            firstname: 'Imie',
-            lastname: 'Nazwisko',
-            email: 'E-mail',
-            password: 'Hasło',
+            [name]: 'Imie',
+            [surname]: 'Nazwisko',
+            [email]: 'E-mail',
+            [password]: 'Hasło',
+            [address]: 'Adres',
+            [city]: 'Miasto',
+            [postalcode]: 'Kod pocztowy',
+            
             passwordconfirm: 'Powtórz hasło',
-            address: 'Adres',
-            city: 'Miasto',
-            postalcode: 'Kod pocztowy'
         }
 
         const minimumPasswordLength = env.minimumPasswordLength; //this is enforced by the backend - server will return 400 bad request if password length is < 6
@@ -74,22 +81,14 @@ export class Register extends Component {
             this.setState({issues: _issues});
             return;
         } 
-        
-        //TODO there's gotta be a better way to format this
-        const requestBody = {
-            [env.userRegister.name]: fieldContents.firstname,
-            [env.userRegister.surname]: fieldContents.lastname,
-            [env.userRegister.password]: fieldContents.password,
-            [env.userRegister.email]: fieldContents.email,
-            [env.userRegister.verified]: true, //this will be removed later, no idea what this does but keep it at true
-            [env.userRegister.address]: fieldContents.address,
-            [env.userRegister.city]: fieldContents.city,
-            [env.userRegister.postalcode]: fieldContents.postalcode, 
-        };
+
+        const {passwordconfirm, ...postData} = this.state.fields; //postData contains everything from this.state.fields but "passwordconfirm"
+        postData["verified"] = false; //no idea what it does, but its required. keep it at true anyways
+        console.log("state fields", this.state.fields, "modified fields", postData);
         
         const fetchParams = {
             method: 'POST',
-            body: JSON.stringify(requestBody),
+            body: JSON.stringify(postData),
             
             headers: {
                 'Accept': 'application/json',
@@ -101,7 +100,14 @@ export class Register extends Component {
 
         if(responseCode!==200) {
             appendIssue(env.errorMessageStrings.fetchFailed);
-            this.setState({issues: _issues});
+            this.setState({
+                issues: _issues,
+            });
+        }
+        else { //if ok
+            this.setState({
+                redirect: <Redirect to='/login'/>
+            })
         }
 
     }
@@ -110,25 +116,25 @@ export class Register extends Component {
     //TODO add password strength indicator (get one from npm probably)
     //TODO add classNames for CSS
     render() { //! reusing CSS from <Login/>
-        
         return(
             <div className={style.login}>
                 <form onSubmit={this.handleSubmit} className={style.login__form}>
-                    <input type="text" onChange={this.handleChange} name="firstname" placeholder="Imię" autoFocus=""/>
-                    <input type="text" onChange={this.handleChange} name="lastname" placeholder="Nazwisko" />
-                    <input type="email" onChange={this.handleChange} name="email" placeholder="twojemail@przyklad.pl"/>
-                    <input type="password" onChange={this.handleChange} name="password" placeholder="Wpisz hasło" />
+                    <input type="text" onChange={this.handleChange} name={name} placeholder="Imię" autoFocus=""/>
+                    <input type="text" onChange={this.handleChange} name={surname} placeholder="Nazwisko" />
+                    <input type="email" onChange={this.handleChange} name={email} placeholder="twojemail@przyklad.pl"/>
+                    <input type="password" onChange={this.handleChange} name={password} placeholder="Wpisz hasło" />
                     <input type="password" onChange={this.handleChange} name="passwordconfirm" placeholder="Potwierdź hasło"/>
                     <p/>
-                    <input type="text" onChange={this.handleChange} name="address" placeholder={"Ulica (np. ul. Przykład 3A/25\)"} />
-                    <input type="text" onChange={this.handleChange} name="city" placeholder="Miasto (np. Warszawa)"/>
-                    <input type="text" onChange={this.handleChange} name="postalcode" placeholder="Kod pocztowy (np. 12-123)" />
+                    <input type="text" onChange={this.handleChange} name={address} placeholder={"Ulica (np. ul. Przykład 3A/25)"} />
+                    <input type="text" onChange={this.handleChange} name={city} placeholder="Miasto (np. Warszawa)"/>
+                    <input type="text" onChange={this.handleChange} name={postalcode} placeholder="Kod pocztowy (np. 12-123)" />
                     <p/>
                     <input type="submit" value="Zarejestruj się" />
                 </form>
                 <div>
                     {this.state.issues.map(issue => <div>{issue}</div>)}
                 </div>
+                {this.state.redirect}
             </div>
         )
     }

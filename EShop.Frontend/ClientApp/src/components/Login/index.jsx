@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-
+import {Redirect} from 'react-router-dom'
 import * as env from '../../env.js';
 import style from './style.css';
 //i am actually ashamed of myself this is exactly the same code as in <Register/>
@@ -14,7 +14,8 @@ export class Login extends Component {
                 password: '',
             },
             loginTokenExists: (localStorage.getItem(env.tokenCookieName) ? true : false),
-            issues: []
+            issues: [],
+            redirect: null,
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -111,7 +112,7 @@ export class Login extends Component {
     //TODO add password strength indicator (get one from npm probably)
     render() {
         if(this.state.loginTokenExists)
-            return <div>Jesteś zalogowany!</div>
+            return <Redirect to='/'/>
         else return this.userNotLoggedIn();
     }
 }

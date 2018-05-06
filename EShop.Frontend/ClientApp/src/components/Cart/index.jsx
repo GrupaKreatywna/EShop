@@ -31,7 +31,6 @@ export class Cart extends Component {
         let productIdsAndQuantities = await requestProductIdsAndQuantitiesForGuid.json(); 
         
         //TODO refactor this
-        let i = 0;
         let finalProducts = productIdsAndQuantities.map(cartElement => {
             //TODO initialAdded and initialQuantity should be a single object, much like in setState
             let elemId = cartElement[env.redisCartElement.id];
@@ -67,66 +66,18 @@ export class Cart extends Component {
 
     render() {
         
-        console.log(this.state.prices);
-
         const sum = Object.values(this.state.prices).reduce((sum,x)=>sum+x);
         
-        const productsExist = (
+        const cartExists = (
         <div>
             <div>Total:{sum}</div>
             <div>{this.state.products}</div>
-            <button onClick={e=>{
-                e.preventDefault();
-                
-            }}/>
+            <button onClick={null}>Zatwierdź</button>
         </div>)
         
         return (
             <div className={style.wrapper}>
-                {this.state.products.length > 0 ? <div><div>Total: {sum}</div>{this.state.products}</div> : "Twój koszyk jest pusty"}
-            </div>
-        )
-    }
-}
-
-
-export class Checkout extends Component {
-    constructor(props) {
-        super(props);
-        
-        this.state = {
-
-        }
-
-        this.handleChange() = this.handleChange().bind(this);
-    }
-
-    handleChange(e) {
-        e.persist();
-        this.setState(prevState => ({
-                fields: {
-                    ...prevState.fields,
-                    [e.target.name]: e.target.value 
-                }
-            }
-        }
-
-    render() {
-        return (
-            <div>
-                <form onSubmit={this.handleSubmit} className={style.login__form}>
-                    <input type="text" onChange={this.handleChange} name="address" placeholder="Adres" />
-                    <input type="text" onChange={this.handleChange} name="contractingAuthority" placeholder="contractingAuthority" />
-                    <input type="text" onChange={this.handleChange} name="city" placeholder="Miasto" />
-                    <input type="text" onChange={this.handleChange} name="postalCode" placeholder="Kod pocztowy" />
-                    <input type="text" onChange={this.handleChange} name="discountCouponId" placeholder="Adres" />
-                    <input type="text" onChange={this.handleChange} name="" placeholder="Adres" />
-
-
-
-
-                    <input type="submit" value="Zamów" />
-                </form>
+                {this.state.products.length > 0 ? cartExists : "Twój koszyk jest pusty"}
             </div>
         )
     }

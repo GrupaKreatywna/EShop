@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
 
 import style from './style.css';
 import * as env from '../../env';
@@ -24,7 +23,7 @@ export default class UnnumberedList extends Component {
     render() {
         let bar = (this.props.dataset) ? this.props.dataset : this.state.data;
         let foo = bar.map( parent =>{
-                if(parent.children.length == 0) {
+                if(parent.children.length === 0) {
                     console.log(parent[env.category.name]);
                     return (<li key={parent[env.category.id]}>{parent[env.category.name]}</li>);
                 }
