@@ -55,25 +55,18 @@ export class Register extends Component {
             postalcode: 'Kod pocztowy'
         }
 
-        const minimumPasswordLength = 6; //this is enforced by the backend - server will return 400 bad request if password length is < 6
-        const messageStrings = {
-            passwordsDontMatch: 'Hasło i powtórzone hasło nie są takie same',
-            fetchFailed: 'Kontakt z serwerem nie powiódł się. Spróbuj ponownie później',
-            fieldIsEmpty: field => ['Pole', field, 'jest puste'].join(' '),
-            passwordTooShort: 'Hasło jest zbyt krótkie - musi mieć przynajmniej ' + minimumPasswordLength + ' znaków',
-
-        }
+        const minimumPasswordLength = env.minimumPasswordLength; //this is enforced by the backend - server will return 400 bad request if password length is < 6
 
         let emptyFields = Object.keys(fieldContents).filter(key => !fieldContents[key]); //returns names of input fields that are empty
-        emptyFields.forEach(emptyField => appendIssue(messageStrings.fieldIsEmpty(mapNamesToStrings[emptyField])))
+        emptyFields.forEach(emptyField => appendIssue(env.errorMessageStrings.fieldIsEmpty(mapNamesToStrings[emptyField])))
 
         const anyPasswordFieldEmpty = emptyFields.includes("password") || emptyFields.includes("passwordconfirm");  
         if(fieldContents.password !== fieldContents.passwordconfirm) { //"passwords dont match" issue
             if(!anyPasswordFieldEmpty) //dont display the passwords dont match error when one of the password fields is empty
-                appendIssue(messageStrings.passwordsDontMatch);
+                appendIssue(env.errorMessageStrings.passwordsDontMatch);
         }
-        else if(fieldContents.password < minimumPasswordLength && !anyPasswordFieldEmpty) { //if passwords are the same and the password is shorther than minimumn and no password field is empty
-            appendIssue(messageStrings.passwordTooShort);
+        else if(fieldContents.password.length < minimumPasswordLength && !anyPasswordFieldEmpty) { //if passwords are the same and the password is shorther than minimumn and no password field is empty
+            appendIssue(env.errorMessageStrings.passwordTooShort);
         }
 
 
@@ -106,10 +99,8 @@ export class Register extends Component {
         
         let responseCode = await (await fetch(env.host+env.apiRegister, fetchParams)).status;
 
-
-
         if(responseCode!==200) {
-            appendIssue(messageStrings.fetchFailed);
+            appendIssue(env.errorMessageStrings.fetchFailed);
             this.setState({issues: _issues});
         }
 

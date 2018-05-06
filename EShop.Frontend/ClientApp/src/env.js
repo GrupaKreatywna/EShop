@@ -55,6 +55,18 @@ export const userRegister = {
     postalcode: "postalcode",
 }
 
+export const errorMessageStrings = {
+    passwordsDontMatch: 'Hasło i powtórzone hasło nie są takie same',
+    fetchFailed: 'Kontakt z serwerem nie powiódł się. Spróbuj ponownie później',
+    fieldIsEmpty: field => ['Pole', field, 'jest puste'].join(' '),
+    passwordTooShort: 'Hasło jest zbyt krótkie - musi mieć przynajmniej ' + this.minimumPasswordLength + ' znaków',
+    incorrectLoginOrPassword: 'Login lub hasło są niepoprawne.',
+}
+
+export const minimumPasswordLength=6;
+
+
+
 export const currency = "PLN";
 
 export const formatPrice = num => {
