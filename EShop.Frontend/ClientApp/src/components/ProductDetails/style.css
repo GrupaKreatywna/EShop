@@ -117,20 +117,21 @@ button[disabled=""]:hover {
 /*-------------------------LAYOUT-----------------------------*/
 
 :local(.productWrapper) {
-    width: 40vw;
+    width: fit-content;
     min-width: fit-content;
     min-height: fit-content;
-    height: 30vh;
-    max-height:100%;
+    height: min-content;
+    max-height: 30%;
 
     color: var(--color-font-dark);
 
 }
 
 :local(.product) {
-    display: grid; 
+    display: inline-grid; 
     grid-template-columns: 50% 50%;
     grid-template-rows: 100%;
+
     width: 100%;
     height: 100%;
     
@@ -144,6 +145,17 @@ button[disabled=""]:hover {
 
 :local(.infoWrapper) { /*right column of .product grid (contains .name, .description etc)*/
     cursor: default;
+    
+    display: inline-block;
+    
+    
+    min-width: 100%;
+    
+    min-height: min-content;
+    max-height: min-content;
+
+    width:100%;
+    height: min-content;
 }
 
 
@@ -151,8 +163,8 @@ button[disabled=""]:hover {
 }
 
 :local(.imageWrapper) > img {   
-    width: 100%;
-    height: 100%;
+    width: 30vw;
+    height: 30vh;
     object-fit: contain;
 }
 

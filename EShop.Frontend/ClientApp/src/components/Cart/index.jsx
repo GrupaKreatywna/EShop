@@ -3,6 +3,8 @@ import React, {Component} from 'react';
 import * as env from '../../env'
 import style from './style.css'
 
+import {ProductDetails} from '../ProductDetails';
+
 export class Cart extends Component {
     constructor() {
         super();
@@ -10,6 +12,7 @@ export class Cart extends Component {
             productIds: [],
             products: [],
             guidCookieExists: false,
+            prices: {0:0}
         }
     }
 
@@ -23,53 +26,108 @@ export class Cart extends Component {
         if(!guid) return;
         
         let query = env.apiCartRedis.slice(0,-1)+'?'+env.redisCartElement.key+'='+guid // /api/Cart?key=[guidhere]
-        let cartProductIdsQuantitiesForGuid = await fetch(env.host + query); //[{id: [ID here], quantity: [how much of that product someone wants to buy]}, {id:.., quantity:..}] and so on
-        let productIdsAndQuantities = await cartProductIdsQuantitiesForGuid.json(); 
+        
+        let requestProductIdsAndQuantitiesForGuid = await fetch(env.host + query); //[{id: [ID here], quantity: [how much of that product someone wants to buy]}, {id:.., quantity:..}] and so on
+        let productIdsAndQuantities = await requestProductIdsAndQuantitiesForGuid.json(); 
         
         //TODO refactor this
-        let finalProducts = productIdsAndQuantities.map(async (cartElement)=>{
+        let i = 0;
+        let finalProducts = productIdsAndQuantities.map(cartElement => {
+            //TODO initialAdded and initialQuantity should be a single object, much like in setState
+            let elemId = cartElement[env.redisCartElement.id];
             
-            let product = await (await fetch(env.host+env.apiSingleProduct+cartElement.id)).json();
-            let price = await (await fetch(env.host+env.apiSinglePrice+product[env.product.currentPriceId])).json(); //the "product" object contains the priceId, not the price itself. We need to fetch the price value
+            let callback = totalPrice => { //this function takes the total price (quantity * price) and sets it to an object property inside this.state.prices that is equal to the product id
+                //so youre going to have {[productId]:[pricehere], 29: 350} etc.
+                
+                const prices = this.state.prices;
+                prices[elemId] = totalPrice;
+                console.log("prices[elemid]", totalPrice);
+                
+                this.setState({prices: prices});
+            };
 
-            let joinedProduct = { //here we join the cartElement fetch (it's outside this map()), the product fetch and price fetch into one object containg all the things we need
-                id: cartElement[env.redisCartElement.id],
-                img: product[env.product.img],
-                name: product[env.product.name],
-                description: product[env.product.description],
-                quantity: cartElement[env.redisCartElement.quantity],
-                price: price[env.price.value],
-            }
 
-            let productAsComponent = this.productComponent(joinedProduct);
-
-            let currentProducts = this.state.products;
-            currentProducts.push(productAsComponent);
-            this.setState({products: currentProducts});
+            
+            return <ProductDetails 
+                    id={elemId} 
+                    initialAdded={true} 
+                    initialQuantity={cartElement[env.redisCartElement.quantity]}
+                    totalPriceCallback={callback}/>
         });
-        console.log(this.state.products)
+        
+        console.log(finalProducts);
+        this.setState({products: finalProducts});
+    }
+
+    onOrderClick() {
+        fetch()
     }
 
     //TODO add remove from cart button
-    productComponent = joinedProduct => (
-        <div key={joinedProduct.id}>
-            <div>{joinedProduct.name}</div>
-            <div>{joinedProduct.description}</div>
-            <div>
-                <span>Należność: {joinedProduct.quantity*joinedProduct.price} zł</span>
-                <div>{joinedProduct.quantity} x {joinedProduct.price}</div>
-            </div>
-        </div>
-    )
 
     render() {
+        
+        console.log(this.state.prices);
+
+        const sum = Object.values(this.state.prices).reduce((sum,x)=>sum+x);
+        
+        const productsExist = (
+        <div>
+            <div>Total:{sum}</div>
+            <div>{this.state.products}</div>
+            <button onClick={e=>{
+                e.preventDefault();
+                
+            }}/>
+        </div>)
+        
         return (
-            <div className={style.wrapper} >
-                {(this.state.products.length > 0 ? this.state.products : "Twój koszyk jest pusty")}
+            <div className={style.wrapper}>
+                {this.state.products.length > 0 ? <div><div>Total: {sum}</div>{this.state.products}</div> : "Twój koszyk jest pusty"}
             </div>
         )
     }
 }
 
 
-//<div class="price">{env.helpers.getPriceFromPriceId(productJSON[env.product.currentPriceId])}</div>
+export class Checkout extends Component {
+    constructor(props) {
+        super(props);
+        
+        this.state = {
+
+        }
+
+        this.handleChange() = this.handleChange().bind(this);
+    }
+
+    handleChange(e) {
+        e.persist();
+        this.setState(prevState => ({
+                fields: {
+                    ...prevState.fields,
+                    [e.target.name]: e.target.value 
+                }
+            }
+        }
+
+    render() {
+        return (
+            <div>
+                <form onSubmit={this.handleSubmit} className={style.login__form}>
+                    <input type="text" onChange={this.handleChange} name="address" placeholder="Adres" />
+                    <input type="text" onChange={this.handleChange} name="contractingAuthority" placeholder="contractingAuthority" />
+                    <input type="text" onChange={this.handleChange} name="city" placeholder="Miasto" />
+                    <input type="text" onChange={this.handleChange} name="postalCode" placeholder="Kod pocztowy" />
+                    <input type="text" onChange={this.handleChange} name="discountCouponId" placeholder="Adres" />
+                    <input type="text" onChange={this.handleChange} name="" placeholder="Adres" />
+
+
+
+
+                    <input type="submit" value="Zamów" />
+                </form>
+            </div>
+        )
+    }
+}

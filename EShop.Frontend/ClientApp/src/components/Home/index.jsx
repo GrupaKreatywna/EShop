@@ -16,7 +16,7 @@ export const Home = () => (
     </div>
     
     <div className={style.gridSearchAutocomplete}>  
-      <SearchAutocomplete/>
+
     </div>
 
     <div className={style.gridProductsMostPopular}>  
