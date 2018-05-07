@@ -3,23 +3,37 @@
 because the <Autocomplete/> component hates
 CSS modules*/
 
-/*input box*/
-:local(.main) > div > input { /*<-tinkering with selectors*/
-    display: block;
+:local(.main) {
     width: 100%;
-    height: 40px;
-    
-    padding-left: 20px;
-    
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: bold;
-    font-size: 20px;
-    letter-spacing: 1px;
-
-    top:50%;
+    height:fit-content;
 }
 
-:local(.main) {
+/*input box*/
+:local .main > div > input { /*<-tinkering with selectors*/
+    display: block;
+    transition: all ease-out 0.2s;
+    height: 25px;
+    width: 30%;
+    padding-left: 10px;
+    
+    font-family: Arial, Helvetica, sans-serif;
+    letter-spacing: 1px;
+    top:50%;
+
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+:local .main > div > input:focus,
+:local .main > div > input {
+    padding-left: 10px;
+    
+    font-family: Arial, Helvetica, sans-serif;
+    letter-spacing: 1px;
+
+}
+
+:local .main > div > input:focus {
     width: 100%;
 }
 
@@ -27,17 +41,15 @@ CSS modules*/
 :local(.main) > div {
     min-width: 0 !important;
     width: 100%;
-
-    height: 80vh;
+    height: fit-content;
+    max-height: fit-content;
 }
 
 /*search result wrapper*/
 :local(.main) > div > div > div{
     min-width: 0 !important;
     width: 100% !important;
-    float: left;
-
-    overflow: auto;
+    overflow: hidden;
 }
 
 /*single search result*/

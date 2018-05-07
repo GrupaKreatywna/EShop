@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import Autocomplete from 'react-autocomplete';
@@ -14,7 +14,7 @@ export default class SearchAutocomplete extends Component {
         this.state = {
             value: "",
             data: [],
-            redirect:false,
+            redirect:undefined,
         };
         this.onSelect = this.onSelect.bind(this);
     }
@@ -23,12 +23,14 @@ export default class SearchAutocomplete extends Component {
         this.setState({data: searchresults})
     }
 
-    render() {
-        if(this.state.redirect)
-            return this.state.redirect;
+    componentDidUpdate() {
+        if(this.state.redirect) this.setState({redirect: undefined})
+    }
 
+    render() {
         return (
             <div className={style.main}>
+                {this.state.redirect}
                 <Autocomplete
                     items={this.state.data}
                     getItemValue={item => item[env.product.name]}
@@ -38,17 +40,18 @@ export default class SearchAutocomplete extends Component {
                     value={this.state.value}
                     onChange={e => this.setState({ value: e.target.value })}
                     onSelect={this.onSelect}
+                    inputProps={{placeholder:"Wyszukiwarka produktów"}}
 
                     wrapperStyle={{position: 'relative'}} //see comment by CMTenger on https://github.com/reactjs/react-autocomplete/issues/284
-                    menuStyle={{position: 'absolute', top: '40px', left: 0}}
+                    menuStyle={{position: 'absolute', top: '25px', left: 0}}
                 />
             </div>
         );
     }
     //this fires when a user clicks on a search result/presses enter
     onSelect(productName, productItem) { 
-        this.setState({ value: productName }); //set input field to chosen product (more of an UX thing)
-        this.setState({redirect: <Redirect to={'/product/' + productItem[env.product.id]}/>}); //redirect to product page
+        this.setState({ value: "" }); //set input field to chosen product (more of an UX thing)
+        this.setState({redirect: <Redirect to={'/product/' + productItem[env.product.id]}/>});
     }
 }
 
@@ -63,6 +66,7 @@ const SearchResult = (product, isHighlighted) => {
             
             <div className={style.elementText}>{product[env.product.name]}</div>
             <div className={style.elementPrice}>{env.formatPrice(String(product[env.product.price])) + ' ' + currency }</div>
+            
         </div>
     )
 }
