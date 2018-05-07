@@ -10,10 +10,6 @@ button {
     border-radius: var(--border-radius);
 }
 
-:local(.counter__button):active {
-    box-shadow: 1px 1px var(--color-dark);
-}
-
 button[disabled=""] { /* disabled="" means the button is disabled */
     background: var(--color-disabled);
     color: var(--font-dark);
@@ -39,6 +35,7 @@ button[disabled=""]:hover {
     font-size: 1.25em;
 
     padding: 2vh;
+    min-height: 100%;
 }
 
 :local(.addedInfoWrapper) {
@@ -55,7 +52,7 @@ button[disabled=""]:hover {
     animation-timing-function: ease-in;
     */
     background: var(--color-bad);
-    font-size: .75em;
+    /*font-size: .75em;*/
     text-align: left;
 
     min-height: 100% !important;
@@ -101,6 +98,7 @@ button[disabled=""]:hover {
 :local(.buttonPlus:active),
 :local(.buyButton:active) {
     background: var(--color-good-dark);
+    box-shadow: 1px 1px var(--color-dark);
 }
 
 :local(.buttonMinus) {
@@ -113,6 +111,7 @@ button[disabled=""]:hover {
 :local(.buttonMinus:active),
 :local(.removeButton:active) {
     background: var(--color-bad-dark);
+    box-shadow: 1px 1px var(--color-dark);
 }
 /*-------------------------LAYOUT-----------------------------*/
 
