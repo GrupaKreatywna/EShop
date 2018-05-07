@@ -23,10 +23,11 @@ export class Login extends Component {
 
     userNotLoggedIn = () => (
         <div className={style.login}>
+            <h1>Logowanie</h1>
             <form onSubmit={this.handleSubmit} className={style.login__form}>
                 <input type="email" onChange={this.handleChange} name="email" placeholder="twojemail@przyklad.com"/>
                 <input type="password" onChange={this.handleChange} name="password" placeholder="Hasło"/>
-                <input type="submit" value="Zaloguj"/>
+                <input type="submit" value="Zaloguj" className={style.buyButton}/>
             </form>
             <div>{this.state.issues.map(issue => <div>{issue}</div>)}</div>
         </div>

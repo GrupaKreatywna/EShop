@@ -118,6 +118,7 @@ export class Register extends Component {
     render() { //! reusing CSS from <Login/>
         return(
             <div className={style.login}>
+                <h1>Rejestracja</h1>
                 <form onSubmit={this.handleSubmit} className={style.login__form}>
                     <input type="text" onChange={this.handleChange} name={name} placeholder="Imię" autoFocus=""/>
                     <input type="text" onChange={this.handleChange} name={surname} placeholder="Nazwisko" />
@@ -129,7 +130,7 @@ export class Register extends Component {
                     <input type="text" onChange={this.handleChange} name={city} placeholder="Miasto (np. Warszawa)"/>
                     <input type="text" onChange={this.handleChange} name={postalcode} placeholder="Kod pocztowy (np. 12-123)" />
                     <p/>
-                    <input type="submit" value="Zarejestruj się" />
+                    <input type="submit" value="Zarejestruj się" className={style.buyButton}/>
                 </form>
                 <div>
                     {this.state.issues.map(issue => <div>{issue}</div>)}

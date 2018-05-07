@@ -5,8 +5,13 @@
     height:100%;
     
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+}
+
+:local .login > h1 {
+    color: var(--color-font-dark)
 }
 
 :local(.login__form) {
@@ -21,4 +26,40 @@
     grid-auto-flow: dense;
 
     grid-row-gap:1vh;
+}
+
+
+:local .buyButton {
+    box-shadow: 5px 5px lightgray;
+    transition: all ease 0.1s;
+    border: 0;
+    border-style: none;
+    border-radius: var(--border-radius);
+}
+
+:local .buyButton[disabled=""] { /* disabled="" means the :local .buyBtton is disabled */
+    background: var(--color-disabled);
+    color: var(--font-dark);
+
+    box-shadow: 0px 0px;
+}   
+
+:local .buyButton[disabled=""]:hover {
+    background: var(--color-disabled);
+    color: var(--font-dark);
+
+    box-shadow: 0px 0px;
+    cursor: default;
+}
+
+:local(.buyButton) {
+    background: var(--color-good);
+    color: var(--color-light);
+}
+:local(.buyButton:hover) {
+    background: var(--color-good-light);
+}
+:local(.buyButton:active) {
+    background: var(--color-good-dark);
+    box-shadow: 1px 1px var(--color-dark);
 }
