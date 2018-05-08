@@ -45,6 +45,12 @@ namespace EShop.Controllers
             return await _queryDispatcher.Dispatch<GetTenLastProducts.Query, List<GetTenLastProducts.Result>>(new GetTenLastProducts.Query());
         }
 
+        [HttpGet("/api/Product/Popular")]
+        public async Task<List<GetTenMostPopularProducts.Result>> GetTenTheMostPopular()
+        {
+            return await _queryDispatcher.Dispatch<GetTenMostPopularProducts.Query, List<GetTenMostPopularProducts.Result>>(new GetTenMostPopularProducts.Query());
+        }
+
         [HttpPost("")]
        // [Authorize]
         public async Task Create(string name, string img, string description, string tags,
