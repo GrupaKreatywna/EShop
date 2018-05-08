@@ -1,48 +1,85 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 import style from './style.css';
 import * as env from '../../env';
 
-export default class UnnumberedList extends Component {
+const {name, id, children, parentId} = env.category;
+
+class UnnumberedList extends Component {
     
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
-            data: [],
             isOpen: false,
         }
+        this.toggleOpen = this.toggleOpen.bind(this);
     }
-    
-    async componentDidMount() {
-        if(!this.props.dataset && !this.props.categoryName) {
-            let categoriesJSON = await (await fetch(env.host + env.apiCategories)).json();
-            this.setState({data: categoriesJSON});
-        }
+
+    toggleOpen() {
+        this.setState(prevState => (
+            {
+                isOpen: !prevState.isOpen,
+            }
+        ));
     }
 
     render() {
-        let bar = (this.props.dataset) ? this.props.dataset : this.state.data;
-        let foo = bar.map( parent =>{
-                if(parent.children.length === 0) {
-                    console.log(parent[env.category.name]);
-                    return (<li key={parent[env.category.id]}>{parent[env.category.name]}</li>);
-                }
+        const {categoryChildren, parentName} = this.props;
 
-                return parent.children.map(child => {
-                    let content = (child.children) ? <UnnumberedList dataset={child.children} categoryName={child[env.category.name]}/> : child[env.category.name]; 
-                    return (
-                        <li key={child[env.category.id]}>
-                            {content}
-                        </li>
-                    )
-                })
-        });
-        //when you call the topmost <UnnumberedList/> component it doesn't have props passed to it - if it doesn't have props, it fetches all categories then recursively creates itself with props
-        let catName = (this.props.categoryName) ? this.props.categoryName : this.state.data[env.category.name];
+        let listedChildren = categoryChildren.map(child => <li key={child[id]}><UnnumberedList categoryChildren={child[children]} parentName={child[name]}/></li>);
+
+        const isOpenClass = this.state.isOpen ? style.open : style.closed;
+        const isOpenClassParentName = this.state.isOpen ? style["parentName--open"] : style["parentName--closed"];
+        const buttonCharacter = this.state.isOpen ? '▶' : '▼';
         
-        return (<ul className={style.list}>
-            {catName}    
-            {foo}
-            </ul>)
+        
+        const hasChildren = categoryChildren.length > 0;
+        const button = hasChildren ? <button onClick={()=>this.toggleOpen()}> {buttonCharacter} </button> : null;
+
+        
+        return (
+            <div >
+                <div className={isOpenClassParentName}>
+                    <Link to={env.apiProductsFromCategory} >{parentName}</Link>
+                    {button}
+                </div>
+                <div className={isOpenClass}>
+                    <ul className={style.list}>
+                        {listedChildren}
+                    </ul>
+                </div>
+            </div>
+        );
     }
 };
+
+UnnumberedList.propTypes = {
+    categoryChildren: PropTypes.arrayOf(PropTypes.object).isRequired,
+    parentName: PropTypes.string.isRequired,
+}
+
+export class CategoryWrapper extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            categories: [],
+        }
+    }
+
+    async componentDidMount() {
+        let categoriesJSON = await (await fetch(env.host + env.apiCategories)).json();
+        
+        const _categories = categoriesJSON.map(topLevelParentlessCategory => (
+                <UnnumberedList
+                    parentName={topLevelParentlessCategory[name]}
+                    categoryChildren={topLevelParentlessCategory[children]}
+                    key={topLevelParentlessCategory[id]}
+                />
+        ));
+        this.setState({categories: _categories});
+    }
+
+    render = () => <div className={style.wrapper}>{this.state.categories}</div>;
+}
