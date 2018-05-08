@@ -1,18 +1,16 @@
 :local(.Layout){
     display:grid;
 
-    grid-template-areas: "Categories SearchAutocomplete ."
-                         ". ProductsMostPopular ."
-                         ". ProductsRecentlyAdded .";
+    grid-template-areas: "Categories ProductsMostPopular ."
+                        ". ProductsRecentlyAdded .";
 
     grid-template-columns: 20vw auto 20vw;
     
     grid-template-rows: 1fr
-                        1fr
                         1fr;
     
     grid-column-gap:10px;
-    padding-top: 10vh;
+    padding-top: 5vh;
 }
 
 :local(.gridCategories) {
