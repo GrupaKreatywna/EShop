@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { Link } from 'react-router-dom';
 
 import * as env from '../../env'
 import style from './style.css'
@@ -74,10 +75,16 @@ export class Cart extends Component {
             <div>{this.state.products}</div>
             <button onClick={null}>Zatwierdź</button>
         </div>)
+
+        const cartNotExists = (
+            <div>
+                Twój koszyk jest pusty. <Link to='/'>Powrót do strony głównej</Link>
+            </div>
+        )
         
         return (
             <div className={style.wrapper}>
-                {this.state.products.length > 0 ? cartExists : "Twój koszyk jest pusty"}
+                {this.state.products.length > 0 ? cartExists : cartNotExists}
             </div>
         )
     }
