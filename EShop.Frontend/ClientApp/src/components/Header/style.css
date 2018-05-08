@@ -1,17 +1,18 @@
 @import "../../globalColorTheme.css";
 
 :root {
-    --margin-horizontal: 1vw;
+    --margin-horizontal: 0.5vw;
     --margin-vertical: 0.5vh; 
 }
 
 :local(.header) {
-    display: flex;
+    display: inline-flex;
+    flex: 0 0 auto;
 
     width: 100%;
-    min-height:75px;
-    height: 5vh;
-    max-height:150px;
+    height: 25px;
+    max-height: 50px;
+
     background: var(--color-main);
 }
 
@@ -20,39 +21,51 @@
 }
 
 :local(.logo) {
-    max-height:100%;
-    max-width: 10%;
-    object-fit: scale-down;
+    height: 25px;
+    max-height: 100%;
+    padding: 0.5vh;
+}
+
+:local(.logo) > a > img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
     
-    font-weight: bold;
-    margin: 0 var(--margin-horizontal);
 }
 
 :local(.button) {
     display: block;
-    align-self: flex-end;
+    align-self: flex-start;
     bottom:0;
 
-    height: 50%;
-    min-width: min-content;
+    transition: all ease 0.1s;
+    
+    min-height: fit-content;
+    height: 100%;
+
+    min-width: fit-content;
     width: 10%;
     max-width: 20%;
 
-    margin: 0 0 0 var(--margin-horizontal); /*margin from left*/
     background: var(--color-secondary);
 
     text-align: center;
-    font-size: 2em;
+    font-size: 1em;
     color: var(--color-font-light);  
     
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: clip;      
+    /*text-overflow: clip;*/      
 }
 :local(.button):hover {
     background: var(--color-tertiary);
     color: var(--color-light);
 }
+
+:local(.button--activeroute) {
+    text-decoration: underline;
+    background: var(--color-tertiary);
+} 
 
 :local(.button.logo) { /*logo is treated similar to a button but some CSS needs to be changed*/
     height:100%;
@@ -66,14 +79,42 @@
 }
 
 :local(.loginContainer) {
-    display: flex;
-    width: 20%;
+    display: block;
+    width: fit-content;
+    min-width: fit-content;
+    padding: var(--margin-horizontal);
+    
+    font-size: .75em;
     color: var(--color-font-dark-subdued);
+    background: var(--color-tertiary);
+    overflow: hidden;
 }
 
-:local(.loginInfo) {
-    min-width: min-content;
-    background: var(--color-secondary);
+:local(.loginInfo) {    
+    display: inline-block;
+    background: inherit;
+    margin: 0 var(--margin-horizontal);
+    color: var(--color-font-light);
 }
 
-:local(.searchAutocompleteWrapper)
+/*
+a:hover,
+a:active,
+a:visited,
+a:focus {
+    color: var(--color-font-light);
+}
+
+a:focus {
+    font-weight: bold;
+}
+*/
+
+
+:local(.searchAutocompleteWrapper) {
+    position: relative;
+    top: 0;
+    left: 0;
+    min-width: 30%;
+    width: 80vw;
+}
