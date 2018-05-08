@@ -4,16 +4,16 @@ input:not([type="submit"]) {
     border-width: 1px;
     border-color: var(--color-secondary);
     text-align: left;
-    padding: 0.5vh;
+    width: 100%;
+    height: 100%;
+    /*padding: 0.5vh;*/
     /*transition: all ease 0.3s;*/
-    box-sizing: border-box;
 }
 
 input:not([type="submit"]) {
 }
 
 input[name="lastname"] {
-    margin-bottom: 2vh;
 }
 
 
@@ -24,6 +24,4 @@ input:not([type="submit"]):focus, input:not([type="submit"]):focus {
 }
 
 input:not([type="submit"]):focus::placeholder {
-    font-weight: 600;
-    text-decoration: underline;
 }
