@@ -13,6 +13,8 @@ CSS modules*/
     display: block;
     transition: all ease-out 0.2s;
     height: 25px;
+    
+    min-width: 25%;
     width: 30%;
     padding-left: 10px;
     
@@ -45,6 +47,9 @@ CSS modules*/
     max-height: fit-content;
 }
 
+:local(.main) > div > div {
+    width: 100%;
+}
 /*search result wrapper*/
 :local(.main) > div > div > div{
     min-width: 0 !important;
@@ -55,6 +60,8 @@ CSS modules*/
 /*single search result*/
 :local(.main) > div > div > div > div {
     width: 100%;
+    min-height: fit-content;
+    height: 10vh;
     max-height: 10vh;
 }
 
