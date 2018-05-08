@@ -19,13 +19,16 @@ export class Products extends Component {
     async componentDidMount() {
         let products = await (await fetch(env.host + this.props.apiLink)).json();
         
+        const {id, img, name} = env.product;
+
         let productsAsComponents = products.map(product => (
-            <div key={product[env.product.id]} className={style.product}>
-                <Link to={'/product/' + product[env.product.id]}>
-                    <img src={product[env.product.img]} className={style.image} alt={product[env.product.name]} />
-                    <div className={style.text}>{product[env.product.name]}</div>
-                </Link>
-            </div>
+            <Link to={'/product/' + product[id]}
+                className={style.product}
+                key={product[id]}
+            >
+                <img src={product[img]} className={style.image} alt={product[name]} />
+                <div className={style.text}>{product[name]}</div>
+            </Link>
         ));
 
         this.setState({data: productsAsComponents});
