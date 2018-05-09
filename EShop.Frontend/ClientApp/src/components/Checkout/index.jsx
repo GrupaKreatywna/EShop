@@ -8,6 +8,8 @@ export class Checkout extends Component {
         super(props);  
         
         let _fields = {};
+
+        //TODO refactor this and 'const neededFields' from componentDidMount() in this component
         let namesOfInputFields = Object.keys(env.order) //get only the key names which are supposed to be displayed (eg. the user doesnt input the orderdate, so we dont show it)
             .filter(key => typeof env.order[key]["fieldname"] !== 'undefined')
             .forEach(key => _fields[key]='');
@@ -27,15 +29,25 @@ export class Checkout extends Component {
         let userToken = localStorage.getItem(env.tokenCookieName);
 
         if(!userToken) return;
-        let userInfoRequestParams = {
+        const requestParams = {
             method: 'GET',
-            headers: new Headers({
-                "Authorization": userToken, //TODO change this later, backend uses OAuth 2.0 i think
-            })
+            headers: {
+                'Authorization': 'Bearer ' + userToken,
+                'Content-Type': 'application/x-www-form-urlencoded',
+            }
         };
-        let userInfo = await (await fetch(env.host + env.apiUserInfo, userInfoRequestParams)).json();
+        let userInfo = await (await fetch(env.host + env.apiUserInfo, requestParams)).json();
         
+        const neededFields = Object.keys(userInfo) //key array {0: key1, 1: key2} and so on
+            .filter(key => env.order[key]) //take only keys which exist in env.order
+            .reduce( (obj, key) => {obj[key]=userInfo[key]; return obj;}, {}); //turn {0: key1} array into {key1: value} object
         
+        this.setState(prevState => ({
+            fields: {
+                ...prevState.fields,
+                ...neededFields,
+            }
+        }));
     }
 
     handleChange(e) { //generic handleChange (uses "name" property of <input/>)
@@ -52,14 +64,10 @@ export class Checkout extends Component {
         e.preventDefault();
         
         const fieldContents = this.state.fields;
-
-        /*let emptyFields = Object.keys(fieldContents).filter(key => !fieldContents[key]); //returns names of input fields that are empty
-        emptyFields.forEach(emptyField => appendIssue(env.errorMessageStrings.fieldIsEmpty(mapNamesToStrings[emptyField])))*/
         
         let requestParams = {
             body: {
-                ...this.state.fields,
-                
+                ...fieldContents,
                 key: localStorage.getItem(env.guidCookieName),
                 orderDate: Date.getTime(), //this is UTC
             }
@@ -71,7 +79,7 @@ export class Checkout extends Component {
     render() {
         const inputFields = Object.keys(this.state.fields).map( key => {
             const {name, placeholder, fieldname, type} = env.order[key];
-            return <input type={type} name={name} placeholder={placeholder} onChange={this.handleChange}/>
+            return <input key={name} type={type} name={name} placeholder={placeholder} onChange={this.handleChange} value={this.state.fields[key] || ""}/>
         });
 
         return(
@@ -85,16 +93,3 @@ export class Checkout extends Component {
     }
 }
 
-                    /*key
-                    
-                    <input type="text" onChange={this.handleChange} name="address" placeholder="Adres" />
-                    <input type="text" onChange={this.handleChange} name="contractingAuthority" placeholder="contractingAuthority" />
-                    <input type="text" onChange={this.handleChange} name="city" placeholder="Miasto" />
-                    <input type="text" onChange={this.handleChange} name="postalCode" placeholder="Kod pocztowy" />
-                    <input type="text" onChange={this.handleChange} name="discountCouponId" placeholder="Adres" />
-                    <input type="text" onChange={this.handleChange} name="address" placeholder="Adres" />
-                    */
-
-                    /*
-        });*/
-        //

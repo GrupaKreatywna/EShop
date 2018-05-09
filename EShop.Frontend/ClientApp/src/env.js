@@ -62,6 +62,24 @@ export const userRegister = {
 }
 
 export const order = {
+    name: {
+        name: 'name',
+        placeholder: 'Imię',
+        fieldname: 'Imię',
+        type: 'text',
+    },
+    surname: {
+        name: 'surname',
+        placeholder: 'Nazwisko',
+        fieldname: 'Nazwisko',
+        type: 'text',
+    },
+    email: {
+        name: 'email',
+        placeholder: 'E-mail, np. ja@przyklad.pl',
+        fieldname: 'E-mail',
+        type: 'email'
+    },
     key: {
         name:'key',
         placeholder: undefined,
@@ -95,7 +113,7 @@ export const order = {
         fieldname: 'Miasto',
         type: 'text'
     },
-    postalcode: {
+    postalCode: {
         name:'postalCode',
         placeholder: 'Kod pocztowy, np 15-151',
         fieldname: 'Kod pocztowy',
