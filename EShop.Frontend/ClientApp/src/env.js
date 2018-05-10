@@ -62,17 +62,15 @@ export const userRegister = {
 }
 
 export const order = {
-    name: {
-        name: 'name',
-        placeholder: 'Imię',
-        fieldname: 'Imię',
-        type: 'text',
+    key: {
+        name:'key',
+        placeholder: undefined,
+        fieldname: undefined,
     },
-    surname: {
-        name: 'surname',
-        placeholder: 'Nazwisko',
-        fieldname: 'Nazwisko',
-        type: 'text',
+    orderDate: {
+        name:'orderDate',
+        placeholder: undefined,
+        fieldname: undefined,
     },
     email: {
         name: 'email',
@@ -80,31 +78,10 @@ export const order = {
         fieldname: 'E-mail',
         type: 'email'
     },
-    key: {
-        name:'key',
-        placeholder: undefined,
-        fieldname: undefined,
-    },
-    orderdate: {
-        name:'orderDate',
-        placeholder: undefined,
-        fieldname: undefined,
-    },
-    userid: {
-        name:'key',
-        placeholder: undefined,
-        fieldname: undefined,
-    },
-    address: {
-        name:'address',
-        placeholder: 'ul. Przykład 5B/21',
-        fieldname: 'Adres',
-        type: 'text'
-    },
-    contractingauthority: {
+    contractingAuthority: {
         name:'contractingAuthority',
-        placeholder: 'contractingauthority',
-        fieldname: 'contractingauthority',
+        placeholder: 'Podmiot zamawiający (firma lub imie i nazwisko)',
+        fieldname: 'Podmiot zamawiający',
         type: 'text'
     },
     city: {
@@ -113,18 +90,24 @@ export const order = {
         fieldname: 'Miasto',
         type: 'text'
     },
+    adress: {
+        name:'adress',
+        placeholder: 'Ulica, np. ul. Przykład 5B/21',
+        fieldname: 'Ulica',
+        type: 'text'
+    },
     postalCode: {
         name:'postalCode',
         placeholder: 'Kod pocztowy, np 15-151',
         fieldname: 'Kod pocztowy',
         type: 'text'
     }, //camelcase consistency between userRegister and Order though
-    discountcouponid: {
-            name:'distcountCouponId',
-            placeholder: 'Kod rabatowy, np 123',
-            fieldname: 'Kod rabatowy',
-            type:'text'
-        }
+    discountCouponId: {
+        name:'discountCouponId',
+        placeholder: 'Kod rabatowy, np 123',
+        fieldname: 'Kod rabatowy',
+        type:'text'
+    }
 }
 
 export const minimumPasswordLength=6;
@@ -138,7 +121,14 @@ export const errorMessageStrings = {
     incorrectLoginOrPassword: 'Login lub hasło są niepoprawne.',
 }
 
-
+export const objToQueryString = function(obj) {
+    var str = [];
+    for (var p in obj)
+        if (obj.hasOwnProperty(p)) {
+        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+    }
+    return str.join("&");
+}
 
 
 export const currency = "PLN";
