@@ -84,7 +84,7 @@
     min-width: fit-content;
     padding: var(--margin-horizontal);
     
-    font-size: .75em;
+    font-size: calc(5px + .75vw);
     color: var(--color-font-dark-subdued);
     background: var(--color-tertiary);
     overflow: hidden;
@@ -97,18 +97,18 @@
     color: var(--color-font-light);
 }
 
-/*
-a:hover,
-a:active,
-a:visited,
-a:focus {
+
+:local .header a:hover,
+:local .header a:active,
+:local .header a:visited,
+:local .header a:focus {
     color: var(--color-font-light);
 }
 
 a:focus {
     font-weight: bold;
 }
-*/
+
 
 
 :local(.searchAutocompleteWrapper) {
@@ -116,5 +116,10 @@ a:focus {
     top: 0;
     left: 0;
     min-width: 30%;
+    width: 50%;
     width: 80vw;
+}
+
+:local .clickable {
+    cursor: pointer;
 }
