@@ -20,7 +20,7 @@ export class Register extends Component {
                 [city]: '',
                 [postalcode]: '',
 
-                passwordconfirm: '', //this is not part of the "register user" POST
+                passwordconfirm: '', //this is not part of the "register user" POST (the API doesn't care about it)
             },
             issues: [],
             redirect: null,
@@ -109,6 +109,7 @@ export class Register extends Component {
                 redirect: <Redirect to='/login'/>
             })
         }
+    window.location.reload();
 
     }
     
@@ -116,6 +117,9 @@ export class Register extends Component {
     //TODO add password strength indicator (get one from npm probably)
     //TODO add classNames for CSS
     render() { //! reusing CSS from <Login/>
+        if(localStorage.getItem(env.tokenCookieName))
+            return <Redirect to='/'/>
+        
         return(
             <div className={style.login}>
                 <h1>Rejestracja</h1>
