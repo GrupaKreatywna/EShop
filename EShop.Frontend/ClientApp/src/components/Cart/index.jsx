@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 import * as env from '../../env'
 import style from './style.css'
@@ -13,7 +13,8 @@ export class Cart extends Component {
             productIds: [],
             products: [],
             guidCookieExists: false,
-            prices: {0:0}
+            prices: {0:0},
+            redirect: null, //becomes <Redirect/>> and redirects to <Checkout/>
         }
     }
 
@@ -59,21 +60,18 @@ export class Cart extends Component {
         this.setState({products: finalProducts});
     }
 
-    onOrderClick() {
-        fetch()
-    }
-
-    //TODO add remove from cart button
-
     render() {
         
         const sum = Object.values(this.state.prices).reduce((sum,x)=>sum+x);
         
         const cartExists = (
-        <div>
-            <div>Total:{sum}</div>
+        <div className={style.wrapper}>
+            {this.state.redirect}
+            <div className={style.info}>
+                <h1>Koszyk</h1> Całkowita należność:{env.formatPrice(String(sum)) + env.currency}
+                <button onClick={()=>this.setState({redirect: <Redirect to='/checkout'/>})} className={style.accept}>Zamów</button>            
+            </div>
             <div>{this.state.products}</div>
-            <button onClick={null}>Zatwierdź</button>
         </div>)
 
         const cartNotExists = (
