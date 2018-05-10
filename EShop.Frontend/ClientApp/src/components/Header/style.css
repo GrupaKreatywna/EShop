@@ -1,0 +1,125 @@
+@import "../../globalColorTheme.css";
+
+:root {
+    --margin-horizontal: 0.5vw;
+    --margin-vertical: 0.5vh; 
+}
+
+:local(.header) {
+    display: inline-flex;
+    flex: 0 0 auto;
+
+    width: 100%;
+    height: 25px;
+    max-height: 50px;
+
+    background: var(--color-main);
+}
+
+:local(.header div:last-child) {
+    margin-left: auto;
+}
+
+:local(.logo) {
+    height: 25px;
+    max-height: 100%;
+    padding: 0.5vh;
+}
+
+:local(.logo) > a > img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    
+}
+
+:local(.button) {
+    display: block;
+    align-self: flex-start;
+    bottom:0;
+
+    transition: all ease 0.1s;
+    
+    min-height: fit-content;
+    height: 100%;
+
+    min-width: fit-content;
+    width: 10%;
+    max-width: 20%;
+
+    background: var(--color-secondary);
+
+    text-align: center;
+    font-size: 1em;
+    color: var(--color-font-light);  
+    
+    white-space: nowrap;
+    overflow: hidden;
+    /*text-overflow: clip;*/      
+}
+:local(.button):hover {
+    background: var(--color-tertiary);
+    color: var(--color-light);
+}
+
+:local(.button--activeroute) {
+    text-decoration: underline;
+    background: var(--color-tertiary);
+} 
+
+:local(.button.logo) { /*logo is treated similar to a button but some CSS needs to be changed*/
+    height:100%;
+    background: inherit;
+}
+
+:local(.button.loginInfo) { /*login buttons are normal buttons, but make them a bit smaller*/
+    height: 20%;
+    font-size: .75em;
+    font-weight: bold;
+}
+
+:local(.loginContainer) {
+    display: block;
+    width: fit-content;
+    min-width: fit-content;
+    padding: var(--margin-horizontal);
+    
+    font-size: calc(5px + .75vw);
+    color: var(--color-font-dark-subdued);
+    background: var(--color-tertiary);
+    overflow: hidden;
+}
+
+:local(.loginInfo) {    
+    display: inline-block;
+    background: inherit;
+    margin: 0 var(--margin-horizontal);
+    color: var(--color-font-light);
+}
+
+
+:local .header a:hover,
+:local .header a:active,
+:local .header a:visited,
+:local .header a:focus {
+    color: var(--color-font-light);
+}
+
+a:focus {
+    font-weight: bold;
+}
+
+
+
+:local(.searchAutocompleteWrapper) {
+    position: relative;
+    top: 0;
+    left: 0;
+    min-width: 30%;
+    width: 50%;
+    width: 80vw;
+}
+
+:local .clickable {
+    cursor: pointer;
+}

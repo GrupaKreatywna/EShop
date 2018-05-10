@@ -1,68 +1,89 @@
 import React, {Component} from 'react';
+import { Link, Redirect } from 'react-router-dom';
 
 import * as env from '../../env'
 import style from './style.css'
 
+import {ProductDetails} from '../ProductDetails';
 
-//TODO rewrite this completely this is not how it's supposed to be done
-//async, await may be useful here but idk
 export class Cart extends Component {
     constructor() {
         super();
         this.state = {
-            products: []
+            productIds: [],
+            products: [],
+            guidCookieExists: false,
+            prices: {0:0},
+            redirect: null, //becomes <Redirect/>> and redirects to <Checkout/>
         }
-    
-        this.getCartItemIdsFromStorage = JSON.parse(localStorage.getItem("cart")).products;
-        this.mapProductIdsToFetchedProducts = this.mapProductIdsToFetchedProducts.bind(this);
-        this.appendToProductsState = this.appendToProductsState.bind(this);
+    }
 
-        /*cart={
-            uuid:"somethingfoobar",
-            products: [
-                {
-                    id:0,
-                    count:5
-                },
-                {
-                    id:1,
-                    count:5,
-                }
-            ]
-        }*/
+    async componentDidMount() {
+        const guid = localStorage.getItem("guid");
+
+        this.setState({
+            guidCookieExists: (guid ? true : false), //guidCookieExists will be used to display a message like "whoops looks like you didnt add anything to cart"
+        })
+
+        if(!guid) return;
         
-    }
+        let query = env.apiCartRedis.slice(0,-1)+'?'+env.redisCartElement.key+'='+guid // /api/Cart?key=[guidhere]
+        
+        let requestProductIdsAndQuantitiesForGuid = await fetch(env.host + query); //[{id: [ID here], quantity: [how much of that product someone wants to buy]}, {id:.., quantity:..}] and so on
+        let productIdsAndQuantities = await requestProductIdsAndQuantitiesForGuid.json(); 
+        
+        //TODO refactor this
+        let finalProducts = productIdsAndQuantities.map(cartElement => {
+            //TODO initialAdded and initialQuantity should be a single object, much like in setState
+            let elemId = cartElement[env.redisCartElement.id];
+            
+            let callback = totalPrice => { //this function takes the total price (quantity * price) and sets it to an object property inside this.state.prices that is equal to the product id
+                //so youre going to have {[productId]:[pricehere], 29: 350} etc.
+                
+                const prices = this.state.prices;
+                prices[elemId] = totalPrice;
+                console.log("prices[elemid]", totalPrice);
+                
+                this.setState({prices: prices});
+            };
 
-    componentDidMount() {
-        this.mapProductIdsToFetchedProducts(this.getCartItemIdsFromStorage);
-    }
 
-    mapProductIdsToFetchedProducts(productIds) {
-        return productIds.map(product=>(
-            fetch(env.host+env.apiSingleProduct + product.id)
-                .then(response => response.json())
-                .then(json=>this.productComponent(json)) //take a fetched product and turn it into a component
-                .then(component=>this.appendToProductsState(component)) //append component to state
-        ))
+            
+            return <ProductDetails 
+                    id={elemId} 
+                    initialAdded={true} 
+                    initialQuantity={cartElement[env.redisCartElement.quantity]}
+                    totalPriceCallback={callback}/>
+        });
+        
+        console.log(finalProducts);
+        this.setState({products: finalProducts});
     }
-
-    appendToProductsState(arg) {
-        let newarray = this.state.products;
-        newarray.push(arg);
-        this.setState({ products: newarray})
-    }
-
-    productComponent = product => (
-        <div>
-            <div>{product[env.product.name]}</div>
-            <div>{product[env.product.description]}</div>
-        </div>
-    )
 
     render() {
-        return this.state.products
+        
+        const sum = Object.values(this.state.prices).reduce((sum,x)=>sum+x);
+        
+        const cartExists = (
+        <div className={style.wrapper}>
+            {this.state.redirect}
+            <div className={style.info}>
+                <h1>Koszyk</h1> Całkowita należność:{env.formatPrice(String(sum)) + env.currency}
+                <button onClick={()=>this.setState({redirect: <Redirect to='/checkout'/>})} className={style.accept}>Zamów</button>            
+            </div>
+            <div>{this.state.products}</div>
+        </div>)
+
+        const cartNotExists = (
+            <div>
+                Twój koszyk jest pusty. <Link to='/'>Powrót do strony głównej</Link>
+            </div>
+        )
+        
+        return (
+            <div className={style.wrapper}>
+                {this.state.products.length > 0 ? cartExists : cartNotExists}
+            </div>
+        )
     }
 }
-
-
-//<div class="price">{env.helpers.getPriceFromPriceId(productJSON[env.product.currentPriceId])}</div>

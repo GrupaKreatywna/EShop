@@ -1,10 +1,14 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
+import {Link} from 'react-router-dom';
+
 import style from './style.css';
 import * as env from '../../env';
 
-class Products extends Component {
+
+
+export class Products extends Component {
     constructor() {
         super();
         this.state = {
@@ -12,23 +16,27 @@ class Products extends Component {
         }
     }
 
-    componentDidMount() {
-        fetch(env.host + env.apiProducts)
-        .then(response => response.json())
-        .then(json => this.setState({data: json}));
+    async componentDidMount() {
+        let products = await (await fetch(env.host + this.props.apiLink)).json();
+        
+        const {id, img, name} = env.product;
+
+        let productsAsComponents = products.map(product => (
+            <Link to={'/product/' + product[id]}
+                className={style.product}
+                key={product[id]}
+            >
+                <img src={product[img]} className={style.image} alt={product[name]} />
+                <div className={style.text}>{product[name]}</div>
+            </Link>
+        ));
+
+        this.setState({data: productsAsComponents});
     }
 
-    render() {
-        
-        let mappedData = this.state.data.map(product => (
-            <div key={product[env.product.id]} className={style.product}>
-                <img src={product[env.product.img]} className={style.image} alt={product[env.product.name]}/>
-                <div className={style.text}>{product[env.product.name]}</div>
-            </div>
-        ));
-        
-        return <div className={style.wrapper}>{mappedData}</div>
-    }
+    render = () => <div className={style.wrapper}>{this.state.data}</div>;
 }
 
-export default Products;
+Products.propTypes = {
+    apiLink: PropTypes.string.isRequired,
+}

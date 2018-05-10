@@ -1,6 +1,36 @@
-:local(.list) {
+:local .wrapper ul {
+    padding-left: 0;
+    margin-left: 1vw;
+    list-style-type: none;
 }
 
-:local(.listItem) {
+:local .parentName {
+    color: var(--font-dark);
+}
 
+:local .parentName--open {
+    background: whitesmoke;
+    text-decoration: underline;
+}
+
+.local .parentName--open button {
+    color: var(--color-tertiary);
+}
+
+:local .open {
+}
+
+:local button.open {
+    color: var(--color-tertiary);
+}
+
+:local .closed {
+    display:none;
+}
+
+:local .wrapper button {
+    background-color: inherit;
+    box-shadow: 0 0;
+    border: 0 none;
+    border-radius: 0;
 }

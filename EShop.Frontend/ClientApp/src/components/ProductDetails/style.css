@@ -1,1 +1,207 @@
-/*TODO LAYOUT FOR PRODUCTDETAILS*/
+:root{
+    --infomargin: 2vh;
+    --border-radius: 5px;
+}
+
+button {
+    box-shadow: 5px 5px lightgray;
+    transition: all ease 0.1s;
+    border: 0;
+    border-radius: var(--border-radius);
+}
+
+button[disabled=""] { /* disabled="" means the button is disabled */
+    background: var(--color-disabled);
+    color: var(--font-dark);
+
+    box-shadow: 0px 0px;
+}   
+
+button[disabled=""]:hover {
+    background: var(--color-disabled);
+    color: var(--font-dark);
+
+    box-shadow: 0px 0px;
+    cursor: default;
+}
+
+
+:local(.buyButton), 
+:local(.removeButton) {
+    display:inline-block;
+    color: var(--color-light);
+
+    font-weight: bold;
+    font-size: 1.25em;
+
+    padding: 2vh;
+    min-height: 100%;
+}
+
+:local(.addedInfoWrapper) {
+    height:100%;
+}
+
+:local(.removeButton) {
+    min-height: 100%;
+    
+    z-index: -1;
+    /*
+    animation-name: removeSlideOut;
+    animation-duration: 50ms;
+    animation-timing-function: ease-in;
+    */
+    background: var(--color-bad);
+    /*font-size: .75em;*/
+    text-align: left;
+
+    min-height: 100% !important;
+
+    height:100%;
+    
+    border-radius: 0 var(--border-radius) var(--border-radius) 0;
+    border-style: dashed;
+    border-width: 2px;
+    border-color: var(--color-bad-dark);
+    border-left-style: none;
+}
+
+:local(.buyButton[disabled=""]) {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+:local(.counter__button){
+    border: 0;
+    color: var(--color-light);
+    
+    border-radius: 3px;
+
+    width:25px;
+    height: 25px;
+
+    text-align: center;
+
+    font-size: 1.15em;
+    font-weight: 700;
+    overflow: hidden;
+}
+
+:local(.buttonPlus),
+:local(.buyButton) {
+    background: var(--color-good);
+}
+:local(.buttonPlus:hover),
+:local(.buyButton:hover) {
+    background: var(--color-good-light);
+}
+:local(.buttonPlus:active),
+:local(.buyButton:active) {
+    background: var(--color-good-dark);
+    box-shadow: 1px 1px var(--color-dark);
+}
+
+:local(.buttonMinus) {
+    background: var(--color-bad);
+}
+:local(.buttonMinus:hover),
+:local(.removeButton:hover) {
+    background: var(--color-bad-light);
+}
+:local(.buttonMinus:active),
+:local(.removeButton:active) {
+    background: var(--color-bad-dark);
+    box-shadow: 1px 1px var(--color-dark);
+}
+/*-------------------------LAYOUT-----------------------------*/
+
+:local(.productWrapper) {
+    width: fit-content;
+    min-width: fit-content;
+    min-height: fit-content;
+    height: min-content;
+    max-height: 30%;
+
+    color: var(--color-font-dark);
+
+}
+
+:local(.product) {
+    display: inline-grid; 
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 100%;
+
+    width: 100%;
+    height: 100%;
+    
+    grid-column-gap: 1vw;
+
+    margin:5%;
+
+    align-content: center;
+    justify-items: center;
+}
+
+:local(.infoWrapper) { /*right column of .product grid (contains .name, .description etc)*/
+    cursor: default;
+    
+    display: inline-block;
+    
+    
+    min-width: 100%;
+    
+    min-height: min-content;
+    max-height: min-content;
+
+    width:100%;
+    height: min-content;
+}
+
+
+:local(.imageWrapper) { /*left column of .product (image)*/
+}
+
+:local(.imageWrapper) > img {   
+    width: 30vw;
+    height: 30vh;
+    object-fit: contain;
+}
+
+:local(.name),
+:local(.description),
+:local(.counterWrapper) {
+    margin: var(--infomargin) 0;    
+}
+
+:local(.name) {
+    font-size: 1.5em;
+    line-height: .9em;
+}
+
+:local(.counterWrapper) {
+    user-select: none; /*avoid accidentally selecting if you press counter + - buttons*/    
+}
+
+:local(.counter__number) {
+    display:inline-block;
+    color: var(--color-font-dark);
+    margin: 0 1vw;
+    
+    width: 2ch; /* so it doesent move the + - counter buttons if number is >= 10*/
+    text-align:center;
+    
+    font-weight: 900;
+    font-size: 1.25em;
+}
+
+@keyframes removeSlideOut{
+    0% {
+        transform: translateX(-30%);
+        opacity: 50%;
+    }
+
+    100% {
+        transform: translateX(0%);
+        opacity: 100%;
+    }
+}

@@ -1,68 +1,69 @@
+@import "../../globalColorTheme.css";
+
+:root {
+    --product-min-width: 100px;
+    --product-width: 150px;
+
+    --max-products-in-row: 10;
+}
+
 :local(.wrapper) {
-    
     display: inline-flex;
-    flex-direction: row;
     flex-wrap: wrap;
 
-    width: inherit;
-    height: inherit;
-
-    background-color: red;
+    min-width: 0;
+    width: 100%;
+    flex: 0 0 auto;
+    
+    margin-bottom: 10vh;
 }
 
 :local(.product) {
-    display:grid;
-    
-    grid-template-rows: 15vh 
-                        20vh;
-    grid-template-columns: 1fr;
+    display:inline-grid;
 
-    --product-min-width: 100px;
+    grid-template-rows: 15vh
+                        15vh;
+    grid-template-columns: 100%;
+    grid-auto-rows: fit-content;
     
-    flex: 0 1 var(--product-min-width);
-    
-    min-width: var(--product-min-width);
-    width:150px;
-    max-width:200px;
-    
-    height:auto;
-
-    background-color: blue;
+    height: 100%;
+    width: 60px;
 }
 
 :local(.image) {
-    min-width: 0;
-    width:auto;
-    max-width:100%;
-
-    min-height: 0;    
-    height:100%;
-    max-height:100%;
-
     align-self: center;
     justify-self: center;
-    object-fit: contain;
+    margin: auto;
 
     overflow: hidden;
+    word-wrap: nowrap;
+    text-overflow: ellipsis;
+
+    max-width: 100%;
+    max-height: 100%;
+}
+
+:local .image > img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+
+    text-overflow: ellipsis;
+    word-wrap: break-word;
 }
 
 :local(.text) {
-    min-width: 0;
+    display: inline-block;
     width:100%;
-    max-width:100%;
-    
-    min-height: 0;
-    height:100%;
-    max-height: 100%;
+    min-height: fit-content;
 
     align-self: top;
+
     text-align: center;
-    text-overflow: ellipsis;
     word-break: normal;
 
-    overflow:hidden;
+    overflow: hidden;
 
-    background-color: orange;
-    color: brown;
+    color: var(--color-font-dark);
     
 }
