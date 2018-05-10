@@ -28,6 +28,9 @@
     grid-row-gap:1vh;
 }
 
+:local .label {
+}
+
 
 :local .buyButton {
     box-shadow: 5px 5px lightgray;
@@ -62,4 +65,18 @@
 :local(.buyButton:active) {
     background: var(--color-good-dark);
     box-shadow: 1px 1px var(--color-dark);
+}
+
+.clearfix:before,
+.clearfix:after {
+    content: " "; 
+    display: table; 
+}
+
+.clearfix:after {
+    clear: both;
+}
+
+.clearfix {
+    *zoom: 1;
 }

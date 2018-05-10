@@ -107,7 +107,7 @@ export class Login extends Component {
         }
 
         this.setState({issues: _issues}); //apply the issues from above        
-
+        window.location.reload();
     }
     //TODO add e-mail address verification
     //TODO add password strength indicator (get one from npm probably)
