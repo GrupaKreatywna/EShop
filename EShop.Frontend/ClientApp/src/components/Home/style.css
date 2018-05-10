@@ -4,7 +4,7 @@
     grid-template-areas: "Categories ProductsMostPopular ."
                         ". ProductsRecentlyAdded .";
 
-    grid-template-columns: 20vw auto 20vw;
+    grid-template-columns: 20vw 60vw 20vw;
     
     grid-template-rows: 1fr
                         1fr;
