@@ -11,9 +11,10 @@ using System;
 namespace EShop.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20180506212708_EzProductCategory")]
+    partial class EzProductCategory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -59,15 +60,13 @@ namespace EShop.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Address");
+                    b.Property<string>("Adress");
 
                     b.Property<string>("City");
 
                     b.Property<string>("ContractingAuthority");
 
                     b.Property<int?>("DiscountCouponId");
-
-                    b.Property<string>("Email");
 
                     b.Property<DateTime>("OrderDate");
 
@@ -155,7 +154,7 @@ namespace EShop.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Address");
+                    b.Property<string>("Adress");
 
                     b.Property<string>("City");
 

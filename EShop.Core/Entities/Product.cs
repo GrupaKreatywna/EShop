@@ -16,6 +16,7 @@ namespace EShop.Core.Entities
 
         public int CategoryId { get; set; }
         public virtual Category Category { get; set; }
+        public string CategoryIdString { get; set; }
 
         public ICollection<OrderProduct> OrderProducts { get; set; }
     }
