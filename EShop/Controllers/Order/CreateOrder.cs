@@ -53,6 +53,7 @@ namespace EShop.Controllers.Order
 
                     _uow.ProductRepository.Query().Where(y => y.Id == int.Parse(x)).ToList().ForEach(y => y.Count = y.Count - int.Parse(val));
                 }
+                await _uow.SaveChangesAsync();
             }
         }
         public class Validator : AbstractValidator<Command>
