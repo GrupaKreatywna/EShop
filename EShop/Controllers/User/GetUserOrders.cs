@@ -6,13 +6,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace EShop.Controllers.Order
+namespace EShop.Controllers.User
 {
-    public class SearchByContractingAuthorityOrder
+    public class GetUserOrders
     {
         public class Query : IQuery
         {
-            public string ContractingAuthority;
+            public string Email { get; set; }
+
+            public Query(string email)
+            {
+                Email = email;
+            }
         }
         public class HandlerList : IQueryHandler<Query, List<Result>>
         {
@@ -26,7 +31,8 @@ namespace EShop.Controllers.Order
 
             public async Task<List<Result>> Handle(Query query)
             {
-                var result = await _uow.OrderRepository.Query().Where(x => x.ContractingAuthority == query.ContractingAuthority).Select(x => new Result()
+               
+                var result = await _uow.OrderRepository.Query().Where(x=> x.Email == query.Email ).Select(x => new Result()
                 {
                     OrderDate = x.OrderDate,
                     Adress = x.Adress,
@@ -46,13 +52,12 @@ namespace EShop.Controllers.Order
         public class Result
         {
             public DateTime OrderDate { get; set; }
-            public string Email { get; set; }
             public string Adress { get; set; }
+            public string Email { get; set; }
             public string ContractingAuthority { get; set; }
             public string City { get; set; }
             public string PostalCode { get; set; }
             public int? DiscountCouponId { get; set; }
-
         }
     }
 }

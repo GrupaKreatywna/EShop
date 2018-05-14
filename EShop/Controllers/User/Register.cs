@@ -1,10 +1,13 @@
 ﻿using Eshop.Core.CQRS;
 using Eshop.Core.Data;
+using Eshop.Data;
 using FluentValidation;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
 
 namespace EShop.Controllers.User
 {
@@ -26,25 +29,33 @@ namespace EShop.Controllers.User
 
             public async Task Execute(Command command)
             {
-                var user = command._data;
+                var user = command._data;               
                 var hash = new HashedPassword(PasswordHelper.CreateHash(user.Password));
                 user.Password = hash.ToSaltedPassword();
                 _uow.UserRepository.Insert(user.ToUserEntity());
-                await _uow.SaveChangesAsync();
+                await _uow.SaveChangesAsync();              
             }
         }
+
+       
 
         public class Validator : AbstractValidator<Command>
         {
+            private readonly IUnitOfWork _uow;
 
-            public Validator()
+            public Validator(IUnitOfWork uow)
             {
-                RuleFor(x => x._data.Email).EmailAddress();
-                RuleFor(x => x._data.Password).MinimumLength(6);
+                _uow = uow;
+                RuleFor(x => x._data.Email).EmailAddress().MustAsync(async (request, val, token) => {
+                    string _email = await _uow.UserRepository.Query().Where(x => x.Email == val).Select(x => x.Email)
+                    .FirstOrDefaultAsync();
+                    if (_email == null)
+                        return true;
+                    return false;
+                }).WithMessage("This email is already in use");
+                RuleFor(x => x._data.Password).MinimumLength(6);               
             }
         }
-
-
         public class Data
         {
             public string Name { get; set; }
@@ -77,7 +88,7 @@ namespace EShop.Controllers.User
                     Email = this.Email,
                     Password = this.Password,
                     Verified = this.Verified,
-                    Adress = this.Adress,
+                    Address = this.Adress,
                     City = this.City,
                     PostalCode = this.PostalCode
                 };

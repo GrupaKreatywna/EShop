@@ -70,7 +70,7 @@ namespace EShop.Controllers.Order
         {
             public Guid Key { get; set; }
             public DateTime OrderDate { get; set; }
-            public int? UserId { get; set; }
+            public string Email { get; set; }
             public string Adress { get; set; }
             public string ContractingAuthority { get; set; }
             public string City { get; set; }
@@ -79,7 +79,7 @@ namespace EShop.Controllers.Order
 
             
 
-            public Data(Guid key, DateTime orderDate, string adress, string contractingAuthority, string city, string postalCode, int? discountCouponId, int? userId)
+            public Data(Guid key, DateTime orderDate, string adress, string contractingAuthority, string city, string postalCode, int? discountCouponId, string email)
             {
                 Key = key;
                 OrderDate = orderDate;
@@ -88,7 +88,7 @@ namespace EShop.Controllers.Order
                 City = city;
                 PostalCode = postalCode;
                 DiscountCouponId = discountCouponId;
-                UserId = userId;
+                Email = email;
             }
 
             public Core.Entities.Order ToOrderEntity()
@@ -101,7 +101,7 @@ namespace EShop.Controllers.Order
                 City = this.City,
                 PostalCode = this.PostalCode,
                 DiscountCouponId = this.DiscountCouponId,
-                UserId = this.UserId
+                Email = this.Email
             };
                 return o;
             }

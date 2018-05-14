@@ -59,13 +59,15 @@ namespace EShop.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Adress");
+                    b.Property<string>("Address");
 
                     b.Property<string>("City");
 
                     b.Property<string>("ContractingAuthority");
 
                     b.Property<int?>("DiscountCouponId");
+
+                    b.Property<string>("Email");
 
                     b.Property<DateTime>("OrderDate");
 
@@ -151,7 +153,7 @@ namespace EShop.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Adress");
+                    b.Property<string>("Address");
 
                     b.Property<string>("City");
 

@@ -11,8 +11,8 @@ using System;
 namespace EShop.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20180428162750_AddUser")]
-    partial class AddUser
+    [Migration("20180502205832_ChangeOrderEntity")]
+    partial class ChangeOrderEntity
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -68,13 +68,19 @@ namespace EShop.Data.Migrations
 
                     b.Property<int?>("DiscountCouponId");
 
+                    b.Property<string>("Email");
+
                     b.Property<DateTime>("OrderDate");
 
                     b.Property<string>("PostalCode");
 
+                    b.Property<int?>("UserId");
+
                     b.HasKey("Id");
 
                     b.HasIndex("DiscountCouponId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Orders");
                 });
@@ -87,6 +93,8 @@ namespace EShop.Data.Migrations
                     b.Property<int>("OrderId");
 
                     b.Property<int>("ProductId");
+
+                    b.Property<int>("Quantity");
 
                     b.HasKey("Id");
 
@@ -146,11 +154,17 @@ namespace EShop.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("Address");
+
+                    b.Property<string>("City");
+
                     b.Property<string>("Email");
 
                     b.Property<string>("Name");
 
                     b.Property<string>("Password");
+
+                    b.Property<string>("PostalCode");
 
                     b.Property<string>("Surname");
 
@@ -173,6 +187,10 @@ namespace EShop.Data.Migrations
                     b.HasOne("EShop.Core.Entities.DiscountCoupon", "DiscountCoupon")
                         .WithMany("Orders")
                         .HasForeignKey("DiscountCouponId");
+
+                    b.HasOne("EShop.Core.Entities.User", "User")
+                        .WithMany("Orders")
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("EShop.Core.Entities.OrderProduct", b =>

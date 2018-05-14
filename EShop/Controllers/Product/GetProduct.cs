@@ -36,7 +36,7 @@ namespace EShop.Controllers.Product
             public async Task<Result> Handle(Query query)
             {
                 
-                    var result = await _uow.ProductRepository.Query().Where(x => x.Id == query.ID).Select(x => new Result()
+                    var result = await _uow.ProductRepository.Query().Where(x => x.Id == query.ID).Select(x => new Result
                     {
                         Name = x.Name,
                         Img = x.Picture,
@@ -65,7 +65,7 @@ namespace EShop.Controllers.Product
 
             public async Task<List<Result>> Handle(Query query)
             {
-                var result = await _uow.ProductRepository.Query().Select(x => new Result()
+                var result = await _uow.ProductRepository.Query().Select(x => new Result
                 {
                     ID = x.Id,
                     Name = x.Name,
