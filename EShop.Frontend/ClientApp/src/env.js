@@ -3,8 +3,8 @@ export const host = 'http://localhost:1212'; //do not add a slash at the end
 export const apiProducts = '/api/Products';
 export const apiSingleProduct = '/api/Product/'; //append product id to the end when using this endpoint in code
 export const apiRecentlyAddedProducts = '/api/Product/Latest';
-export const apiMostBoughtProducts = '/api/Product/PLACEHOLDER (not implemented yet)'
-export const apiProductsFromCategory = '/api/Product/category/'
+export const apiMostBoughtProducts = '/api/Product/Popular';
+export const apiProductsFromCategory = '/api/Product/category/';
 
 export const apiSinglePrice = '/api/Price/'
 
