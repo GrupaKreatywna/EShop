@@ -56,7 +56,7 @@ export const userRegister = {
     email: "email",
     password: "password",
     verified: "verified",
-    address: "address",
+    address: "adress",
     city: "city",
     postalcode: "postalcode",
 }
