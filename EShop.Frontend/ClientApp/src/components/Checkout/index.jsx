@@ -67,25 +67,30 @@ export class Checkout extends Component {
     async handleSubmit(e) {
         e.preventDefault();
         
-        let _issues = [];
+        let _issues = []; //_issues stores input validation
         this.setState({issues:_issues});
         let appendIssue = issue => _issues.push(issue);        
         const fieldContents = this.state.fields;
         
-        let emptyFields = Object.keys(fieldContents)
+        let emptyFields = Object.keys(fieldContents) //for displaying "field X is empty"
             .filter(key => !fieldContents[key])
             .filter(key => key!==env.order.discountCouponId.name);
 
-        emptyFields.forEach(emptyField => appendIssue(env.errorMessageStrings.fieldIsEmpty(env.order[emptyField].fieldname)));
+        emptyFields.forEach(emptyField => appendIssue(env.errorMessageStrings.fieldIsEmpty(env.order[emptyField].fieldname))); //add "Field X is empty" to issues array for each empty field
 
-        if(_issues.length > 0) {
+        if(_issues.length > 0) { //if there are any issues, stop here, don't attempt to contact the API
             this.setState({issues:_issues});
             return;
         }
+
+        //below are things used in fetch()
         
+        const someoneMisspelledAddress = fieldContents.address; 
+
         const body = {
-                ...fieldContents,
-                key: localStorage.getItem(env.guidCookieName),
+            ...fieldContents,
+            adress: someoneMisspelledAddress,
+            key: localStorage.getItem(env.guidCookieName),
             orderDate: (new Date).toISOString(),
         }
 
@@ -111,7 +116,7 @@ export class Checkout extends Component {
             /*redirect: <Redirect to='/'/>,*/
         });
 
-        localStorage.clear(env.guidCookieName);
+        localStorage.clear(env.guidCookieName); //remove cart
     }
 
     render() {
