@@ -90,8 +90,8 @@ export const order = {
         fieldname: 'Miasto',
         type: 'text'
     },
-    adress: {
-        name:'adress',
+    address: {
+        name:'address',
         placeholder: 'Ulica, np. ul. Przykład 5B/21',
         fieldname: 'Ulica',
         type: 'text'
