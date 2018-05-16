@@ -26,6 +26,7 @@
     grid-template-columns: 100%;
     grid-auto-rows: fit-content;
     
+    margin-left: 15px;
     height: 100%;
     width: 60px;
 }

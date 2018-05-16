@@ -26,9 +26,9 @@ class UnnumberedList extends Component {
     }
 
     render() {
-        const {categoryChildren, parentName} = this.props;
+        const {categoryChildren, parentName, parentId} = this.props;
 
-        let listedChildren = categoryChildren.map(child => <li key={child[id]}><UnnumberedList categoryChildren={child[children]} parentName={child[name]}/></li>);
+        let listedChildren = categoryChildren.map(child => <li key={child[id]}><UnnumberedList categoryChildren={child[children]} parentName={child[name]} parentId={child[id]}/></li>);
 
         const isOpenClass = this.state.isOpen ? style.open : style.closed;
         const isOpenClassParentName = this.state.isOpen ? style["parentName--open"] : style["parentName--closed"];
@@ -42,7 +42,7 @@ class UnnumberedList extends Component {
         return (
             <div >
                 <div className={isOpenClassParentName}>
-                    <Link to={env.apiProductsFromCategory} >{parentName}</Link>
+                    <Link to={'/category/'+parentId} >{parentName}</Link>
                     {button}
                 </div>
                 <div className={isOpenClass}>
@@ -58,6 +58,7 @@ class UnnumberedList extends Component {
 UnnumberedList.propTypes = {
     categoryChildren: PropTypes.arrayOf(PropTypes.object).isRequired,
     parentName: PropTypes.string.isRequired,
+    parentId: PropTypes.number.isRequired,
 }
 
 export class CategoryWrapper extends Component {
@@ -74,6 +75,7 @@ export class CategoryWrapper extends Component {
         const _categories = categoriesJSON.map(topLevelParentlessCategory => (
                 <UnnumberedList
                     parentName={topLevelParentlessCategory[name]}
+                    parentId={topLevelParentlessCategory[id]}
                     categoryChildren={topLevelParentlessCategory[children]}
                     key={topLevelParentlessCategory[id]}
                 />

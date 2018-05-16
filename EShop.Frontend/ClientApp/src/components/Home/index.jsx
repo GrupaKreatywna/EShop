@@ -15,7 +15,7 @@ export const Home = () => (
     </div>
     <div className={style.gridProductsMostPopular}>  
       <p><b>Najczęściej kupowane</b></p>
-      <Products apiLink={env.apiRecentlyAddedProducts}/>
+      <Products apiLink={env.apiMostBoughtProducts}/>
     </div>
     
     <div className={style.gridProductsRecentlyAdded}>

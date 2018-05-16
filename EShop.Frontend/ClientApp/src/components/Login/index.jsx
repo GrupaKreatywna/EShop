@@ -44,9 +44,9 @@ export class Login extends Component {
         ));
     }
     
-   //this is very similar code to <Register/>'s handleSubmit
-   //TODO refactor?
-   //handleSubmit contains input validation
+    //this is very similar code to <Register/>'s handleSubmit
+    //TODO refactor?
+    //handleSubmit contains input validation
     async handleSubmit(e) {
         e.preventDefault();
         const fieldContents = this.state.fields;
@@ -100,6 +100,7 @@ export class Login extends Component {
             let token = await response.json();
             localStorage.setItem(env.tokenCookieName, token);
             this.setState({loginTokenExists: true});
+            window.location.reload();
         }
 
         else { //responseCode other than 200 or 401 are probably internal server error etc.
@@ -107,7 +108,6 @@ export class Login extends Component {
         }
 
         this.setState({issues: _issues}); //apply the issues from above        
-        window.location.reload();
     }
     //TODO add e-mail address verification
     //TODO add password strength indicator (get one from npm probably)
