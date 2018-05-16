@@ -29,7 +29,7 @@ namespace EShop.Controllers.Order
                 var result = await _uow.OrderRepository.Query().Where(x => x.ContractingAuthority == query.ContractingAuthority).Select(x => new Result()
                 {
                     OrderDate = x.OrderDate,
-                    Adress = x.Adress,
+                    Adress = x.Address,
                     ContractingAuthority = x.ContractingAuthority,
                     City = x.City,
                     PostalCode = x.PostalCode,

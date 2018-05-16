@@ -61,27 +61,23 @@ namespace EShop.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Orders",
+                name: "Users",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Adress = table.Column<string>(nullable: true),
+                    Address = table.Column<string>(nullable: true),
                     City = table.Column<string>(nullable: true),
-                    ContractingAuthority = table.Column<string>(nullable: true),
-                    DiscountCouponId = table.Column<int>(nullable: true),
-                    OrderDate = table.Column<DateTime>(nullable: false),
-                    PostalCode = table.Column<string>(nullable: true)
+                    Email = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: true),
+                    Password = table.Column<string>(nullable: true),
+                    PostalCode = table.Column<string>(nullable: true),
+                    Surname = table.Column<string>(nullable: true),
+                    Verified = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Orders", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Orders_DiscountCoupons_DiscountCouponId",
-                        column: x => x.DiscountCouponId,
-                        principalTable: "DiscountCoupons",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                    table.PrimaryKey("PK_Users", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -91,6 +87,7 @@ namespace EShop.Data.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     CategoryId = table.Column<int>(nullable: false),
+                    CategoryIdString = table.Column<string>(nullable: true),
                     Count = table.Column<int>(nullable: false),
                     CurrentPriceId = table.Column<int>(nullable: true),
                     Description = table.Column<string>(nullable: true),
@@ -116,13 +113,46 @@ namespace EShop.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Orders",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Address = table.Column<string>(nullable: true),
+                    City = table.Column<string>(nullable: true),
+                    ContractingAuthority = table.Column<string>(nullable: true),
+                    DiscountCouponId = table.Column<int>(nullable: true),
+                    Email = table.Column<string>(nullable: true),
+                    OrderDate = table.Column<DateTime>(nullable: false),
+                    PostalCode = table.Column<string>(nullable: true),
+                    UserId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Orders", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Orders_DiscountCoupons_DiscountCouponId",
+                        column: x => x.DiscountCouponId,
+                        principalTable: "DiscountCoupons",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Orders_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "OrderProduct",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     OrderId = table.Column<int>(nullable: false),
-                    ProductId = table.Column<int>(nullable: false)
+                    ProductId = table.Column<int>(nullable: false),
+                    Quantity = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -162,6 +192,11 @@ namespace EShop.Data.Migrations
                 column: "DiscountCouponId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Orders_UserId",
+                table: "Orders",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Products_CategoryId",
                 table: "Products",
                 column: "CategoryId");
@@ -185,6 +220,9 @@ namespace EShop.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "DiscountCoupons");
+
+            migrationBuilder.DropTable(
+                name: "Users");
 
             migrationBuilder.DropTable(
                 name: "Categories");

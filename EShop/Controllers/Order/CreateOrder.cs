@@ -97,7 +97,7 @@ namespace EShop.Controllers.Order
                 Core.Entities.Order o = new Core.Entities.Order
                 {
                 OrderDate = this.OrderDate,
-                Adress = this.Adress,
+                Address = this.Adress,
                 ContractingAuthority = this.ContractingAuthority,
                 City = this.City,
                 PostalCode = this.PostalCode,
