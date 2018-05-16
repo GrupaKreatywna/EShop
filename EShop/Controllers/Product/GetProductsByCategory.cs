@@ -30,20 +30,7 @@ namespace EShop.Controllers.Product
 
             public async Task<List<Result>> Handle(Query query)
             {
-                //var result = await _uow.ProductRepository.Query().Where(x=> x.CategoryId == query.CategoryId).Select(x => new Result
-                //{
-                //    ID = x.Id,
-                //    Name = x.Name,
-                //    Img = x.Picture,
-                //    Description = x.Description,
-                //    Tags = x.Tags,
-                //    Quantity = x.Count,
-                //    CurrentPriceId = x.CurrentPriceId,
-                //    Price = _uow.PriceRepository.Query().Where(y => y.Id == x.CurrentPriceId).Select(y => y.Value).FirstOrDefault(),
-                //    CategoryId = x.CategoryId
-                //}).ToListAsync();
-
-                string catstring = await GenerateCategoryString(query.CategoryId);
+                string catstring = await GenerateCategoryString(query.CategoryId).ConfigureAwait(false);
 
                 var result = await _uow.ProductRepository.Query().Where(x => x.CategoryIdString.StartsWith(catstring)).Select(x => new Result
                 {
