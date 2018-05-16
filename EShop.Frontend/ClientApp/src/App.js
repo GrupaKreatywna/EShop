@@ -9,6 +9,7 @@ import { Cart } from './components/Cart';
 import { Register } from './components/Register';
 import { Login } from './components/Login';
 import { Checkout } from './components/Checkout';
+import { Category } from './components/CategoryList';
 
 export default class App extends Component {
   displayName = App.name;
@@ -24,6 +25,7 @@ export default class App extends Component {
             <Route path='/checkout' component={Checkout}/>
             <Route path='/register' component={Register}/>
             <Route path='/login' component={Login}/>
+            <Route path='/category/:id' component = {Category}/>
           </div>
         </div>
     );

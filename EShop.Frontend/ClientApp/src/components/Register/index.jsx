@@ -84,7 +84,6 @@ export class Register extends Component {
 
         const {passwordconfirm, ...postData} = this.state.fields; //postData contains everything from this.state.fields but "passwordconfirm"
         postData["verified"] = false; //no idea what it does, but its required. keep it at true anyways
-        console.log("state fields", this.state.fields, "modified fields", postData);
         
         const fetchParams = {
             method: 'POST',
@@ -96,10 +95,16 @@ export class Register extends Component {
             },
         }
         
-        let responseCode = await (await fetch(env.host+env.apiRegister, fetchParams)).status;
+        let response = await fetch(env.host+env.apiRegister, fetchParams);
+        let responseCode = await response.status;
 
-        if(responseCode!==200) {
-            appendIssue(env.errorMessageStrings.fetchFailed);
+        console.log(response.status);
+
+        if(responseCode!==200 && responseCode!==204) {
+            let responseBody = await response.json();
+            if(responseBody["errors"]) {
+                let serverErrorMessages = responseBody.errors.forEach(error => appendIssue(error.message));
+            }
             this.setState({
                 issues: _issues,
             });
@@ -109,7 +114,6 @@ export class Register extends Component {
                 redirect: <Redirect to='/login'/>
             })
         }
-    window.location.reload();
 
     }
     
@@ -122,6 +126,7 @@ export class Register extends Component {
         
         return(
             <div className={style.login}>
+                {this.state.redirect}
                 <h1>Rejestracja</h1>
                 <form onSubmit={this.handleSubmit} className={style.login__form}>
                     <input type="text" onChange={this.handleChange} name={name} placeholder="Imię" autoFocus=""/>
