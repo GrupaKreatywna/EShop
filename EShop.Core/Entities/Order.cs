@@ -7,7 +7,7 @@ namespace EShop.Core.Entities
     public class Order : BaseEntity<int>
     {
         public DateTime OrderDate { get; set; }
-        public string Adress { get; set; }
+        public string Address { get; set; }
         public string ContractingAuthority { get; set; }
         public string City { get; set; }
         public string PostalCode { get; set; }

@@ -28,7 +28,7 @@ namespace EShop.Controllers.Order
                 var result = await _uow.OrderRepository.Query().Where(x => x.Id == query.ID).Select(x => new Result()
                 {
                     OrderDate = x.OrderDate,
-                    Address = x.Adress,
+                    Address = x.Address,
                     ContractingAuthority = x.ContractingAuthority,
                     City = x.City,
                     PostalCode = x.PostalCode,
@@ -54,7 +54,7 @@ namespace EShop.Controllers.Order
                 var result = await _uow.OrderRepository.Query().Select(x => new Result()
                 {
                     OrderDate = x.OrderDate,
-                    Address = x.Adress,
+                    Address = x.Address,
                     ContractingAuthority = x.ContractingAuthority,
                     City = x.City,
                     PostalCode = x.PostalCode,
