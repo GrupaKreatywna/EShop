@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Hosting.Internal;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Cors;
+using Eshop.Data;
 
 namespace Eshop
 {
@@ -88,6 +89,8 @@ namespace Eshop
             {
                 options.CustomSchemaIds(type => type.FullName);
             });
+
+            services.AddDbContext<DataContext>();
 
             ApplicationContainer = IocConfig.RegisterDependencies(services);
 			

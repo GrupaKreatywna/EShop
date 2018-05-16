@@ -29,6 +29,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="appsettings.azure.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Update="appsettings.Pawel.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

@@ -11,8 +11,8 @@ using System;
 namespace EShop.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20180516071449_Init")]
-    partial class Init
+    [Migration("20180516091400_BugFix")]
+    partial class BugFix
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

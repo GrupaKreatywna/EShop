@@ -1,5 +1,6 @@
 using EShop.Core.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace Eshop.Data
 {
@@ -11,11 +12,15 @@ namespace Eshop.Data
         public DbSet<Category> Categories{get;set;}
         public DbSet<DiscountCoupon> DiscountCoupons { get; set; }
         public DbSet<User> Users { get; set; }
-        
+        private readonly IConfiguration _conf;
 
+        public DataContext(IConfiguration conf )
+        {
+            _conf = conf;
+        }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Data Source=.\SQLEXPRESS;Initial Catalog=EShop;Persist Security Info=False;Integrated Security=True;");
+            optionsBuilder.UseSqlServer(_conf["SQL-Server:ConnectionString"]);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

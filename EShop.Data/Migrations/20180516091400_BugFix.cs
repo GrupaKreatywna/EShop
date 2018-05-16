@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace EShop.Data.Migrations
 {
-    public partial class Init : Migration
+    public partial class BugFix : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

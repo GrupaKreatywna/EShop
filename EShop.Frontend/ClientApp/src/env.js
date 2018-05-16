@@ -1,4 +1,4 @@
-export const host = 'http://localhost:1212'; //do not add a slash at the end
+export const host = 'http://eshop-grupakreatywna.azurewebsites.net'; //do not add a slash at the end
 
 export const apiProducts = '/api/Products';
 export const apiSingleProduct = '/api/Product/'; //append product id to the end when using this endpoint in code
