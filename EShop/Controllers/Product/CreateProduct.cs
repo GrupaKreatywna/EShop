@@ -1,6 +1,7 @@
 ﻿using Eshop.Core.CQRS;
 using Eshop.Core.Data;
 using FluentValidation;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,8 +27,27 @@ namespace EShop.Controllers.Product
 
             public async Task Execute(Command command)
             {
-                _uow.ProductRepository.Insert(command._data.ToProductEntity());
+                string catstring = await GenerateCategoryString(command._data.CategoryId);
+
+                _uow.ProductRepository.Insert(command._data.ToProductEntity(catstring));
                 await _uow.SaveChangesAsync();
+            }
+
+            private async Task<string> GenerateCategoryString(int? id)
+            {
+                int?[] cat;
+
+                string result = id.ToString();
+
+                cat = await _uow.CategoryRepository.Query().Where(x => x.Id == id).Select(x => x.ParentId).ToArrayAsync();
+                while (cat[0] != null)
+                {
+                    id = cat[0];
+                    result = cat[0].ToString() + "-" + result;
+                    cat = await _uow.CategoryRepository.Query().Where(x => x.Id == id).Select(x => x.ParentId).ToArrayAsync();
+                }
+                
+                return result;
             }
         }
 
@@ -51,6 +71,9 @@ namespace EShop.Controllers.Product
             public int Quantity { get; set; }
             public int? CurrentPriceId { get; set; }
             public int CategoryId { get; set; }
+            public string CategoryIdString { get; set; }
+
+            public Data() { }
 
             public Data(string name, string img, string description, string tags, 
                 int quantity, int? _CurrentPriceId, int _CategoryId)
@@ -64,7 +87,7 @@ namespace EShop.Controllers.Product
                 CategoryId = _CategoryId;
             }
 
-            public Core.Entities.Product ToProductEntity()
+            public Core.Entities.Product ToProductEntity(string categoryString)
             {
                 var _product = new Core.Entities.Product()
                 {
@@ -74,7 +97,8 @@ namespace EShop.Controllers.Product
                 Tags = this.Tags,
                 Count = this.Quantity,
                 CurrentPriceId = this.CurrentPriceId,
-                CategoryId = this.CategoryId
+                CategoryId = this.CategoryId,
+                CategoryIdString = categoryString
             };
                 return _product;
             }
