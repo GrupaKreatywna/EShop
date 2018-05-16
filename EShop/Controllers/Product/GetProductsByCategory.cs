@@ -30,8 +30,6 @@ namespace EShop.Controllers.Product
 
             public async Task<List<Result>> Handle(Query query)
             {
-
-                string catstring = await GenerateCategoryString(query.CategoryId);
                 var result = await _uow.ProductRepository.Query().Where(x => x.CategoryIdString.StartsWith(catstring)).Select(x => new Result
                 {
                     ID = x.Id,
