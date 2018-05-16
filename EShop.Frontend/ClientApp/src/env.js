@@ -4,7 +4,7 @@ export const apiProducts = '/api/Products';
 export const apiSingleProduct = '/api/Product/'; //append product id to the end when using this endpoint in code
 export const apiRecentlyAddedProducts = '/api/Product/Latest';
 export const apiMostBoughtProducts = '/api/Product/Popular';
-export const apiProductsFromCategory = '/api/Product/category/';
+export const apiProductsFromCategory = '/api/Products/';
 
 export const apiSinglePrice = '/api/Price/'
 
